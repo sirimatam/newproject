@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 echo $db;
-
+/*
 pg_query($db,"CREATE TABLE product (
 prod_id varchar(10) NOT NULL,
 prod_name varchar(40) NOT NULL,
@@ -13,7 +13,7 @@ prod_price_per_unit integer NOT NULL,
 prod_stock integer NOT NULL,
 prod_pro_price integer NOT NULL,
 PRIMARY KEY(prod_id))");
-/*
+
 pg_query($db,"CREATE TABLE createcart (
 cartp_id varchar(10) NOT NULL,
 cus_id varchar(50) NOT NULL,
