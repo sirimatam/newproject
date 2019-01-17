@@ -1,7 +1,8 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
 
-$db = pg_connect(("host=ec2-107-22-162-8.compute-1.amazonaws.com port=5432 dbname=d8kmurmr59kdsg user=kdozgixaxyediw password=0fad69adabf7a1c52fec6765c9331e776845abe09fc5a3b7c9c5ae1ccc9f6531");
+require_once('connection.php');
+//$db = pg_connect(("host=ec2-107-22-162-8.compute-1.amazonaws.com port=5432 dbname=d8kmurmr59kdsg user=kdozgixaxyediw password=0fad69adabf7a1c52fec6765c9331e776845abe09fc5a3b7c9c5ae1ccc9f6531");
 
 pg_query($db,"CREATE TABLE product (
 prod_id varchar(10) NOT NULL,
@@ -9,7 +10,7 @@ prod_name varchar(40) NOT NULL,
 prod_size varchar(10) NOT NULL,
 prod_type varchar(40) NOT NULL,
 prod_color varchar(40) NOT NULL,
-prod_description varchar(40) NOT NULL,
+prod_description varchar(200) NOT NULL,
 prod_price_per_unit int(10) NOT NULL,
 prod_stock int(10) NOT NULL,
 prod_pro_price int(10) NOT NULL
@@ -17,7 +18,7 @@ PRIMARY KEY(prod_id))");
 
 pg_query($db,"CREATE TABLE createcart (
 cartp_id varchar(10) NOT NULL,
-cus_id varchar(10) NOT NULL
+cus_id varchar(50) NOT NULL
 FOREIGN KEY (cus_id) REFERENCES customer(cus_id)
 PRIMARY KEY(cartp_id))");
 
@@ -43,7 +44,7 @@ PRIMARY KEY(order_id))");
 
 
 pg_query($db,"CREATE TABLE customer (
-cus_id varchar(10) NOT NULL,
+cus_id varchar(50) NOT NULL,
 cus_name varchar(40) NOT NULL,
 cus_address varchar(100) NOT NULL,
 cus_tel varchar(10) NOT NULL
