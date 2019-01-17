@@ -67,7 +67,7 @@ PRIMARY KEY(staff_id))");
 
 
 
-*/
+
 
 
 ?>
