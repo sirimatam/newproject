@@ -9,7 +9,7 @@ prod_size varchar(10) NOT NULL,
 prod_type varchar(40) NOT NULL,
 prod_color varchar(40) NOT NULL,
 prod_description varchar(200) NOT NULL,
-prod_price_per_unit int(10) NOT NULL,
+prod_price_per_unit int NOT NULL,
 prod_stock int NOT NULL,
 prod_pro_price int NOT NULL,
 PRIMARY KEY(prod_id))");
