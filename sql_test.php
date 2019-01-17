@@ -1,5 +1,5 @@
 <html>
-<body>t
+<body>
 <?php
 require_once('connection.php');
 if(isset($_POST["sql"]))
