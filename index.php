@@ -2,6 +2,9 @@
 require_once('connection.php');
 echo $db;
 
+pg_query($db,"CREATE TABLE Product ( prod_id varchar(10) NOT NULL, prod_name varchar(40) NOT NULL, PRIMARY KEY(prod_id))");
+
+/*
 pg_query($db,"CREATE TABLE Product (
 prod_id varchar(10) NOT NULL PRIMARY KEY,
 prod_name varchar(40) NOT NULL,
@@ -9,11 +12,11 @@ prod_size varchar(10) NOT NULL,
 prod_type varchar(40) NOT NULL,
 prod_color varchar(40) NOT NULL,
 prod_description varchar(200) NOT NULL,
-prod_price_per_unit INT NOT NULL,
-prod_stock INT NOT NULL,
-prod_pro_price INT NOT NULL
+prod_price int NOT NULL,
+prod_stock int NOT NULL,
+prod_pro_price int NOT NULL
 )");
-/*
+
 pg_query($db,"CREATE TABLE Createcart (
 cartp_id varchar(10) NOT NULL,
 cus_id varchar(50) NOT NULL,
