@@ -1,5 +1,7 @@
 <?php
 require_once('connection.php');
+require('showproduct.php');
+
 echo $db;
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -68,7 +70,17 @@ if ( sizeof($request_array['events']) > 0 )
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
- 
-	 
 
+ if( strlen($reply_message) > 0 )
+  {
+   if($reply_message == '1')
+   {
+   	show_product();
+   }
+   elseif($reply_message == '2')
+   {
+   	show_product();
+   }
+	 
+ }
 ?>
