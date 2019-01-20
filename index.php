@@ -22,32 +22,42 @@ if ( sizeof($request_array['events']) > 0 )
    {
     $text = $event['message']['text'];
 	
-	if ($text=='ดู และ สั่งซื้อสินค้า')
+	$greeting = array('Hi','Hello','ดีจ้า','สวัสดี','สวัสดีครับ');
+	
+	$correct = 0;
+	foreach ($greeting as $value)
+	{
+		if ($text == $value)
+		{
+			$correct = 1;
+		}
+	}
+	if ($correct == 1)
+	{
+		$reply_message = 'Hi,what is you name';
+	}
+	elseif ($text=='button')
 	{
 		$reply_message = "1";
 	}
 	
-	elseif ($text=='สินค้าโปรโมชั่น')
+	elseif ($text=='numcust')
 	{
-		$reply_message = "2";
+		$result = pg_query($db,"SELECT COUNT(*) FROM Customer1");
+		$list = pg_fetch_row($result);
+		$reply_message = " result = $list[0]";
 	}
-  elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
+	elseif ($text=='showcust')
 	{
-		$reply_message = "3";
+		$result = pg_query($db,"SELECT cus_name FROM Customer1");
+		while ($list = pg_fetch_row($result))
+		{
+			$cust = $list[0]."\n";
+			$custlist .= $cust;
+		}
+		$reply_message = "$custlist";
 	}
-	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
-	{
-		$reply_message = "4";
-	}
-  elseif ($text=='wishlist')
-	{
-		$reply_message = "5";
-	}
-  elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
-	{
-		$reply_message = "6";
-	}
-/*	elseif (substr($text,0,6) =='addcus')
+	elseif (substr($text,0,6) =='addcus')
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
 		//$cardata = explode(" ",$text);
@@ -60,17 +70,17 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		$reply_message = "$custlist";
 	}
-	*/
-   }
 	else
 	$reply_message = 'why dont you say hello to me';
    }
    else
     $reply_message = 'ระบบได้รับ '.ucfirst($event['message']['type']).' ของคุณแล้ว';
   
-  }}
+  }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
+ 
+	 
 
 
  if( strlen($reply_message) > 0 )
