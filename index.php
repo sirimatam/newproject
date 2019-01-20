@@ -48,7 +48,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$reply_message = "6";
 	}
-	elseif (substr($text,0,6) =='addcus')
+/*	elseif (substr($text,0,6) =='addcus')
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
 		//$cardata = explode(" ",$text);
@@ -61,6 +61,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		$reply_message = "$custlist";
 	}
+	*/
 	else
 	$reply_message = 'why dont you say hello to me';
    }
