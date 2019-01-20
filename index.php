@@ -10,7 +10,7 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 
-if ( is_array($request_array['events']) && sizeof($request_array['events']) > 0 )
+if ( sizeof($request_array['events']) > 0 )
 {
  foreach ($request_array['events'] as $event)
  {
@@ -61,14 +61,14 @@ if ( is_array($request_array['events']) && sizeof($request_array['events']) > 0 
 		$reply_message = "$custlist";
 	}
 	*/
-   }
+   
 	else
 	$reply_message = 'why dont you say hello to me';
    }
    else
     $reply_message = 'ระบบได้รับ '.ucfirst($event['message']['type']).' ของคุณแล้ว';
   
-  }}
+  }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
 
@@ -83,6 +83,8 @@ if ( is_array($request_array['events']) && sizeof($request_array['events']) > 0 
    {
    	show_product();
    }
-	 
- }
+}
+}
+} 
+ 
 ?>
