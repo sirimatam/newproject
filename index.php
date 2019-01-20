@@ -62,6 +62,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$reply_message = "$custlist";
 	}
 	*/
+   }
 	else
 	$reply_message = 'why dont you say hello to me';
    }
@@ -71,6 +72,7 @@ if ( sizeof($request_array['events']) > 0 )
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
+}
 
  if( strlen($reply_message) > 0 )
   {
