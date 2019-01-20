@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-require('showproduct.php');
+require 'showproduct.php';
 
 echo $db;
 
