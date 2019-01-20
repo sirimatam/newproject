@@ -41,35 +41,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$reply_message = "1";
 	}
 	
-	elseif ($text=='numcust')
-	{
-		$result = pg_query($db,"SELECT COUNT(*) FROM Customer1");
-		$list = pg_fetch_row($result);
-		$reply_message = " result = $list[0]";
-	}
-	elseif ($text=='showcust')
-	{
-		$result = pg_query($db,"SELECT cus_name FROM Customer1");
-		while ($list = pg_fetch_row($result))
-		{
-			$cust = $list[0]."\n";
-			$custlist .= $cust;
-		}
-		$reply_message = "$custlist";
-	}
-	elseif (substr($text,0,6) =='addcus')
-	{
-		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
-		//$cardata = explode(" ",$text);
-		pg_query($db,"INSERT INTO Customer1 (cus_id,cus_name,cus_lastname,cus_pic) VALUES ($cusid,$cusname,$cuslast,$cuspic)");
-		$result = pg_query($db,"SELECT cus_name FROM Customer1");
-		while ($list = pg_fetch_row($result))
-		{
-			$cust = $list[0]."\n";
-			$custlist .= $cust;
-		}
-		$reply_message = "$custlist";
-	}
+	
 	else
 	$reply_message = 'why dont you say hello to me';
    }
@@ -79,7 +51,7 @@ if ( sizeof($request_array['events']) > 0 )
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
- 
+ }
 	 
 
 
