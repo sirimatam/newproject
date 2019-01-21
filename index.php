@@ -75,7 +75,7 @@ if ( sizeof($request_array['events']) > 0 )
 
  if( strlen($reply_message) > 0 )
   {
-   if($reply_message == '1')
+  /* if($reply_message == '1')
    {
    	$data = [
 	'replyToken' => $reply_token,
@@ -153,7 +153,7 @@ $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
-   }
+   }*/
 if ($reply_message == '2')
 {
 	show_product();
