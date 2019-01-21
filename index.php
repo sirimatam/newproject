@@ -75,89 +75,17 @@ if ( sizeof($request_array['events']) > 0 )
 
  if( strlen($reply_message) > 0 )
   {
-  /* if($reply_message == '1')
+   if($reply_message == '1')
    {
-   	$data = [
-	'replyToken' => $reply_token,
-	'messages' => [
-[
-  "type" => "flex",
-  "altText" => "Flex Message",
-  "contents" => [
-    "type" => "bubble",
-    "direction" => "ltr",
-    "header" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "text",
-          "text" => "เลือกประเภทสินค้า",
-          "align" => "center",
-          "weight" => "bold"
-        ]
-      ]
-    ],
-    "body" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "สายเดี่ยว/แขนกุด",
-            "text" => "เสื้อสายเดี่ยว/แขนกุด"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เสื้อมีแขน",
-            "text" => "เสื้อมีแขน"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เดรส",
-            "text" => "เดรส"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขาสั้น",
-            "text" => "กางเกงขาสั้น"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขายาว",
-            "text" => "กางเกงขายาว"
-          ]
-        ]
-      ]
-    ]
-  ]
-]
-]];
-$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+   	
+$post_body = json_encode($show_product_type, JSON_UNESCAPED_UNICODE);
 file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
 $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
-   }*/
-if ($reply_message == '2')
-{
-	show_product();
-}
+   }
+
 
 }
 }
