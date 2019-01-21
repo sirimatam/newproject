@@ -20,7 +20,13 @@ if ( sizeof($request_array['events']) > 0 )
   {
    if( $event['message']['type'] == 'text' )
    {
-    $text = $event['message']['text'];
+        $text = $event['message']['text'];
+	$userid = $event['source']['userId'];
+	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = '$userid'");
+	if( pg_fetch_result($findid) == 0)
+	{
+		pg_query($db,"INSERT INTO Customer (cus_id,) VALUES ('bmw',0)");
+	}
 	
 	if ($text=='ดู และ สั่งซื้อสินค้า')
 	{
@@ -31,7 +37,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$reply_message = "2";
 	}
-  elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
+       elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
 		$reply_message = "3";
 	}
@@ -39,11 +45,11 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$reply_message = "4";
 	}
-  elseif ($text=='wishlist')
+       elseif ($text=='wishlist')
 	{
 		$reply_message = "5";
 	}
-  elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
+        elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
 	{
 		$reply_message = "6";
 	}
