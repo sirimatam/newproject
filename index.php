@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-//require 'showproduct.php';
+require 'showproduct.php';
 
 echo $db;
 
@@ -154,6 +154,10 @@ echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
    }
+if ($reply_message == '2')
+{
+	show_product();
+}
 
 }
 }
