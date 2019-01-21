@@ -14,7 +14,7 @@ function send_reply_message($url, $post_header, $post_body)
  return $result;
 }
 
-
+/*
 function show_product()
 {
     $data = [
@@ -94,6 +94,77 @@ echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
 }
+*/
 
+$show_product_type = [
+	'replyToken' => $reply_token,
+	'messages' => [
+[
+  "type" => "flex",
+  "altText" => "Flex Message",
+  "contents" => [
+    "type" => "bubble",
+    "direction" => "ltr",
+    "header" => [
+      "type" => "box",
+      "layout" => "vertical",
+      "contents" => [
+        [
+          "type" => "text",
+          "text" => "เลือกประเภทสินค้า",
+          "align" => "center",
+          "weight" => "bold"
+        ]
+      ]
+    ],
+    "body" => [
+      "type" => "box",
+      "layout" => "vertical",
+      "contents" => [
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "สายเดี่ยว/แขนกุด",
+            "text" => "เสื้อสายเดี่ยว/แขนกุด"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "เสื้อมีแขน",
+            "text" => "เสื้อมีแขน"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "เดรส",
+            "text" => "เดรส"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "กางเกงขาสั้น",
+            "text" => "กางเกงขาสั้น"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "กางเกงขายาว",
+            "text" => "กางเกงขายาว"
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+]];
 
 ?>
