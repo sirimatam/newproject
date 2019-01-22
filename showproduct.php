@@ -39,6 +39,9 @@ function show_promotion_product()
    
 }   
 	   
-	   
+function customer_address($cusid)
+{
+	pg_query($db,"UPDATE Customer SET cus_name = 'C001', cus_address = '', cus_tel = '' WHERE cus_id = $cusid ");
+}
 	   
 ?>
