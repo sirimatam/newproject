@@ -41,7 +41,7 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
    $carousel = array();
    if($num_carousel <=10)
    {
-      for ($i=0, $i<10,$i++)
+      for ($i=0; $i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
@@ -63,7 +63,7 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
    {
    while( $running < $num_carousel)  
    {
-     for ($i=0, $i<10,$i++)
+     for ($i=0;$i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
@@ -102,11 +102,11 @@ function carousel_view_more($prod_id)
    $carousel = array();
   if($num_carousel <=10)
    {
-      for ($i=0, $i<10,$i++)
+      for ($i=0; $i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
-        $datas['columns'][$i]['title'] = $list[$prod_name];
+        $datas['columns'][$i]['title'] = $pd_name;
         $datas['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
         $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
@@ -123,11 +123,11 @@ function carousel_view_more($prod_id)
    {
    while( $running < $num_carousel)  
    {
-     for ($i=0, $i<10,$i++)
+     for ($i=0; $i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
-        $datas['columns'][$i]['title'] = $list[$prod_name];
+        $datas['columns'][$i]['title'] = $pd_name;
         $datas['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
         $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
@@ -168,9 +168,8 @@ function add_favorite($prod_id,$cus_id)
 function carousel_show_favorite($cus_id)
   {
     $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
-   
     $list = pg_fetch_row($check);
-    for ($i=0, $i<10,$i++)
+    for ($i=0; $i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
@@ -255,7 +254,7 @@ function carousel_cart($cus_id,$cartp_id)
   {
     $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cus_id');
     $list = pg_fetch_row($check);
-    for ($i=0, $i<10,$i++)
+    for ($i=0; $i<10;$i++)
      {
         $datas = [];
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_id]; 
