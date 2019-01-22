@@ -7,7 +7,7 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 if ( sizeof($request_array['events']) > 0 )
 {
   $reply_message = '';
-  $reply_token = $event['replyToken'];ฟ
+  $reply_token = $event['replyToken'];
   if ( $event['type'] == 'message' ) 
   {
    if ( $event['message']['type'] == 'text' )&&($text = $event['message']['text'])){
@@ -33,7 +33,7 @@ $data = [
 function carousel_product_type($type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
-   $pd_type = pg_query("SELECT * FROM Product WHERE prod_type = $type");  
+   $pd_type = pg_query($db,"SELECT * FROM Product WHERE prod_type = $type");  
    $num_carousel = pg_num_rows($pd_type);
    $list = pg_fetch_row($pd_type);
    //$times = $num_carousel/10;
@@ -92,9 +92,9 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
   
 function carousel_view_more($prod_id) 
 {
-  $pd_name = pg_fetch_result(pg_query('SELECT prod_name FROM Product WHERE prod_id = $prod_id'));
-  $pd_des = pg_fetch_result(pg_query('SELECT prod_description FROM Product WHERE prod_id = $prod_id'));
-  $pd_sku = pg_query('SELECT sku_id FROM STOCK WHERE stock.prod_id = Product.prod_id');
+  $pd_name = pg_fetch_result(pg_query($db,'SELECT prod_name FROM Product WHERE prod_id = $prod_id'));
+  $pd_des = pg_fetch_result(pg_query($db,'SELECT prod_description FROM Product WHERE prod_id = $prod_id'));
+  $pd_sku = pg_query($db,'SELECT sku_id FROM STOCK WHERE stock.prod_id = Product.prod_id');
   $list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
   //$times = $num_carousel/10;
@@ -153,13 +153,13 @@ function carousel_view_more($prod_id)
 function add_favorite($prod_id,$cus_id)
   {
     /* check fav cannot more than 10 */
-    $check = pg_query('SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
+    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
     //end of function
     else{
     $fave_id++;
-    pg_query('INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
     }
   }  
 
@@ -167,7 +167,7 @@ function add_favorite($prod_id,$cus_id)
   
 function carousel_show_favorite($cus_id)
   {
-    $check = pg_query('SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
+    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
    
     $list = pg_fetch_row($check);
     for ($i=0, $i<10,$i++)
@@ -195,13 +195,85 @@ function carousel_show_favorite($cus_id)
     pg_query('DELETE FROM Favorite WHERE fav_id = $fav_id');
   }
   
-  function check_status($cus_id)
+  function button_order_status($cus_id)
   {
+    $data = [];
+    $data['type'] = 'template';
+    $data['altText'] = 'this is a buttons template';
+    $data['template']['type'] = 'buttons';
+    $data['template']['action'][0]['type'] = 'message';
+    $data['template']['action'][0]['label'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['action'][0]['text'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['action'][1]['type'] = 'message';
+    $data['template']['action'][1]['label'] = 'แจ้งโอนเงิน';
+    $data['template']['action'][1]['text'] = 'แจ้งโอนเงิน';
+    $data['template']['action'][2]['type'] = 'message';
+    $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
     
   }
-    
-    
-    
+
+  
+
+  
+  
+ function create_cart($cus_id)
+  {
+    //check จ่ายตังก่อน
+    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+//if message['text'] == 'Cart'.$sku_id
+//ยังแก้ไม่เสร็จ  
+function add_cart($sku_id,$cus_id)
+  {
+    /* check cart cannot more than 10 */
+    $check = pg_query($db,'SELECT * FROM Cart WHERE Favorite.cus_id = Customer.cus_id');
+    $count = pg_num_rows($check);
+    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
+    //end of function
+    else{
+    $fave_id++;
+    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+    }
+  }    
+  
+//ยังแก้ไม่เสร็จ  
+function carousel_cart($cus_id)
+  {
+    $check = pg_query($db,'SELECT * FROM Cart WHERE Favorite.cus_id = Customer.cus_id');
+   
+    $list = pg_fetch_row($check);
+    for ($i=0, $i<10,$i++)
+     {
+        $datas = [];
+        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_id]; 
+        $datas['columns'][$i]['title'] = $list[$prod_name];
+        $datas['columns'][$i]['text'] = $list[$i][$prod_description];
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['columns'][$i]['actions'][0]['data'] =  'view'.$list[$i][$prod_id];
+        $datas['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
+        $datas['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$fav_id];
+     }
+    return $datas;
+  }
     
     
     
