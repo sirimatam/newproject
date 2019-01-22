@@ -26,6 +26,7 @@ if ( sizeof($request_array['events']) > 0 )
 	if( pg_fetch_result($findid) == 0)
 	{
 		pg_query($db,"INSERT INTO Customer (cus_id) VALUES ('$userid')");
+		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES '$userid'")
 	}
 	
 	if ($text=='ดู และ สั่งซื้อสินค้า')
