@@ -159,7 +159,7 @@ function add_favorite($prod_id,$cus_id)
     //end of function
     else{
     $fave_id++;
-    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id));
     }
   }  
 
@@ -173,8 +173,8 @@ function carousel_show_favorite($cus_id)
     for ($i=0, $i<10,$i++)
      {
         $datas = [];
-        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_id]; 
-        $datas['columns'][$i]['title'] = $list[$prod_name];
+        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
+        $datas['columns'][$i]['title'] = $list[$prod_name]; //check prod_name ว่าต้องมี [$i] มั้ย
         $datas['columns'][$i]['text'] = $list[$i][$prod_description];
         $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
@@ -220,7 +220,7 @@ function carousel_show_favorite($cus_id)
   
  function create_cart($cus_id)
   {
-    //check จ่ายตังก่อน
+    //check จ่ายตังก่อน ++ ยังแก้ไม่เสด
     pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
   }
   
@@ -238,24 +238,22 @@ function carousel_show_favorite($cus_id)
   
 //if message['text'] == 'Cart'.$sku_id
 //ยังแก้ไม่เสร็จ  
-function add_cart($sku_id,$cus_id)
+function add_cart($sku_id,$cus_id,$cartp_id)
   {
     /* check cart cannot more than 10 */
-    $check = pg_query($db,'SELECT * FROM Cart WHERE Favorite.cus_id = Customer.cus_id');
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cartp_id);
     $count = pg_num_rows($check);
-    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
+    if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น'}  
     //end of function
     else{
-    $fave_id++;
-    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+    pg_query($db,'INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,'1')); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
   
 //ยังแก้ไม่เสร็จ  
-function carousel_cart($cus_id)
+function carousel_cart($cus_id,$cartp_id)
   {
-    $check = pg_query($db,'SELECT * FROM Cart WHERE Favorite.cus_id = Customer.cus_id');
-   
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cus_id');
     $list = pg_fetch_row($check);
     for ($i=0, $i<10,$i++)
      {
