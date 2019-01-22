@@ -47,12 +47,14 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
         $datas['columns'][$i]['title'] = $list[$i][$prod_name];
         $datas['columns'][$i]['text'] = $list[$i][$prod_description];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['columns'][$i]['actions'][0]['text'] = $list[$i][$prod_id];
-        $datas['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['columns'][$i]['actions'][0]['data'] =  'view'.$list[$i][$prod_id];
+        $datas['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'Favorite'.$list[$i][$prod_id];   
+        $datas['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas['columns'][$i]['actions'][1]['data'] = 'Favorite'.$list[$i][$prod_id];
      }
      $carousel[0] = $datas;
      return $carousel;
@@ -67,12 +69,14 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
         $datas['columns'][$i]['title'] = $list[$i][$prod_name];
         $datas['columns'][$i]['text'] = $list[$i][$prod_description];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['columns'][$i]['actions'][0]['text'] = $list[$i][$prod_id];
-        $datas['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['columns'][$i]['actions'][0]['data'] =  'view'.$list[$i][$prod_id];
+        $datas['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'Favorite'.$list[$i][$prod_id];  
+        $datas['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas['columns'][$i]['actions'][1]['data'] = 'Favorite'.$list[$i][$prod_id];
         $running++;
      }
      $carousel[ceil($running-10)/10] = $datas;
@@ -104,9 +108,10 @@ function carousel_view_more($prod_id)
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
         $datas['columns'][$i]['title'] = $list[$prod_name];
         $datas['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas['columns'][$i]['actions'][0]['text'] = 'Cart'.$list[$i][$sku_id];
+        $datas['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$list[$i][$sku_color].' ลงตะกร้าเรียบร้อยแล้ว';
+        $datas['columns'][$i]['actions'][0]['data'] = 'Cart'.$list[$i][$sku_id];
         $datas['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
         $datas['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';  
@@ -124,9 +129,10 @@ function carousel_view_more($prod_id)
         $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
         $datas['columns'][$i]['title'] = $list[$prod_name];
         $datas['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas['columns'][$i]['actions'][0]['text'] = 'Cart'.$list[$i][$sku_id];
+        $datas['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$list[$i][$sku_color].' ลงตะกร้าเรียบร้อยแล้ว';
+        $datas['columns'][$i]['actions'][0]['data'] = 'Cart'.$list[$i][$sku_id];
         $datas['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
         $datas['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';    
@@ -156,6 +162,9 @@ function add_favorite($prod_id,$cus_id)
     pg_query('INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
     }
   }  
+
+  
+  
 function carousel_show_favorite($cus_id)
   {
     $check = pg_query('SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
@@ -164,24 +173,31 @@ function carousel_show_favorite($cus_id)
     for ($i=0, $i<10,$i++)
      {
         $datas = [];
-        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
+        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_id]; 
         $datas['columns'][$i]['title'] = $list[$prod_name];
-        $datas['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
-        $datas['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas['columns'][$i]['actions'][0]['text'] = 'Cart'.$list[$i][$sku_id];
-        $datas['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas['columns'][$i]['text'] = $list[$i][$prod_description];
+        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['columns'][$i]['actions'][0]['data'] =  'view'.$list[$i][$prod_id];
+        $datas['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
         $datas['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$fav_id];
      }
     return $datas;
   }
 
   
-  /* if message['text'] == delete.$fav_id.'ออกจาก Favorite เรียบร้อย' */
+  /* if message['text'] == delete.$fav_id' */
   function delete_favorite($fav_id)
   {
     pg_query('DELETE FROM Favorite WHERE fav_id = $fav_id');
+  }
+  
+  function check_status($cus_id)
+  {
+    
   }
     
     
