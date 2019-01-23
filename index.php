@@ -113,7 +113,7 @@ $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
-   }
+   
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
