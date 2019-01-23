@@ -265,9 +265,9 @@ function carousel_cart($cus_id,$cartp_id)
         $datas['columns'][$i]['actions'][0]['text'] = 'view more';
         $datas['columns'][$i]['actions'][0]['data'] =  'view'.$list[$i][$prod_id];
         $datas['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
-        $datas['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$fav_id];
+        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก ตะกร้า';
+        $datas['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$prod_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$prod_id];
      }
     return $datas;
   }
