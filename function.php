@@ -252,7 +252,7 @@ function add_cart($sku_id,$cus_id,$cartp_id)
 function carousel_cart($cus_id,$cartp_id)
   {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cart_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
-    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0' AND Cart_product.cartp_id = Createcart.cart');
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = $cartid');
     $list = pg_fetch_row($check);
     for ($i=0; $i<10;$i++)
      {
