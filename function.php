@@ -404,7 +404,7 @@ function carousel_cart($cus_id,$cartp_id)
     $confirm['template']['action'][0]['text'] = 'Order confirmed';
     $confirm['template']['action'][1]['type'] = 'message';
     $confirm['template']['action'][1]['label'] = 'ล้างตะกร้า';
-    $confirm['template']['action'][1]['text'] = 'Clear Cart';
+    $confirm['template']['action'][1]['text'] = 'Clear Cart Requested';
     $confirm['text'] = 'ขณะนี้มีสินค้าในตะกร้าทั้งหมด '.$cartitems_amount.' ชิ้น';
     return [$datas,$confirm];
   }
@@ -418,9 +418,34 @@ function create_order($cart_prod_id)
 {
 	
 }
+	
+
+	
+	
+	
+	
+function confirm_clear_cart()
+{
+    $confirm = [];
+    $confirm['type'] = 'template';
+    $confirm['altText'] = 'this is a confirm template';
+    $confirm['template']['type'] = 'confirm';
+    $confirm['template']['action'][0]['type'] = 'message';
+    $confirm['template']['action'][0]['label'] = 'ใช่';
+    $confirm['template']['action'][0]['text'] = 'Clear Cart Confirmed';
+    $confirm['template']['action'][1]['type'] = 'message';
+    $confirm['template']['action'][1]['label'] = 'ไม่';
+    $confirm['template']['action'][1]['text'] = 'ไม่';
+    $confirm['text'] = 'ล้างตะกร้าทั้งหมด?';
+    return $confirm;
+	
+}
   
-  
-  
+  /* if text == 'Clear Cart Confirmed' */
+function clear_cart($cartp_id)
+	{
+		pg_query($db,'DELETE FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cartp_id');
+	}
   
   
   
