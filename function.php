@@ -343,8 +343,8 @@ function add_cart($sku_id,$cus_id,$cartp_id)
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($cus_id,$cartp_id)
   {
-    $cartid
-    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Createcart.cus_id = $cus_id AND ');
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cart_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = $cartid');
     $list = pg_fetch_row($check);
     for ($i=0; $i<10;$i++)
      {
@@ -357,9 +357,10 @@ function carousel_cart($cus_id,$cartp_id)
         $datas['columns'][$i]['actions'][0]['text'] = 'view more';
         $datas['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
         $datas['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'delete '.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
-        $datas['columns'][$i]['actions'][1]['data'] =  'Delete '.$list[$i][$fav_id];
+        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก ตะกร้า';
+        $datas['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$prod_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$prod_id];
+
      }
     return $datas;
   }
