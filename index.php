@@ -31,12 +31,6 @@ if ( sizeof($request_array['events']) > 0 )
 	
 	if ($text=='ดู และ สั่งซื้อสินค้า')
 	{
-		$reply_message = "1";
-	}
-	
-	elseif ($text=='สินค้าโปรโมชั่น')
-	{
-		//$reply_message = "2";
 		$data = [
 	'replyToken' => $reply_token,
 	'messages' => [
@@ -112,8 +106,11 @@ file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
 $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-    
-   
+	}
+	
+	elseif ($text=='สินค้าโปรโมชั่น')
+	{
+		
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
@@ -121,7 +118,47 @@ file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 	}
 	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
 	{
-		$reply_message = "4";
+		//$reply_message = "4";
+		$data = [
+	'replyToken' => $reply_token,
+	'messages' => [
+[
+  "type" => "flex",
+  "altText" => "Flex Message",
+  "contents" => [
+    "type" => "bubble",
+    "direction" => "ltr",
+    "body" => [
+      "type" => "box",
+      "layout" => "vertical",
+      "contents" => [
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "ดูที่อยู่จัดส่ง",
+            "text" => "ดูที่อยู่จัดส่ง"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "แก้ไขที่อยู่",
+            "text" => "แก้ไขที่อยู่"
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+]];
+$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
+$send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
+echo "Result: ".$send_result."\r\n";
+file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+		
 	}
        elseif ($text=='wishlist')
 	{
