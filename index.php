@@ -38,7 +38,8 @@ if ( sizeof($request_array['events']) > 0 )
 	}	
 	elseif ($text=='สินค้าโปรโมชั่น')
 	{
-		$reply_message = "2";
+		$post = show_promotion_product();
+		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
