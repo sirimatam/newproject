@@ -130,7 +130,7 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'view '.$list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
@@ -155,7 +155,7 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'view '.$list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
@@ -261,17 +261,20 @@ function add_favorite($prod_id,$cus_id)
     for ($i=0; $i<10;$i++)
      {
         $datas = [];
-        $datas['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
-        $datas['columns'][$i]['title'] = $list[$prod_name]; //check prod_name ว่าต้องมี [$i] มั้ย
-        $datas['columns'][$i]['text'] = $list[$i][$prod_description];
-        $datas['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['columns'][$i]['actions'][0]['data'] =  'view '.$list[$i][$prod_id];
-        $datas['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'delete '.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
-        $datas['columns'][$i]['actions'][1]['data'] =  'delete '.$list[$i][$fav_id];
+        $datas['type'] = 'template';
+        $datas['altText'] = 'this is a carousel template';
+        $datas['template']['type'] = 'carousel';    
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
+        $datas['template']['columns'][$i]['title'] = $list[$prod_name]; //check prod_name ว่าต้องมี [$i] มั้ย
+        $datas['template']['columns'][$i]['text'] = $list[$i][$prod_description];
+        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete '.$list[$i][$fav_id];
      }
     return $datas;
   }
@@ -352,11 +355,11 @@ function carousel_cart($cus_id,$cartp_id)
         $datas['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['columns'][$i]['actions'][0]['data'] =  'view '.$list[$i][$prod_id];
+        $datas['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
         $datas['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
         $datas['columns'][$i]['actions'][1]['text'] = 'delete '.$list[$i][$fav_id].'ออกจาก Favorite เรียบร้อย';  
-        $datas['columns'][$i]['actions'][1]['data'] =  'delete '.$list[$i][$fav_id];
+        $datas['columns'][$i]['actions'][1]['data'] =  'Delete '.$list[$i][$fav_id];
      }
     return $datas;
   }
