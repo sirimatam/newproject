@@ -248,6 +248,7 @@ function add_cart($sku_id,$cus_id,$cartp_id)
     }
   }    
   
+  
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($cus_id,$cartp_id)
   {
@@ -270,19 +271,8 @@ function carousel_cart($cus_id,$cartp_id)
      }
     return $datas;
   }
-    
-    
-    
-    
-    
-    
-    
-    
-  }
   
-  
-  
-  
+
   
   
   
