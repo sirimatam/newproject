@@ -47,7 +47,7 @@ function customer_address($cusid)
 	pg_query($db,"UPDATE Customer SET cus_name = 'C001', cus_address = '', cus_tel = '' WHERE cus_id = $cusid ");
 }
 	   
-?>
+
   
   
   
@@ -364,7 +364,7 @@ function add_cart($sku_id,$cus_id,$cartp_id)
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    pg_query($db,'INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,'1')'); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    pg_query($db,"INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,'1')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
   
