@@ -374,6 +374,7 @@ function carousel_cart($cus_id,$cartp_id)
     $cartid = pg_fetch_result(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"));
     $pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id'));
     $cartitems = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = $cartid');
+    $cartitems_amount = pg_num_rows($cartitems);	  
     $list = pg_fetch_row($cartitems);
     for ($i=0; $i<10;$i++)
      {
@@ -390,11 +391,22 @@ function carousel_cart($cus_id,$cartp_id)
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก ตะกร้า';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$prod_id].'ออกจาก Favorite เรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$prod_id].'ออกจากตะกร้าเรียบร้อย';  
         $datas['template']['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$prod_id];
 
      }
-    return $datas;
+    $confirm = [];
+    $confirm['type'] = 'template';
+    $confirm['altText'] = 'this is a confirm template';
+    $confirm['template']['type'] = 'confirm';
+    $confirm['template']['action'][0]['type'] = 'message';
+    $confirm['template']['action'][0]['label'] = 'สั่งซื้อทันที';
+    $confirm['template']['action'][0]['text'] = 'Order confirmed';
+    $confirm['template']['action'][1]['type'] = 'message';
+    $confirm['template']['action'][1]['label'] = 'ล้างตะกร้า';
+    $confirm['template']['action'][1]['text'] = 'Clear Cart';
+    $confirm['text'] = 'ขณะนี้มีสินค้าในตะกร้าทั้งหมด '.$cartitems_amount.' ชิ้น';
+    return [$datas,$confirm];
   }
     
     
@@ -402,10 +414,10 @@ function carousel_cart($cus_id,$cartp_id)
     
     
     
-    
-    
-  }
-  
+function create_order($cart_prod_id)
+{
+	
+}
   
   
   
