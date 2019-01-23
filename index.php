@@ -28,11 +28,12 @@ if ( sizeof($request_array['events']) > 0 )
 	if( pg_fetch_result($findid) == 0)
 	{
 		pg_query($db,"INSERT INTO Customer (cus_id) VALUES ('$userid')");
-		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES '$userid'")
+		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES '$userid'");
 	}
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
+    
 		$post = button_all_type();
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}	
@@ -40,6 +41,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$post = show_promotion_product();
 		send_reply_message($API_URL, $POST_HEADER, $post);
+
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
@@ -47,13 +49,75 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
 	{
-		$reply_message = "4";
+		//$reply_message = "4";
+		$data = [
+	'replyToken' => $reply_token,
+	'messages' => [
+[
+  "type" => "flex",
+  "altText" => "Flex Message",
+  "contents" => [
+    "type" => "bubble",
+    "direction" => "ltr",
+    "body" => [
+      "type" => "box",
+      "layout" => "vertical",
+      "contents" => [
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "ดูที่อยู่จัดส่ง",
+            "text" => "ดูที่อยู่จัดส่ง"
+          ]
+        ],
+        [
+          "type" => "button",
+          "action" => [
+            "type" => "message",
+            "label" => "แก้ไขที่อยู่",
+            "text" => "แก้ไขที่อยู่"
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+]];
+$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+send_reply_message($API_URL, $POST_HEADER, $post_body);
+
+		
 	}
+	   
+       elseif ($text=='ดูที่อยู่จัดส่ง')
+	{
+		$address = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
+	       $show_address = pg_fetch_result($address);
+	       $data = [
+    'replyToken' => $reply_token,
+    'messages' => [['type' => 'text', 'text' => $show_address]]
+   ];
+	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
+	}
+       elseif ($text=='แก้ไขที่อยู่')
+	{
+		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid ");
+		$data = [
+    'replyToken' => $reply_token,
+    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
+   ];
+	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
+       }  
+       
        elseif ($text=='สินค้าที่ชอบ')
 	{
 		$post = carousel_show_favorite($userid);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
+	   
         elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
 	{
 		$reply_message = "6";
@@ -87,6 +151,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
+
 /*	elseif (substr($text,0,6) =='addcus')
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
@@ -116,10 +181,8 @@ if ( sizeof($request_array['events']) > 0 )
 
    	
 $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
-$send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
-echo "Result: ".$send_result."\r\n";
-file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+send_reply_message($API_URL, $POST_HEADER, $post_body);
+
     
   
 }
