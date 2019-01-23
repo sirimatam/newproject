@@ -24,15 +24,18 @@ function show_promotion_product()
       for ($i=0, $i<=$promo_num,$i++)
      {
         $datas = [];
-        $datas['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][$prod_img]; 
-        $datas['columns'][$i]['title'] = $promo_list[$i][$prod_name];
-        $datas['columns'][$i]['text'] = $promo_list[$i][$prod_description];
-        $datas['columns'][$i]['actions'][0]['type'] = 'message';
-        $datas['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['columns'][$i]['actions'][0]['text'] = $list[$i][$prod_id];
-        $datas['columns'][$i]['actions'][1]['type'] = 'message';
-        $datas['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['columns'][$i]['actions'][1]['text'] = 'Favorite'.$promo_list[$i][$prod_id];   
+	$datas['type'] = 'template';
+        $datas['altText'] = 'this is a carousel template';
+        $datas['template']['type'] = 'carousel';
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][$prod_img]; 
+        $datas['template']['columns'][$i]['title'] = $promo_list[$i][$prod_name];
+        $datas['template']['columns'][$i]['text'] = $promo_list[$i][$prod_description];
+        $datas['template']['columns'][$i]['actions'][0]['type'] = 'message';
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = $list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'Favorite'.$promo_list[$i][$prod_id];   
      }
      $carousel[$i] = $datas;
      return $carousel;
