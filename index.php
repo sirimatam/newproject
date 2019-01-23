@@ -119,7 +119,7 @@ file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
 	{
 		//$reply_message = "4";
-		$data = [
+		/*$data = [
 	'replyToken' => $reply_token,
 	'messages' => [
 [
@@ -158,7 +158,7 @@ file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
 $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		
+		*/
 	}
        elseif ($text=='wishlist')
 	{
