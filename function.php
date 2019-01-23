@@ -239,20 +239,20 @@ function add_favorite($prod_id,$cus_id)
 function add_cart($sku_id,$cus_id,$cartp_id)
   {
     /* check cart cannot more than 10 */
-    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cartp_id);
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cartp_id');
     $count = pg_num_rows($check);
-    if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น'}  
+    if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    pg_query($db,'INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,'1')); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    pg_query($db,'INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,'1')'); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
-  
   
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($cus_id,$cartp_id)
   {
-    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = Createcart.cus_id');
+    $cartid
+    $check = pg_query($db,'SELECT * FROM Cart_product WHERE Createcart.cus_id = $cus_id AND ');
     $list = pg_fetch_row($check);
     for ($i=0; $i<10;$i++)
      {
@@ -271,8 +271,19 @@ function carousel_cart($cus_id,$cartp_id)
      }
     return $datas;
   }
+    
+    
+    
+    
+    
+    
+    
+    
+  }
   
-
+  
+  
+  
   
   
   
