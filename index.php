@@ -167,12 +167,19 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
     'replyToken' => $reply_token,
     'messages' => [['type' => 'text', 'text' => $show_address]]
    ];
+	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
 		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid ");
-	}
-	   
+		$data = [
+    'replyToken' => $reply_token,
+    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
+   ];
+	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
+       }  
        elseif ($text=='wishlist')
 	{
 		$reply_message = "5";
