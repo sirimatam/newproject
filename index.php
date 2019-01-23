@@ -48,9 +48,10 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$reply_message = "4";
 	}
-       elseif ($text=='wishlist')
+       elseif ($text=='สินค้าที่ชอบ')
 	{
-		$reply_message = "5";
+		$post = carousel_show_favorite($userid);
+	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
         elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
 	{
@@ -81,7 +82,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 			if(explode(" ",$text)[0]) == 'Favorite')
 			{
-				
+			  add_favorite($prod_id,$userid);	
 			}
 		}
 	}
