@@ -1,5 +1,6 @@
 <?php
 require_once('connection.php');
+require 'function.php';
 //require 'showproduct.php';
 
 echo $db;
@@ -21,6 +22,7 @@ if ( sizeof($request_array['events']) > 0 )
    if( $event['message']['type'] == 'text' )
    {
         $text = $event['message']['text'];
+	$   
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = '$userid'");
 	if( pg_fetch_result($findid) == 0)
@@ -29,11 +31,11 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES '$userid'")
 	}
 	
-	if ($text=='ดู และ สั่งซื้อสินค้า')
+	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
-		$reply_message = "1";
-	}
-	
+		$post = button_all_type();
+		send_reply_message($API_URL, $POST_HEADER, $post);
+	}	
 	elseif ($text=='สินค้าโปรโมชั่น')
 	{
 		$reply_message = "2";
@@ -53,6 +55,35 @@ if ( sizeof($request_array['events']) > 0 )
         elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
 	{
 		$reply_message = "6";
+	}
+	$types =  pg_fetch_result(pg_query($db,'SELECT prod_type FROM Product GROUP BY prod_type '));
+	foreach ($types as $type)
+	{
+		if ($text == $type)
+		{
+			$data = carousel_product_type($text);
+			$size = sizeof($data);
+			for($i=0;$i<$size;$i++)
+			{
+				send_reply_message($API_URL, $POST_HEADER, $data[$i]);	
+			}
+		}
+	}
+	$prod_ids = pg_fetch_result(pq_query($db,'SELECT prod_id FROM Product'));
+	foreach ($prod_ids as $prod_id)
+	{
+		if(explode(" ",$text)[1] == $prod_id)
+		{
+			if(explode(" ",$text)[0]) == 'View')
+			{
+			  $data = carousel_view_more($prod_id);
+			  send_reply_message($API_URL, $POST_HEADER, $data);
+			}
+			if(explode(" ",$text)[0]) == 'Favorite')
+			{
+				
+			}
+		}
 	}
 /*	elseif (substr($text,0,6) =='addcus')
 	{
@@ -80,99 +111,24 @@ if ( sizeof($request_array['events']) > 0 )
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
 
 
- if( strlen($reply_message) > 0 )
-  {
-   if($reply_message == '1')
-   {
-   	$data = [
-	'replyToken' => $reply_token,
-	'messages' => [
-[
-  "type" => "flex",
-  "altText" => "Flex Message",
-  "contents" => [
-    "type" => "bubble",
-    "direction" => "ltr",
-    "header" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "text",
-          "text" => "เลือกประเภทสินค้า",
-          "align" => "center",
-          "weight" => "bold"
-        ]
-      ]
-    ],
-    "body" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "สายเดี่ยว/แขนกุด",
-            "text" => "เสื้อสายเดี่ยว/แขนกุด"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เสื้อมีแขน",
-            "text" => "เสื้อมีแขน"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เดรส",
-            "text" => "เดรส"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขาสั้น",
-            "text" => "กางเกงขาสั้น"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขายาว",
-            "text" => "กางเกงขายาว"
-          ]
-        ]
-      ]
-    ]
-  ]
-]
-]];
+
+   	
 $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
 $send_result = send_reply_message($API_URL, $POST_HEADER, $post_body);
 echo "Result: ".$send_result."\r\n";
 file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
     
-   }
-
-
-}
+  
 }
 } 
-function send_reply_message($url, $post_header, $post_body)
+function send_reply_message($url, $post_header, $post)
 {
  $ch = curl_init($url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
- curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
+ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post, JSON_UNESCAPED_UNICODE));
  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
  $result = curl_exec($ch);
  curl_close($ch);
