@@ -159,15 +159,15 @@ function add_favorite($prod_id,$cus_id)
     //end of function
     else{
     $fave_id++;
-    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id));
+    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
     }
   }  
 
+
   
-  
-function carousel_show_favorite($cus_id)
+  function carousel_show_favorite($cus_id)
   {
-    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
+    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id'); 
     $list = pg_fetch_row($check);
     for ($i=0; $i<10;$i++)
      {
@@ -186,7 +186,6 @@ function carousel_show_favorite($cus_id)
      }
     return $datas;
   }
-
   
   /* if message['text'] == delete.$fav_id' */
   function delete_favorite($fav_id)
