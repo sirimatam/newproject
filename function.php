@@ -371,32 +371,41 @@ function add_to_cart($sku_id,$cus_id,$cartp_id)
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($cus_id,$cartp_id)
   {
-    $cartid = pg_fetch_result(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"));
-    $pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id'));
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
+    $skuid = pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid");
+    $skuarray = array();
+    $skurow = pg_fetch_row(pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid"));
+    while($aaa = $skurow)
+    {
+	    $skuarray += $aaa;
+    }
+	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
+    $namearray = array();
+    for($i=0; $i<=pg_num_rows($skuid);$i++)
+    {
+	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.sku_id = $skuarray[$i] AND Stock.prod_id = Product.prod_id"));
+	 $namearray += array($x[0],$x[1],$x[2]) ;
+    }
+    //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
+    
     $cartitems = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = $cartid');
     $list = pg_fetch_row($cartitems);
     for ($i=0; $i<10;$i++)
-     {
+     {	
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';        
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_id]; 
-        $datas['template']['columns'][$i]['title'] = $list[$prod_name];
-        $datas['template']['columns'][$i]['text'] = $list[$i][$prod_description];
+        $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก ตะกร้า';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'delete'.$list[$i][$prod_id].'ออกจาก Favorite เรียบร้อย';  
-        $datas['template']['columns'][$i]['actions'][1]['data'] =  'delete'.$list[$i][$prod_id];
-
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$namearray[$i][0].'ออกจาก Favorite เรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete'.$namearray[$i][0];
      }
     return $datas;
   }
-    
     
     
     
