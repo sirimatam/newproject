@@ -53,10 +53,7 @@ function customer_address($cusid)
   
 function button_all_type();
   {
-    $data = [
-	'replyToken' => $reply_token,
-	'messages' => [
-[
+    [
   "type" => "flex",
   "altText" => "Flex Message",
   "contents" => [
@@ -121,18 +118,29 @@ function button_all_type();
       ]
     ]
   ]
-]
-]];
+];
    return $data;
   }  
-
-function bubble_all_product{
-$data = [
- 'replyToken' => $reply_token,
- 'messages' =>
-
+function show_address($userid)
+{
+	
+	{
+	  "type": "template",
+	  "altText": "this is a buttons template",
+	  "template": {
+	    "type": "buttons",
+	    "actions": [
+	      {
+		"type": "message",
+		"label": "แก้ไขที่อยู่",
+		"text": "แก้ไขที่อยู่"
+	      }
+	    ],
+	    "title": "ที่อยู่จัดส่งปัจจุบัน",
+	    "text": "cus_description"
+	  }
+	};
 }
-
 /* ข้อ 2 */
 
 function carousel_product_type($type) // $type = Prod_type FROM Product
@@ -329,7 +337,8 @@ function add_favorite($prod_id,$cus_id)
     $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
     $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
     $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
-    
+	  
+    return $data;
   }
 
   
@@ -355,7 +364,6 @@ function add_favorite($prod_id,$cus_id)
   
   
 //if message['text'] == 'Cart'.$sku_id
-//ยังแก้ไม่เสร็จ  
 function add_to_cart($sku_id,$cus_id,$cartp_id)
   {
     /* check cart cannot more than 10 */
