@@ -416,6 +416,68 @@ function carousel_cart($cus_id,$cartp_id)
   }
     
     
+
+function flex_order($order_id)
+{
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'bubble';
+	$data['contents']['header']['type'] = 'box';
+	$data['contents']['header']['layout'] = 'vertical';
+	$data['contents']['header']['flex'] = 0;
+	$data['contents']['header']['contents']['type'] = 'text';
+	$data['contents']['header']['contents']['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
+	$data['contents']['header']['contents']['size'] = 'xl';
+	$data['contents']['header']['contents']['align'] = 'center';
+	$data['contents']['header']['contents']['weight'] = 'bold';
+	$data['contents']['body']['type'] = 'box';
+	$data['contents']['body']['layout'] = 'vertical';
+	$data['contents']['body']['spacing'] = 'md';
+	
+	$order_array = pg_fetch_row($db,"SELECT * From Order WHERE order_id = $order_id");
+	$cartp_id = $order_array[1];
+	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_id) From Cart_product WHERE Cart_product.cartp_id = $cartp_id");
+	$sku_tuple = array();
+	for($i=0;$i<pg_num_rows($cartp_array);$i++)
+	{
+		$sku_tuple[$i] = ($cartp_array[0] => $cartp_array[1]);
+	}
+	$pd_id = array();
+	foreach( $sku_tuple as $sku_id => $order_qty)
+	{
+		$pd_id += pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE Stock.sku_id = $sku_id"))[0];
+	}
+	$running = 0;
+	$pd = [];
+	foreach ( $pd_id as $pdt_id )
+	{
+		$pd[$running] = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_pro_price) FROM Product WHERE Product.prod_id = $pdt_id"))[0];
+		$running++;
+	}
+	for($i=0;$i<sizeof($pd);$i++)
+	{
+		$data['contents']['header']['contents'][$i]['type'] = 'box';
+		$data['contents']['header']['contents'][$i]['layout'] = 'baseline';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['type'] = 'text';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['text'] = $pd[$i][1]; //prod_name
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['flex'] = 0;
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['weight'] = 'regular';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][1]['type'] = 'text';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][1]['text'] = $pd[$i][2]; //prod_name
+		$data['contents']['header']['contents'][$i]['layout']['contents'][1]['flex'] = 0;
+		$data['contents']['header']['contents'][$i]['layout']['contents'][1]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i]['layout']['contents'][1]['weight'] = 'regular';
+		
+	}
+	
+	
+
+	
+}
+
+
     
     
     
