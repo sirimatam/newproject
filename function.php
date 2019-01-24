@@ -444,9 +444,11 @@ function flex_order($order_id)
 		$sku_tuple[$i] = ($cartp_array[0] => $cartp_array[1]);
 	}
 	$pd_id = array();
+	$run =0;
 	foreach( $sku_tuple as $sku_id => $order_qty)
 	{
-		$pd_id += pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE Stock.sku_id = $sku_id"))[0];
+		$pd_id[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE Stock.sku_id = $sku_id"))[0];
+		$run++;
 	}
 	$running = 0;
 	$pd = [];
