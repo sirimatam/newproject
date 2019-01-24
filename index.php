@@ -23,11 +23,11 @@ if ( sizeof($request_array['events']) > 0 )
    {
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = '$userid'");
-	if( pg_fetch_result($findid) == 0)
+	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = $userid");
+	if( sizeof(pg_fetch_row($findid)[0] == 0)
 	{
-		pg_query($db,"INSERT INTO Customer (cus_id) VALUES ('$userid')");
-		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES '$userid'");
+		pg_query($db,"INSERT INTO Customer (cus_id) VALUES ($userid)");
+		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES $userid");
 	}
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
@@ -57,31 +57,38 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 	   
        elseif ($text=='ดูที่อยู่จัดส่ง')
 	{
- 	       $post = show_address($userid);
-	       send_reply_message($API_URL, $POST_HEADER, format_message($post));
+		$address = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
+	       $show_address = pg_fetch_row($address)[0];
+	       $data = [
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => $show_address]]
+		   ];
+	       
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
 		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid ");
-		$answer = [
+		$data = [
 		    'replyToken' => $reply_token,
 		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
 		   ];
-	       send_reply_message($API_URL, $POST_HEADER, $answer);
+	       send_reply_message($API_URL, $POST_HEADER, $post_body);
        }  
        
        elseif ($text=='สินค้าที่ชอบ')
 	{
 		$post = carousel_show_favorite($userid);
-	        send_reply_message($API_URL, $POST_HEADER, format_message($post));
+	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
 	   
         elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
 	{
 		$reply_message = "6";
 	}
-	$types =  pg_fetch_result(pg_query($db,'SELECT prod_type FROM Product GROUP BY prod_type '));
-	foreach ($types as $type)
+	$types =  pg_query($db,'SELECT prod_type FROM Product GROUP BY prod_type ');
+	
+	while($type = pg_fetch_row($types))
 	{
 		if ($text == $type)
 		{
@@ -89,9 +96,9 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 			$size = sizeof($data);
 			for($i=0;$i<$size;$i++)
 			{
-				send_reply_message($API_URL, $POST_HEADER, format_message($data[$i]));	
+				send_reply_message($API_URL, $POST_HEADER, $data[$i]);	
 			}
-		}
+		}	
 	}
 	
 
@@ -120,15 +127,15 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
   elseif($event['type'] == 'postback')
   {
 	$info = $event['postback']['data'];
-	$prod_ids = pg_fetch_result(pq_query($db,'SELECT prod_id FROM Product'));
-	foreach ($prod_ids as $prod_id)
+	$prod_ids = pg_query($db,'SELECT prod_id FROM Product');
+	while($prod_id = pg_fetch_row($prod_ids))
 	{
 		if(explode(" ",$info)[1] == $prod_id)
 		{
 			if(explode(" ",$info)[0]) == 'View')
 			{
 			  $data = carousel_view_more($prod_id);
-			  send_reply_message($API_URL, $POST_HEADER, format_message($data));
+			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$text)[0]) == 'Favorite')
 			{
