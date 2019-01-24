@@ -9,7 +9,7 @@ $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'lBX5YbEdwZ498JOXn+dInNH+7+WS2y7zSGQx77c8nmWwV+jhqYTJHzKm6i9yxK+zU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0ypZNc0WdUfeobmpMs5EhxVg5/s6SdVQ42+Dy4OE4+WJOAdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 $request = file_get_contents('php://input');   // Get request content
-$request_array = json_decode($request, true);   // Decode JSON to Array
+$request_array = json_decode($requeostgres cannot delst, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 )
 {
@@ -21,8 +21,7 @@ if ( sizeof($request_array['events']) > 0 )
   {
    if( $event['message']['type'] == 'text' )
    {
-        $text = $event['message']['text'];
-	$   
+        $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = '$userid'");
 	if( pg_fetch_result($findid) == 0)
@@ -135,22 +134,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 			}
 		}
 	}
-	$prod_ids = pg_fetch_result(pq_query($db,'SELECT prod_id FROM Product'));
-	foreach ($prod_ids as $prod_id)
-	{
-		if(explode(" ",$text)[1] == $prod_id)
-		{
-			if(explode(" ",$text)[0]) == 'View')
-			{
-			  $data = carousel_view_more($prod_id);
-			  send_reply_message($API_URL, $POST_HEADER, $data);
-			}
-			if(explode(" ",$text)[0]) == 'Favorite')
-			{
-			  add_favorite($prod_id,$userid);	
-			}
-		}
-	}
+	
 
 /*	elseif (substr($text,0,6) =='addcus')
 	{
@@ -173,6 +157,26 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
    else
     $reply_message = 'ระบบได้รับ '.ucfirst($event['message']['type']).' ของคุณแล้ว';
   
+  }
+  elseif($event['type'] == 'postback')
+  {
+	$info = $event['postback']['data'];
+	$prod_ids = pg_fetch_result(pq_query($db,'SELECT prod_id FROM Product'));
+	foreach ($prod_ids as $prod_id)
+	{
+		if(explode(" ",$info)[1] == $prod_id)
+		{
+			if(explode(" ",$info)[0]) == 'View')
+			{
+			  $data = carousel_view_more($prod_id);
+			  send_reply_message($API_URL, $POST_HEADER, $data);
+			}
+			if(explode(" ",$text)[0]) == 'Favorite')
+			{
+			  add_favorite($prod_id,$userid);	
+			}
+		}
+	} 
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
