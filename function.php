@@ -1,6 +1,5 @@
 <?php
 
-<?php
 	   
 function show_promotion_product() 
 { 
@@ -121,25 +120,22 @@ function button_all_type();
 ];
    return $data;
   }  
-function show_address($userid)
+function show_address($cusid)
 {
+	$query = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
+	$address = pg_fetch_row($query)[0];
 	
-	{
-	  "type": "template",
-	  "altText": "this is a buttons template",
-	  "template": {
-	    "type": "buttons",
-	    "actions": [
-	      {
-		"type": "message",
-		"label": "แก้ไขที่อยู่",
-		"text": "แก้ไขที่อยู่"
-	      }
-	    ],
-	    "title": "ที่อยู่จัดส่งปัจจุบัน",
-	    "text": "cus_description"
-	  }
-	};
+	$data = [];
+	$data['type'] = 'template';
+	$data['altText'] = 'this is a buttons template';
+	$data['template']['type'] = 'buttons';
+	$data['template']['actions']['type'] = 'message';
+	$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
+	$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
+	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
+	$data['template']['text'] = $address;
+	
+	return $data;
 }
 /* ข้อ 2 */
 
