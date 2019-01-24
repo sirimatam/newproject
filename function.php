@@ -207,9 +207,9 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
   
 function carousel_view_more($prod_id) 
 {
-  $pd_name = pg_fetch_result(pg_query($db,'SELECT prod_name FROM Product WHERE prod_id = $prod_id'));
-  $pd_des = pg_fetch_result(pg_query($db,'SELECT prod_description FROM Product WHERE prod_id = $prod_id'));
-  $pd_sku = pg_query($db,'SELECT sku_id FROM STOCK WHERE stock.prod_id = Product.prod_id');
+  $pd_name = pg_fetch_row(pg_query($db,'SELECT prod_name FROM Product WHERE prod_id = $prod_id'))[0];
+  $pd_des = pg_fetch_row(pg_query($db,'SELECT prod_description FROM Product WHERE prod_id = $prod_id'))[0];
+  $pd_sku = pg_query($db,'SELECT sku_id FROM STOCK WHERE stock.prod_id = $prod_id');
   $list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
   //$times = $num_carousel/10;
@@ -274,7 +274,7 @@ function carousel_view_more($prod_id)
 function add_favorite($prod_id,$cus_id)
   {
     /* check fav cannot more than 10 */
-    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id');
+    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id');
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
     //end of function
@@ -288,7 +288,7 @@ function add_favorite($prod_id,$cus_id)
   
   function carousel_show_favorite($cus_id)
   {
-    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = Customer.cus_id'); 
+    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id'); 
     $list = pg_fetch_row($check);
     for ($i=0; $i<10;$i++)
      {
