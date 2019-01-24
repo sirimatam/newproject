@@ -371,16 +371,21 @@ function add_to_cart($sku_id,$cus_id,$cartp_id)
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($cus_id,$cartp_id)
   {
-    $cartid = pg_fetch_result(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"));
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
     $skuid = pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid");
+    $skuarray = array();
     $skurow = pg_fetch_row(pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid"));
-    //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
+    while($aaa = $skurow)
+    {
+	    $skuarray += $aaa;
+    }
+	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
     $namearray = array();
     for($i=0; $i<=pg_num_rows($skuid);$i++)
     {
-	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.sku_id = $skurow[$i] AND Stock.prod_id = Product.prod_id"));
+	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.sku_id = $skuarray[$i] AND Stock.prod_id = Product.prod_id"));
 
-	 $namearray += $x ;
+	 $namearray += array($x[0],$x[1],$x[2]) ;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
     
