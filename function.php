@@ -52,7 +52,7 @@ function customer_address($cusid)
   
 function button_all_type();
   {
-    $data = [
+    [
   "type" => "flex",
   "altText" => "Flex Message",
   "contents" => [
@@ -412,30 +412,30 @@ function carousel_cart($cus_id,$cartp_id)
   }
     
     
-function flex_order($order_id)
+    
+    
+    
+    
+function add_to_order($cus_id)
 {
-	$data = [];
-	$data['type'] = 'flex';
-	$data['altText'] = 'Flex Message';
-	$data['contents']['type'] = 'bubble';
-	$data['contents']['header']['type'] = 'box';
-	$data['contents']['header']['layout'] = 'vertical';
-	$data['contents']['header']['flex'] = 0;
-	$data['contents']['header']['contents']['type'] = 'text';
-	$data['contents']['header']['contents']['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
-	$data['contents']['header']['contents']['size'] = 'xl';
-	$data['contents']['header']['contents']['align'] = 'center';
-	$data['contents']['header']['contents']['weight'] = 'bold';
-	
-	
-	
+	$order_id = uniqid();
+	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
+	$skuids = pg_query($db,"SELECT sku_id FROM Cart_product WHERE cart_id = $cart_avail");
+	$total_price = 0;
+	while($skuid = pg_fetch_row($skuids))
+	{
+		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE sku_id=$skuid"))[0];
+		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM Product WHERE Stock.sku_id=$skuid AND Product.prod_id=$prod_id"));
+		$total_price += $prod_price; 
+	}
+	date_default_timezone_set("Asia/Bangkok");
+	$time = date("H:i:sa");
+	$date = date("Y/m/d") ;
+	pg_query($db,"INSERT INTO Order VALUES ($order_id,$cart_avail,$total_price,$date,$time,'waiting for payment')");
+	pg_query($db,"UPDATE Createcart SET cart_used = '1' WHERE cartp_id = $cart_avail");
+	pg_query($db,"INSERT INTO Createcart (cus_id,cart_used) VALUES ($cus_id,'0')");
+	return $reply_msg = 'สั่งซื้อสินค้าเรียบร้อยแล้ว';
 }
-	    
-    
-    
-    
-    
-  }
   
   
   
