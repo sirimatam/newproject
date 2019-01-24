@@ -48,42 +48,8 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
 	{
-		//$reply_message = "4";
-		$data = [
-	'replyToken' => $reply_token,
-	'messages' => [
-[
-  "type" => "flex",
-  "altText" => "Flex Message",
-  "contents" => [
-    "type" => "bubble",
-    "direction" => "ltr",
-    "body" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "ดูที่อยู่จัดส่ง",
-            "text" => "ดูที่อยู่จัดส่ง"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "แก้ไขที่อยู่",
-            "text" => "แก้ไขที่อยู่"
-          ]
-        ]
-      ]
-    ]
-  ]
-]
-]];
-$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+		
+
 send_reply_message($API_URL, $POST_HEADER, $post_body);
 
 		
@@ -94,20 +60,19 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 		$address = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
 	       $show_address = pg_fetch_result($address);
 	       $data = [
-    'replyToken' => $reply_token,
-    'messages' => [['type' => 'text', 'text' => $show_address]]
-   ];
-	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => $show_address]]
+		   ];
+	       
 	       send_reply_message($API_URL, $POST_HEADER, $post_body);
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
 		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid ");
 		$data = [
-    'replyToken' => $reply_token,
-    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
-   ];
-	       post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
+		   ];
 	       send_reply_message($API_URL, $POST_HEADER, $post_body);
        }  
        
@@ -191,6 +156,19 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
   
 }
 } 
+
+
+
+
+function format_message($message)
+{
+	$data = ['replyToken' => $reply_token,'messages' => [ $message ]];
+	return $data;
+}
+
+
+
+
 function send_reply_message($url, $post_header, $post)
 {
  $ch = curl_init($url);
@@ -203,5 +181,7 @@ function send_reply_message($url, $post_header, $post)
  curl_close($ch);
  return $result;
 } 
+
+
  
 ?>
