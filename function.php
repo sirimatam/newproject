@@ -52,7 +52,7 @@ function customer_address($cusid)
   
 function button_all_type();
   {
-    [
+    $data = [
   "type" => "flex",
   "altText" => "Flex Message",
   "contents" => [
@@ -412,7 +412,25 @@ function carousel_cart($cus_id,$cartp_id)
   }
     
     
-    
+function flex_order($order_id)
+{
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'bubble';
+	$data['contents']['header']['type'] = 'box';
+	$data['contents']['header']['layout'] = 'vertical';
+	$data['contents']['header']['flex'] = 0;
+	$data['contents']['header']['contents']['type'] = 'text';
+	$data['contents']['header']['contents']['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
+	$data['contents']['header']['contents']['size'] = 'xl';
+	$data['contents']['header']['contents']['align'] = 'center';
+	$data['contents']['header']['contents']['weight'] = 'bold';
+	
+	
+	
+}
+	    
     
     
     
