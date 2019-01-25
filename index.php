@@ -18,20 +18,22 @@ if ( sizeof($request_array['events']) > 0 )
  {
   $reply_message = '';
   $reply_token = $event['replyToken']; */
-	 $rich_area = array(
-			  array('bounds'=> array( 'x'=>'0','y'=>'0','width' => 824,'height' => 776 ), 'action' => array('type'=> 'message', 'text' =>'ดูและสั่งซื้อสินค้า')),
-			  array('bounds'=> array( 'x'=>'833','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'โปรโมชัน')),
-			  array('bounds'=> array( 'x'=>'1686','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'ตะกร้าสินค้า')),
-			  array('bounds'=> array( 'x'=>'10','y'=>'817','width' => 1242,'height' => 869 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
-	      		  array('bounds'=> array( 'x'=>'862','y'=>'798','width' => 795,'height' => 888 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ชอบ')),
-			  array('bounds'=> array( 'x'=>'1686','y'=>'807','width' => 814,'height' => 879 ), 'action' => array('type'=> 'message', 'text' =>'เช็คสถานะ'))
-			  );
 
-	$rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> true ,
+$rich_area = array(
+        array('bounds'=> array( 'x'=>'0','y'=>'0','width' => 824,'height' => 776 ), 'action' => array('type'=> 'message', 'text' =>'ดูและสั่งซื้อสินค้า')),
+	array('bounds'=> array( 'x'=>'833','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'โปรโมชัน')),
+	array('bounds'=> array( 'x'=>'1686','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'ตะกร้าสินค้า')),
+	array('bounds'=> array( 'x'=>'10','y'=>'817','width' => 1242,'height' => 869 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
+	array('bounds'=> array( 'x'=>'862','y'=>'798','width' => 795,'height' => 888 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ชอบ')),
+	array('bounds'=> array( 'x'=>'1686','y'=>'807','width' => 814,'height' => 879 ), 'action' => array('type'=> 'message', 'text' =>'เช็คสถานะ'))
+		  );
+
+$rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> true ,
 				     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area );
 
-	$rich_obj_req = json_encode($rich_object, JSON_UNESCAPED_UNICODE);	
-	$richmenu_id = create_rich_menu($RICH_URL,$ACCESS_TOKEN,$rich_obj_req); //เหมือนว่าทุกครั้งที่ deploy จะได้ richmenuid ใหม่กลับมา	  
+$rich_obj_req = json_encode($rich_object, JSON_UNESCAPED_UNICODE);	
+$richmenu_id = create_rich_menu($RICH_URL,$ACCESS_TOKEN,$rich_obj_req); //เหมือนว่าทุกครั้งที่ deploy จะได้ richmenuid ใหม่กลับมา	  
+
 file_put_contents("php://stderr", "POST JSON ===> ".$richmenu_id);
 	 /*
   if ( $event['type'] == 'message' ) 
