@@ -1,6 +1,6 @@
 <?php
 //require_once('connection.php');
-require 'function.php';
+//require 'function.php';
 //require 'showproduct.php';
 $RICH_URL = 'https://api.line.me/v2/bot/richmenu';
 
