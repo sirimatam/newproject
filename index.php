@@ -36,7 +36,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = button_all_type();
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}	
-	elseif ($text=='สินค้าโปรโมชั่น')
+	elseif ($text=='โปรโมชัน')
 	{
 		$post = show_promotion_product();
 		send_reply_message($API_URL, $POST_HEADER, $post);
@@ -46,7 +46,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$reply_message = "3";
 	}
-	elseif ($text=='เพิ่ม/แก้ไขที่อยู่จัดส่ง')
+	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
 
@@ -82,7 +82,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
 	   
-        elseif ($text=='เช็คสถานะจ่ายเงิน/พัสดุ')
+        elseif ($text=='เช็คสถานะ')
 	{
 		$reply_message = "6";
 	}
