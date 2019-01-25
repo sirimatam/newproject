@@ -1,5 +1,5 @@
 <?php
-//require_once('connection.php');
+require_once('connection.php');
 //require 'function.php';
 //require 'showproduct.php';
 require '/RichMenu/setrichMenuDefault.php';
@@ -20,7 +20,12 @@ if ( sizeof($request_array['events']) > 0 )
   $reply_message = '';
   $reply_token = $event['replyToken']; */
 
-
+pg_query($db,"INSERT INTO Product (prod_id,prod_name,prod_type,prod_description,prod_price,prod_pro_price)
+VALUES ('1','เสื้อสายเดี่ยว ครอป','เสื้อสายเดี่ยว/แขนกุด','free size รอบอก 36 นิ้ว ยาว 20 นิ้ว',200,200),
+('2','เสื้อสายเดี่ยวคอเหลี่ยม ครอป','เสื้อสายเดี่ยว/แขนกุด','free size รอบอก 36 นิ้ว ยาว 20 นิ้ว',200,200),
+('3','เสื้อแขนกุด ชุดทำงานได้','เสื้อสายเดี่ยว/แขนกุด','free size รอบอก 36 นิ้ว ยาว 20 นิ้ว',200,200),
+('4','เดรสปาดไหล่','เดรส','รอบอก 36 นิ้ว/ เอว 28 นิ้ว/ สะโพก 36-40 นิ้ว',250,250),
+('5','เดรสเกาะอก','เดรส','รอบอก 36 นิ้ว/ เอว 28 นิ้ว/ สะโพก 36-40 นิ้ว',250,250)");
 
 	 /*
   if ( $event['type'] == 'message' ) 
