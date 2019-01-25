@@ -77,7 +77,7 @@ if ( sizeof($request_array['events']) > 0 )
 		    'messages' => [['type' => 'text', 'text' => $show_address]]
 		   ];
 	       
-	       send_reply_message($API_URL, $POST_HEADER, $post_body);
+	       send_reply_message($API_URL, $POST_HEADER, $data);
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
@@ -86,7 +86,7 @@ if ( sizeof($request_array['events']) > 0 )
 		    'replyToken' => $reply_token,
 		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
 		   ];
-	       send_reply_message($API_URL, $POST_HEADER, $post_body);
+	       send_reply_message($API_URL, $POST_HEADER,$data);
        }  
        
        elseif ($text=='สินค้าที่ชอบ')
