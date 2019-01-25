@@ -41,7 +41,13 @@ if ( sizeof($request_array['events']) > 0 )
     
 		$post = button_all_type();
 		send_reply_message($API_URL, $POST_HEADER, $post);
-	}	
+	}
+	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
+	{
+		$post = carousel_product_type($text);
+		send_reply_message($API_URL, $POST_HEADER, $post);
+
+	}
 	elseif ($text=='โปรโมชัน')
 	{
 		$post = show_promotion_product();
@@ -50,7 +56,8 @@ if ( sizeof($request_array['events']) > 0 )
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
-		$reply_message = "3";
+		$post = carousel_cart($userid,$cartp_id);
+		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
@@ -132,7 +139,10 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
   }
   elseif($event['type'] == 'postback')
   {
+  	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
+	$cart = 
+	
 	$prod_ids = pg_query($db,'SELECT prod_id FROM Product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
@@ -148,7 +158,25 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 			  add_favorite($prod_id,$userid);	
 			}
 		}
-	} 
+	}
+	$sku_ids = pg_query($db,'SELECT sku_id FROM Stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$info)[1] == $sku_id)
+		{
+			if(explode(" ",$info)[0]) == 'Cart')
+			{
+			  $data = add_to_cart($sku_id,$userid,);
+			  send_reply_message($API_URL, $POST_HEADER, $data);
+			}
+			if(explode(" ",$info)[0]) == 'Delete')
+			{
+			  delete_from_cart($sku_id,$userid,);
+			  $data = $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
+			  send_reply_message($API_URL, $POST_HEADER, $data);
+			}
+		}
+	}
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
