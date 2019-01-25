@@ -1,6 +1,6 @@
 <?php
-//require_once('connection.php');
-//require 'function.php';
+require_once('connection.php');
+require 'function.php';
 //require 'showproduct.php';
 require '/RichMenu/setrichMenuDefault.php';
 
@@ -10,7 +10,7 @@ require '/RichMenu/setrichMenuDefault.php';
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'lBX5YbEdwZ498JOXn+dInNH+7+WS2y7zSGQx77c8nmWwV+jhqYTJHzKm6i9yxK+zU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0ypZNc0WdUfeobmpMs5EhxVg5/s6SdVQ42+Dy4OE4+WJOAdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
-/*$request = file_get_contents('php://input');   // Get request content
+$request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($requeostgres cannot delst, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 )
@@ -22,7 +22,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 
 
-	 /*
+	 
   if ( $event['type'] == 'message' ) 
   {
    if( $event['message']['type'] == 'text' )
@@ -192,7 +192,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 }
 } 
 
-*/
+
 
 
 
