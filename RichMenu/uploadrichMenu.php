@@ -1,6 +1,6 @@
 <?php
 
-$richMenuId:"richmenu-a6176f168491d2594d3b3d4d4dc0cfd9;
+//$richMenuId:"richmenu-a6176f168491d2594d3b3d4d4dc0cfd9;
 
 $rich_img_url = 'https://api.line.me/v2/bot/richmenu/'.$richMenuId.'/content';
 
@@ -8,6 +8,13 @@ $ACCESS_TOKEN = getTokenData();
 $file = fopen('richmenu.jpg', 'r');
 $size = filesize('richmenu.jpg');
 $fildata = fread($file,$size);
+$upload_pic = upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file);
+file_put_contents("php://stderr", "POST JSON ===> ".$upload_pic);
+	
+
+
+function upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file)
+{
 $curl = curl_init();
 	curl_setopt_array($curl, array(
 	    CURLOPT_URL => "https://api.line.me/v2/bot/richmenu/".$richMenuId."/content",
@@ -21,9 +28,10 @@ $curl = curl_init();
 	    CURLOPT_POSTFIELDS => $fildata,
 	    CURLOPT_INFILE => $file,
 	    CURLOPT_HTTPHEADER => array(
-	      "authorization: Bearer ".$ACCESS_TOKEN,
-	      "Cache-Control: no-cache",
-	      "Content-Type: image/png",
+	       "authorization: Bearer ".$ACCESS_TOKEN,
+               "cache-control: no-cache",
+	       "Content-Type: image/png",
+	 	
 	    ),
 	));
   
@@ -33,10 +41,11 @@ $curl = curl_init();
   
   
 	if ($err) {
-        var_dump($err);
+         return $err;
     } else {
-    	var_dump($response);
+    	return $response;
     }
+}	 
 
 
 ?>
