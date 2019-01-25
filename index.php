@@ -18,7 +18,7 @@ if ( sizeof($request_array['events']) > 0 )
  foreach ($request_array['events'] as $event)
  {
   $reply_message = '';
-  $reply_token = $event['replyToken']; */
+  $reply_token = $event['replyToken']; 
 
 
 
@@ -63,7 +63,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		
 
-send_reply_message($API_URL, $POST_HEADER, $post_body);
+//send_reply_message($API_URL, $POST_HEADER, $post_body);
 
 		
 	}
@@ -81,7 +81,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
-		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid ");
+		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid");
 		$data = [
 		    'replyToken' => $reply_token,
 		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
@@ -114,7 +114,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 		}	
 	}
 	
-
+/*
 //   elseif (substr($text,0,6) =='addcus') //comment
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
@@ -129,7 +129,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 		$reply_message = "$custlist";
 	}
 	   // comment
-   
+   */
 	else
 	$reply_message = 'why dont you say hello to me';
    }
@@ -184,8 +184,8 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 
 
    	
-$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-send_reply_message($API_URL, $POST_HEADER, $post_body);
+//$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+//send_reply_message($API_URL, $POST_HEADER, $post_body);
 
     
   
