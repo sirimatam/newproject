@@ -1,14 +1,15 @@
 <?php
-require_once('connection.php');
+//require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
+$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
 
-echo $db;
+//echo $db;
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'lBX5YbEdwZ498JOXn+dInNH+7+WS2y7zSGQx77c8nmWwV+jhqYTJHzKm6i9yxK+zU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0ypZNc0WdUfeobmpMs5EhxVg5/s6SdVQ42+Dy4OE4+WJOAdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
-$request = file_get_contents('php://input');   // Get request content
+/*$request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($requeostgres cannot delst, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 )
@@ -16,7 +17,23 @@ if ( sizeof($request_array['events']) > 0 )
  foreach ($request_array['events'] as $event)
  {
   $reply_message = '';
-  $reply_token = $event['replyToken'];
+  $reply_token = $event['replyToken']; */
+	 $rich_area = array(
+			  array('bounds'=> array( 'x'=>'0','y'=>'0','width' => 824,'height' => 776 ), 'action' => array('type'=> 'message', 'text' =>'ดูและสั่งซื้อสินค้า')),
+			  array('bounds'=> array( 'x'=>'833','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'โปรโมชัน')),
+			  array('bounds'=> array( 'x'=>'1686','y'=>'0','width' => 814,'height' => 785 ), 'action' => array('type'=> 'message', 'text' =>'ตะกร้าสินค้า')),
+			  array('bounds'=> array( 'x'=>'10','y'=>'817','width' => 1242,'height' => 869 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
+	      		  array('bounds'=> array( 'x'=>'862','y'=>'798','width' => 795,'height' => 888 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ชอบ')),
+			  array('bounds'=> array( 'x'=>'1686','y'=>'807','width' => 814,'height' => 879 ), 'action' => array('type'=> 'message', 'text' =>'เช็คสถานะ'))
+			  );
+
+	$rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> true ,
+				     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area );
+
+	$rich_obj_req = json_encode($rich_object, JSON_UNESCAPED_UNICODE);	
+	$richmenu_id = create_rich_menu($RICH_URL,$ACCESS_TOKEN,$rich_obj_req); //เหมือนว่าทุกครั้งที่ deploy จะได้ richmenuid ใหม่กลับมา	  
+file_put_contents("php://stderr", "POST JSON ===> ".$richmenu_id);
+	 /*
   if ( $event['type'] == 'message' ) 
   {
    if( $event['message']['type'] == 'text' )
@@ -102,7 +119,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 	}
 	
 
-/*	elseif (substr($text,0,6) =='addcus')
+//   elseif (substr($text,0,6) =='addcus') //comment
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
 		//$cardata = explode(" ",$text);
@@ -115,7 +132,7 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 		}
 		$reply_message = "$custlist";
 	}
-	*/
+	   // comment
    
 	else
 	$reply_message = 'why dont you say hello to me';
@@ -158,8 +175,38 @@ send_reply_message($API_URL, $POST_HEADER, $post_body);
 }
 } 
 
+*/
 
-
+function create_rich_menu($post_url, $ACCESS_TOKEN , $post_body)
+{
+	$curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => $post_url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => $post_body,
+      CURLOPT_HTTPHEADER => array(
+        "authorization: Bearer ".$ACCESS_TOKEN,
+        "cache-control: no-cache",
+        "content-type: application/json; charset=UTF-8",
+      ),
+    ));
+ 
+ $result = curl_exec($curl);
+ $err = curl_error($curl);
+ 	
+ curl_close($curl);
+	
+ if ($err) {
+        return $err;
+    } else {
+    	return $result;
+    }	
+}		 
 
 function format_message($message)
 {
