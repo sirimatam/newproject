@@ -130,6 +130,8 @@ function button_all_type();
 ];
    return $data;
   }  
+
+/*
 function show_address($cusid)
 {
 	$query = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
@@ -146,9 +148,9 @@ function show_address($cusid)
 	$data['template']['text'] = $address;
 	
 	return $data;
-}
+}*/
 /* ข้อ 2 */
-
+/*
 function carousel_product_type($type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
@@ -213,7 +215,8 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
 
 }
   
-  
+  */
+/*
   
 function carousel_view_more($prod_id) 
 {
@@ -281,13 +284,9 @@ function carousel_view_more($prod_id)
   
   
 }
+*/
 
-function add_more_than_one()
-{
-	
-	
-	
-}
+
 
 
   
@@ -296,18 +295,18 @@ function add_more_than_one()
 function add_favorite($prod_id,$cus_id)
   {
     /* check fav cannot more than 10 */
-    $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id');
+   /* $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id');
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
     //end of function
     else{
     $fave_id++;
     pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
-    }
+    }*/
   }  
 
 
-  
+  /*
   function carousel_show_favorite($cus_id)
   {
     $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id'); 
@@ -331,10 +330,10 @@ function add_favorite($prod_id,$cus_id)
         $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete '.$list[$i][$fav_id];
      }
     return $datas;
-  }
+  }*/
   
   /* if message['text'] == delete.$fav_id' */
-  function delete_favorite($fav_id)
+  /*function delete_favorite($fav_id)
   {
     pg_query('DELETE FROM Favorite WHERE fav_id = $fav_id');
   }
@@ -376,7 +375,7 @@ function add_favorite($prod_id,$cus_id)
   }
   
   
-  
+  */
   
   
   
@@ -391,18 +390,18 @@ function add_favorite($prod_id,$cus_id)
 function add_to_cart($sku_id,$cus_id,$cart_qtt)
   {
     /* check cart cannot more than 10 */
-    $cartp_id = pg_fetch_row(pg_query($db,'SELECT cartp_id FROM Createcart WHERE cart_used = '0' AND cus_id = $cus_id'));
+  /*  $cartp_id = pg_fetch_row(pg_query($db,'SELECT cartp_id FROM Createcart WHERE cart_used = '0' AND cus_id = $cus_id'));
     $check = pg_query($db,'SELECT * FROM Cart_product WHERE cartp_id = $cartp_id');
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
     pg_query($db,"INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,$cart_qtt)"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
-    }
+    }*/
   }    
   
 //ยังแก้ไม่เสร็จ  
-function carousel_cart($cus_id)
+/*function carousel_cart($cus_id)
 {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
     $skuid = pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid");
@@ -538,7 +537,7 @@ function add_to_order($cus_id)
   
   
   
-  
+  */
   
   
   
