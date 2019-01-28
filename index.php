@@ -42,7 +42,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = button_all_type();
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
+/*	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$post = carousel_product_type($text);
 		send_reply_message($API_URL, $POST_HEADER, $post);
@@ -125,7 +125,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}	
 	}
-	
+	*/
 /*
 //   elseif (substr($text,0,6) =='addcus') //comment
 	{
@@ -153,9 +153,8 @@ if ( sizeof($request_array['events']) > 0 )
   {
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
-	$cart = 
 	
-	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
+/*	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
 		if(explode(" ",$info)[1] == $prod_id)
@@ -190,7 +189,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
-  }
+  }*/
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
 
