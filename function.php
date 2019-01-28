@@ -1,6 +1,6 @@
 <?php
 
-	   
+	/*   
 function show_promotion_product() 
 { 
    $promo = pg_query($db,"SELECT * FROM Product WHERE prod_price>prod_pro_price"); 
@@ -57,10 +57,11 @@ function customer_address($cusid)
 	   
 
   
-  
+  */
   
 function button_all_type();
   {
+	  $data = 
     [
   "type" => "flex",
   "altText" => "Flex Message",
