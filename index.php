@@ -94,11 +94,23 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = carousel_show_favorite($userid);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	   
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id)
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id,$userid,$cart_qtt);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
         elseif ($text=='เช็คสถานะ')
 	{
 		$reply_message = "6";
 	}
+	   
+	
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -166,12 +178,13 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			if(explode(" ",$info)[0]) == 'Cart')
 			{
-			  $data = add_to_cart($sku_id,$userid,);
+			  $cart_qtt = 1;
+			  $data = add_to_cart($sku_id,$userid,$cart_qtt);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
 			{
-			  delete_from_cart($sku_id,$userid,);
+			  delete_from_cart($sku_id,$userid);
 			  $data = $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
