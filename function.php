@@ -128,6 +128,7 @@ function button_all_type()
     ]
   ]
 ];*/
+	$data = [];
 	$data = 
 	 [
 	'replyToken' => $reply_token,
