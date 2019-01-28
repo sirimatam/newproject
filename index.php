@@ -11,7 +11,7 @@ $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'lBX5YbEdwZ498JOXn+dInNH+7+WS2y7zSGQx77c8nmWwV+jhqYTJHzKm6i9yxK+zU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0ypZNc0WdUfeobmpMs5EhxVg5/s6SdVQ42+Dy4OE4+WJOAdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 $request = file_get_contents('php://input');   // Get request content
-$request_array = json_decode($requeostgres cannot delst, true);   // Decode JSON to Array
+$request_array = json_decode($request, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 )
 {
@@ -29,11 +29,11 @@ if ( sizeof($request_array['events']) > 0 )
    {
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT * FROM Customer WHERE cus_id = $userid");
+	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = $userid");
 	if( sizeof(pg_fetch_row($findid)[0] == 0)
 	{
-		pg_query($db,"INSERT INTO Customer (cus_id) VALUES ($userid)");
-		pg_query($db,"INSERT INTO Createcart VALUES (cus_id) VALUES $userid");
+		pg_query($db,"INSERT INTO customer (cus_id) VALUES ($userid)");
+		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES $userid");
 	}
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
@@ -70,7 +70,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
        elseif ($text=='ดูที่อยู่จัดส่ง')
 	{
-		$address = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
+		$address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = $cusid");
 	       $show_address = pg_fetch_row($address)[0];
 	       $data = [
 		    'replyToken' => $reply_token,
@@ -81,7 +81,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
        elseif ($text=='แก้ไขที่อยู่')
 	{
-		pg_query($db,"UPDATE Customer SET cus_description = $cusaddress WHERE cus_id = $cusid");
+		pg_query($db,"UPDATE customer SET cus_description = $cusaddress WHERE cus_id = $cusid");
 		$data = [
 		    'replyToken' => $reply_token,
 		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
@@ -94,12 +94,24 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = carousel_show_favorite($userid);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	   
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id)
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id,$userid,$cart_qtt);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
         elseif ($text=='เช็คสถานะ')
 	{
 		$reply_message = "6";
 	}
-	$types =  pg_query($db,'SELECT prod_type FROM Product GROUP BY prod_type ');
+	   
+	
+	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
 	{
@@ -143,7 +155,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$info = $event['postback']['data'];
 	$cart = 
 	
-	$prod_ids = pg_query($db,'SELECT prod_id FROM Product');
+	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
 		if(explode(" ",$info)[1] == $prod_id)
@@ -159,19 +171,20 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM Stock');
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
 		if(explode(" ",$info)[1] == $sku_id)
 		{
 			if(explode(" ",$info)[0]) == 'Cart')
 			{
-			  $data = add_to_cart($sku_id,$userid,);
+			  $cart_qtt = 1;
+			  $data = add_to_cart($sku_id,$userid,$cart_qtt);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
 			{
-			  delete_from_cart($sku_id,$userid,);
+			  delete_from_cart($sku_id,$userid);
 			  $data = $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
