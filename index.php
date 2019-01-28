@@ -32,7 +32,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = $userid");
 	if( sizeof(pg_fetch_row($findid)[0] == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id) VALUES ($userid)");
+		pg_query($db,"INSERT INTO customer (cus_id) VALUES $userid");
 		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES $userid");
 	}
 	
