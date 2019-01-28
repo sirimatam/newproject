@@ -1,7 +1,7 @@
 <?php
 
 $richMenuId = "richmenu-a6176f168491d2594d3b3d4d4dc0cfd9";
-
+$ACCESS_TOKEN = 'lBX5YbEdwZ498JOXn+dInNH+7+WS2y7zSGQx77c8nmWwV+jhqYTJHzKm6i9yxK+zU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0ypZNc0WdUfeobmpMs5EhxVg5/s6SdVQ42+Dy4OE4+WJOAdB04t89/1O/w1cDnyilFU=';
 
 //set rich menu default after upload img 
 
