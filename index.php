@@ -40,7 +40,8 @@ if ( sizeof($request_array['events']) > 0 )
 	{
     
 		$post = button_all_type();
-		send_reply_message($API_URL, $POST_HEADER, $post);
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
+		echo "Result: ".$send_result."\r\n";
 	}
 /*	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
