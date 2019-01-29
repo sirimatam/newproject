@@ -219,84 +219,15 @@ function format_message($message)
 
 function test()
 {
-	$data = 
-	 [
-	'replyToken' => $reply_token,
-	'messages' => [
-		[
-			'type' => 'flex', 
-			'altText' => 'This is flex message',
-			'contents' => [
-				'type' => 'carousel',
-				'contents' => [
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'first bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'postback',
-								'label' => 'Go',
-								'text' => 'Go',
-								'data' => 'test'
-							]
-						]
-					]
-				]
-			],
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'second bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'uri',
-								'label' => 'Go',
-								'uri' => "https://developers.line.me"
-							]
-						]
-					]
-				]
-			]
-			]
-		]
-		]
-	]
-];
+$data = [];
+	$data['type'] = 'template';
+	$data['altText'] = 'this is a buttons template';
+	$data['template']['type'] = 'buttons';
+	$data['template']['actions']['type'] = 'message';
+	$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
+	$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
+	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
+	$data['template']['text'] = $address;
    return $data;	
 }
 
