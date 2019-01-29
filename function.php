@@ -59,7 +59,7 @@ function customer_address($cusid)
   
   */
   
-function button_all_type()
+public function button_all_type()
   {
 /*	  $data = 
     [
@@ -128,7 +128,6 @@ function button_all_type()
     ]
   ]
 ];*/
-	$data = [];
 	$data = 
 	 [
 	'replyToken' => $reply_token,
