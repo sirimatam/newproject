@@ -29,11 +29,11 @@ if ( sizeof($request_array['events']) > 0 )
    {
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid'");
-	if( pg_fetch_row($findid)[0] == "")
+	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = $userid");
+	if( pg_fetch_result($findid) == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id) VALUES $userid");
-		pg_query($db,"INSERT INTO createcart (cus_id) VALUES $userid");
+		pg_query($db,"INSERT INTO customer (cus_id) VALUES ('$userid')");
+		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
