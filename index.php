@@ -38,9 +38,9 @@ if ( sizeof($request_array['events']) > 0 )
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
-    		
+    		$data = [];
 		//$post = button_all_type();
-		$post = test();
+		$post = test($data);
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
 		echo "Result: ".$send_result."\r\n";
 	}
