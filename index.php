@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-require 'function.php';
+require_once('function.php');
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
