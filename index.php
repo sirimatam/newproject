@@ -219,7 +219,7 @@ function format_message($message)
 
 function test()
 {
-$data = [];
+$data = array();
 	$data['type'] = 'template';
 	$data['altText'] = 'this is a buttons template';
 	$data['template']['type'] = 'buttons';
