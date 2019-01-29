@@ -59,7 +59,7 @@ function customer_address($cusid)
   
   */
   
-public function button_all_type()
+function button_all_type()
   {
 /*	  $data = 
     [
