@@ -29,9 +29,26 @@ function track_trace($db,$orderid,$post_header)
     
 }
 
-function send_reply_message($url, $post_header, $post)
-{
+/*      https://www.trackingmore.com/api-class_php.html  
+        https://www.trackingmore.com/api-php.html
+        https://www.trackingmore.com/api-index.html
+   */
 
-} 
-
+/**
+	* Get tracking results of a single tracking
+	* @access public
+	* @param string $trackingNumber  Tracking number
+	* @param string $carrierCode Carrier code
+	* @param string $lang language
+	* @return array
+	*/
+	public function getSingleTrackingResult($carrierCode,$trackingNumber,$lang='en'){
+        $returnData = array();
+        $requestUrl = self::ROUTE_TRACKINGS.'/'.$carrierCode.'/'.$trackingNumber.'/'.$lang;
+        $result = $this->_getApiData($requestUrl, 'GET');
+        if ($result) {
+            $returnData = json_decode($result, true);
+        }
+        return $returnData;
+    }
 ?>
