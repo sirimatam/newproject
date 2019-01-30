@@ -36,7 +36,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id) VALUES ($userid)");
 		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES $userid");
 	}
-	
+	/*
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
     
@@ -105,9 +105,15 @@ if ( sizeof($request_array['events']) > 0 )
 			send_reply_message($API_URL, $POST_HEADER, $data);
 			
 		}
-	}
-        elseif ($text=='เช็คสถานะ')
+	}  */
+        //else
+	   if ($text=='เช็คสถานะ')
 	{
+		$trackingNumber = 'SHX306592865TH';
+		$track = new Trackingmore;
+		$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
+		send_reply_message($API_URL, $POST_HEADER, $track);
+		/*
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = $orderid"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = $orderid"))[0];
 		if(strlen($trackingNumber)=0)
@@ -124,10 +130,10 @@ if ( sizeof($request_array['events']) > 0 )
 			$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
 			send_reply_message($API_URL, $POST_HEADER, $track);
 		}
-		
+		*/
 	}
 	   
-	
+	/* start
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -159,6 +165,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	   // comment
    */
+	  /* 
 	else
 	$reply_message = 'why dont you say hello to me';
    }
@@ -223,7 +230,7 @@ if ( sizeof($request_array['events']) > 0 )
 } 
 
 
-
+*/
 
 
 
