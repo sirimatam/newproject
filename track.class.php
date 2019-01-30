@@ -18,7 +18,7 @@ class Trackingmore{
 	const ROUTE_TRACKINGS_REMOTE   = 'trackings/remote';
 	const ROUTE_TRACKINGS_COSTTIME   = 'trackings/costtime';
 	const ROUTE_TRACKINGS_UPDATEMORE   = 'trackings/updatemore';
-    protected $apiKey              = 'YOUR API KEY';
+    protected $apiKey              = 'c7f2b785-3a87-4a1d-8c10-591095e49b4e';
 
 
     protected function _getApiData($route, $method = 'GET', $sendData = array()){
