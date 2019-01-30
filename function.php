@@ -152,7 +152,7 @@ function show_address($cusid)
 }*/
 /* ข้อ 2 */
 
-function carousel_product_type($type) // $type = Prod_type FROM Product
+function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
    $pd_type = pg_query($db,"SELECT * FROM Product WHERE prod_type = '$type'");  
