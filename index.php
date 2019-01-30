@@ -5,7 +5,7 @@ require 'function.php';
 require 'RichMenu/setrichMenuDefault.php';
 
 print_r(t());
-
+echo "<br>";
 $data = 
 	 [
 	'replyToken' => $reply_token,
@@ -124,7 +124,9 @@ if ( sizeof($request_array['events']) > 0 )
 
 		//$post = button_all_type();
 	//	$post = test();
-		$data = 
+	/*
+	
+	$data = 
 	 [
 	'replyToken' => $reply_token,
 	'messages' => [
@@ -204,7 +206,9 @@ if ( sizeof($request_array['events']) > 0 )
 ];
 		
 		$data = t();
-		$send_result = send_reply_message($API_URL, $POST_HEADER, t());
+		
+		*/
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		//$send_result = send_reply_message($API_URL, $POST_HEADER, test());
 		echo "Result: ".$send_result."\r\n";
 	}
