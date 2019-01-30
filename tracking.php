@@ -28,7 +28,9 @@ $extraInfo['lang']                 = 'en';
 $track = $track->createTracking('china-post','RM121516216CN',$extraInfo);
 
 
-
+//Get tracking results of a single tracking.
+$track = new Trackingmore;
+$track = $track->getSingleTrackingResult('china-post','RM131516216CN','en');
 
 
 
