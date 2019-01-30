@@ -155,7 +155,7 @@ function show_address($cusid)
 function carousel_product_type($type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
-   $pd_type = pg_query($db,"SELECT * FROM Product WHERE prod_type = $type");  
+   $pd_type = pg_query($db,"SELECT * FROM Product WHERE prod_type = '$type'");  
    $num_carousel = pg_num_rows($pd_type);
    $list = pg_fetch_row($pd_type);
    //$times = $num_carousel/10;
