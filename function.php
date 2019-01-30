@@ -151,7 +151,7 @@ function show_address($cusid)
 	return $data;
 }*/
 /* ข้อ 2 */
-/*
+
 function carousel_product_type($type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
@@ -216,7 +216,7 @@ function carousel_product_type($type) // $type = Prod_type FROM Product
 
 }
   
-  */
+  
 /*
   
 function carousel_view_more($prod_id) 
