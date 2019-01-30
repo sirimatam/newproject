@@ -3,6 +3,7 @@ require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
 require '/RichMenu/setrichMenuDefault.php';
+require 'track.class.php';
 
 
 //echo $db;
@@ -107,7 +108,23 @@ if ( sizeof($request_array['events']) > 0 )
 	}
         elseif ($text=='เช็คสถานะ')
 	{
-		$reply_message = "6";
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = $orderid"))[0];
+		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = $orderid"))[0];
+		if(strlen($trackingNumber)=0)
+		{
+			if($payment == 0)
+			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
+			else { $reply = 'กำลังจัดเตรียมสินค้า'}
+			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
+			send_reply_message($API_URL, $POST_HEADER, $data);
+		}
+		else
+		{
+			$track = new Trackingmore;
+			$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
+			send_reply_message($API_URL, $POST_HEADER, $track);
+		}
+		
 	}
 	   
 	
@@ -210,7 +227,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 
 
-function format_message($message)
+function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' => [ $message ]];
 	return $data;
