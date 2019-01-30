@@ -30,11 +30,11 @@ if ( sizeof($request_array['events']) > 0 )
    {
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = $userid");
+	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$userid' ");
 	if( sizeof(pg_fetch_row($findid)[0] == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id) VALUES ($userid)");
-		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES $userid");
+		pg_query($db,"INSERT INTO customer (cus_id) VALUES ('$userid')");
+		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES '$userid'");
 	}
 	/*
 	if ($text=='ดูและสั่งซื้อสินค้า')
@@ -114,8 +114,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
 		send_reply_message($API_URL, $POST_HEADER, $track);
 		/*
-		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = $orderid"))[0];
-		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = $orderid"))[0];
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
+		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
 		if(strlen($trackingNumber)=0)
 		{
 			if($payment == 0)
