@@ -27,7 +27,7 @@ function show_promotion_product($db)
    $running = 0;
    $carousel = array();
    
-      for ($i=0, $i<=$promo_num,$i++)
+      for ($i=0; $i<=$promo_num;$i++)
      {
         $datas = [];
 	$datas['type'] = 'template';
