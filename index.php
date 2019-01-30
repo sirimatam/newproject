@@ -57,7 +57,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
-		$post = format_message($reply_token,carousel_product_type($text));
+		$post = format_message($reply_token,carousel_product_type($db,$text));
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
