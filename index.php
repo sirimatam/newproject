@@ -221,7 +221,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$reply_message = "6";
 			   $dtaa = [
     'replyToken' => $reply_token,
-    'messages' => [['type' => 'text', 'text' => print_r($dtaa)]]
+    'messages' => [['type' => 'text', 'text' => json_encode($dtaa)]]
    ];
 			   $send_result = send_reply_message($API_URL, $POST_HEADER, $dtaa);
 	}
