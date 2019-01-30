@@ -4,8 +4,11 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
+
+$mes="hello";
 print_r(t());
 echo "<br>";
+
 $dtaa = 
 	 [
 	'replyToken' => $reply_token,
@@ -212,7 +215,20 @@ if ( sizeof($request_array['events']) > 0 )
 		//$send_result = send_reply_message($API_URL, $POST_HEADER, test());
 		echo "Result: ".$send_result."\r\n";
 	}
-/*	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
+
+	           elseif ($text=='เช็คสถานะ')
+	{
+		$reply_message = "6";
+			   $dtaa = [
+    'replyToken' => $reply_token,
+    'messages' => [['type' => 'text', 'text' => $reply_message]]
+   ];
+			   $send_result = send_reply_message($API_URL, $POST_HEADER, $dtaa);
+	}
+
+	   
+/*
+	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$post = carousel_product_type($text);
 		send_reply_message($API_URL, $POST_HEADER, $post);
