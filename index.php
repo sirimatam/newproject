@@ -40,8 +40,84 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 
 		//$post = button_all_type();
-		//$post = test();
-		$send_result = send_reply_message($API_URL, $POST_HEADER, test());
+		$post = [
+	'replyToken' => $reply_token,
+	'messages' => [
+		[
+			'type' => 'flex', 
+			'altText' => 'This is flex message',
+			'contents' => [
+				'type' => 'carousel',
+				'contents' => [
+				[
+				'type' => 'bubble',
+				'body' => [
+					'type' => 'box',
+					'layout' => 'horizontal',
+					'contents' => [
+						[
+							'type' => 'text',
+							'text' => 'first bubble',
+							'wrap' => true,
+						]
+						]
+					   ],
+				'footer' => [
+					'type' => 'box',
+					'layout' => 'horizontal',
+				
+					'contents' => [
+						[
+							'type' => 'button',
+							'style' => 'primary',
+							
+							'action' => [
+								'type' => 'postback',
+								'label' => 'Go',
+								'text' => 'Go',
+								'data' => 'test'
+							]
+						]
+					]
+				]
+			],
+				[
+				'type' => 'bubble',
+				'body' => [
+					'type' => 'box',
+					'layout' => 'horizontal',
+					'contents' => [
+						[
+							'type' => 'text',
+							'text' => 'second bubble',
+							'wrap' => true,
+						]
+						]
+					   ],
+				'footer' => [
+					'type' => 'box',
+					'layout' => 'horizontal',
+				
+					'contents' => [
+						[
+							'type' => 'button',
+							'style' => 'primary',
+							
+							'action' => [
+								'type' => 'uri',
+								'label' => 'Go',
+								'uri' => "https://developers.line.me"
+							]
+						]
+					]
+				]
+			]
+			]
+		]
+		]
+	]
+];
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
 		echo "Result: ".$send_result."\r\n";
 	}
 /*	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
