@@ -120,6 +120,8 @@ if ( sizeof($request_array['events']) > 0 )
 		]
 	]
 ];
+		
+		$data = test();
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		//$send_result = send_reply_message($API_URL, $POST_HEADER, test());
 		echo "Result: ".$send_result."\r\n";
