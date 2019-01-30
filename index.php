@@ -127,8 +127,8 @@ if ( sizeof($request_array['events']) > 0 )
 
 		//$post = button_all_type();
 	//	$post = test();
-	
-		$data = format_message(t());
+		
+		$data = format_message($reply_token,t());
 		
 	
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
@@ -315,7 +315,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 
 
-function format_message($message)
+function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' => [ $message ]];
 	return $data;
