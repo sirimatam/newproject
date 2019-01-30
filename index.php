@@ -6,7 +6,7 @@ require 'RichMenu/setrichMenuDefault.php';
 
 print_r(t());
 echo "<br>";
-$data = 
+$dtaa = 
 	 [
 	'replyToken' => $reply_token,
 	'messages' => [
@@ -86,7 +86,7 @@ $data =
 ];
 		
 
-print_r($data);
+print_r($dtaa);
 
 //echo $db;
 
@@ -208,7 +208,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = t();
 		
 		*/
-		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $dtaa);
 		//$send_result = send_reply_message($API_URL, $POST_HEADER, test());
 		echo "Result: ".$send_result."\r\n";
 	}
