@@ -128,87 +128,7 @@ if ( sizeof($request_array['events']) > 0 )
 		//$post = button_all_type();
 	//	$post = test();
 	
-	
-	$dt = 
-	 [
-	'replyToken' => $reply_token,
-	'messages' => [
-		[
-			'type' => 'flex', 
-			'altText' => 'This is flex message',
-			'contents' => [
-				'type' => 'carousel',
-				'contents' => [
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'first bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'postback',
-								'label' => 'Go',
-								'text' => 'Go',
-								'data' => 'test'
-							]
-						]
-					]
-				]
-			],
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'second bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'uri',
-								'label' => 'Go',
-								'uri' => "https://developers.line.me"
-							]
-						]
-					]
-				]
-			]
-			]
-		]
-		]
-	]
-];
-		
-		$data = t();
+		$data = format_message(t());
 		
 	
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
@@ -404,9 +324,7 @@ function format_message($message)
 function t()
 {
 $data = 
-	 [
-	'replyToken' => $reply_token,
-	'messages' => [
+	
 		[
 			'type' => 'flex', 
 			'altText' => 'This is flex message',
@@ -477,8 +395,6 @@ $data =
 				]
 			]
 			]
-		]
-		]
 	]
 ];
    return $data;
