@@ -4,93 +4,6 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
-
-$mes="hello";
-print_r(t());
-echo "<br>";
-
-$dtaa = 
-	 [
-	'replyToken' => $reply_token,
-	'messages' => [
-		[
-			'type' => 'flex', 
-			'altText' => 'This is flex message',
-			'contents' => [
-				'type' => 'carousel',
-				'contents' => [
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'first bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'postback',
-								'label' => 'Go',
-								'text' => 'Go',
-								'data' => 'test'
-							]
-						]
-					]
-				]
-			],
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'second bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'uri',
-								'label' => 'Go',
-								'uri' => "https://developers.line.me"
-							]
-						]
-					]
-				]
-			]
-			]
-		]
-		]
-	]
-];
-		
-
-print_r($dtaa);
-
 //echo $db;
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -124,15 +37,9 @@ if ( sizeof($request_array['events']) > 0 )
 	
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
-
-		//$post = button_all_type();
-	//	$post = test();
 		
-		$data = format_message($reply_token,t());
-		
-	
+		$data = format_message($reply_token,button_all_type());
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
-		//$send_result = send_reply_message($API_URL, $POST_HEADER, test());
 		echo "Result: ".$send_result."\r\n";
 	}
 
