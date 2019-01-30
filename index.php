@@ -4,6 +4,7 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
+printr(test());
 
 //echo $db;
 
