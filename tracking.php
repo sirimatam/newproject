@@ -1,5 +1,26 @@
 <?php
 
+
+$track = new Trackingmore;
+$track = $track->getCarrierList();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function track_trace($db,$orderid,$post_header)
 {
     $order_status = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = $orderid"))[0];
@@ -29,26 +50,4 @@ function track_trace($db,$orderid,$post_header)
     
 }
 
-/*      https://www.trackingmore.com/api-class_php.html  
-        https://www.trackingmore.com/api-php.html
-        https://www.trackingmore.com/api-index.html
-   */
-
-/**
-	* Get tracking results of a single tracking
-	* @access public
-	* @param string $trackingNumber  Tracking number
-	* @param string $carrierCode Carrier code
-	* @param string $lang language
-	* @return array
-	*/
-	public function getSingleTrackingResult($carrierCode,$trackingNumber,$lang='en'){
-        $returnData = array();
-        $requestUrl = self::ROUTE_TRACKINGS.'/'.$carrierCode.'/'.$trackingNumber.'/'.$lang;
-        $result = $this->_getApiData($requestUrl, 'GET');
-        if ($result) {
-            $returnData = json_decode($result, true);
-        }
-        return $returnData;
-    }
 ?>
