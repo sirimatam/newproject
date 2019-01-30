@@ -111,7 +111,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
-		$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
+		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH','en');
 		send_reply_message($API_URL, $POST_HEADER, $track);
 		/*
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
