@@ -82,7 +82,7 @@ if ( sizeof($request_array['events']) > 0 )
 	} */
        elseif ($text=='แก้ไขชื่อและที่อยู่')
 	{
-	        $ans = ['type'='text','text' = 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
+	        $ans = ['type'=>'text','text' => 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
 	 	$data = format_message($reply_token,$ans);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
        } 
