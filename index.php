@@ -82,13 +82,13 @@ if ( sizeof($request_array['events']) > 0 )
 	} */
        elseif ($text=='แก้ไขชื่อและที่อยู่')
 	{
-	        $ans = ['type'=>'text','text' => 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
+	        $ans = ['type'=>'text','text' => 'พิมพ์ @@ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@@น.ส.เสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
 	 	$data = format_message($reply_token,$ans);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
        } 
-       elseif (explode("@",$text)[0] == '')   
+       elseif (explode("@@",$text)[0] == '')   
        {
-	       $address = explode("@",$text)[1];
+	       $address = explode("@@",$text)[1];
 	       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$userid' AND cus_default = '1'");
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
