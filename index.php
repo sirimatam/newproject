@@ -16,9 +16,6 @@ print_r(show_address($db,'U93b77cb796b8f440cb888401981cf6e2'));
 
 
 	
-
-
-//echo $db;
 $GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
@@ -133,8 +130,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
-		
 		/*
+		
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
 		if(strlen($trackingNumber)=0)
@@ -155,7 +152,7 @@ if ( sizeof($request_array['events']) > 0 )
 		
 	}
 	   
-	/*
+	
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -171,7 +168,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}	
 	}
 	
-/*
+
 //   elseif (substr($text,0,6) =='addcus') //comment
 	{
 		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
@@ -185,21 +182,23 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		$reply_message = "$custlist";
 	}
-	   // comment
-   */
-	  /* 
-	else
-	$reply_message = 'why dont you say hello to me';
+
    }
-   else
-    $reply_message = 'ระบบได้รับ '.ucfirst($event['message']['type']).' ของคุณแล้ว';
-  
+   elseif( $event['message']['type'] == 'image' )
+   {
+	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
+	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
+	   
+	   $get = get_user_content($GET_url,$POST_HEADER);
+	   
+	   pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
+   }
   }
   elseif($event['type'] == 'postback')
   {
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
-	$cart = 
+	
 	
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
@@ -237,11 +236,9 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 	}
   }
-  else
-   $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
+ }
+}
 
-*/
-}}}}
 
 
 
@@ -263,6 +260,18 @@ function send_reply_message($url, $post_header, $post)
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post, JSON_UNESCAPED_UNICODE));
+ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+ $result = curl_exec($ch);
+ curl_close($ch);
+ return $result;
+} 
+
+function get_user_content($url, $post_header)
+{
+ $ch = curl_init($url);
+ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
  $result = curl_exec($ch);
  curl_close($ch);
