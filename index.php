@@ -121,7 +121,9 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='แจ้งโอนเงิน')
 	{
-		
+		$ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
+	 	$data = format_message($reply_token,$ans);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
 	}	
         elseif ($text=='เช็คสถานะพัสดุ')
 	{
