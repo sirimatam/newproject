@@ -75,7 +75,7 @@ $data = [];
 	{
 		$array_carousel = carousel_product_type($db,$text);
 		$post = format_message($reply_token,$array_carousel);	
-			send_reply_message($API_URL, $POST_HEADER, $post);
+	        send_reply_message($API_URL, $POST_HEADER, $post);
 		/*
 		if(sizeof($array_carousel) > 1)
 		{
