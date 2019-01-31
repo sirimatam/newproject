@@ -133,7 +133,7 @@ function show_address($db,$cusid)
 {
 	$query = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid' AND cus_default == '1'");
 	$address = pg_fetch_row($query)[0];
-	if (strlen($address) == 0)
+	/*if (strlen($address) == 0)
 	{ $address = 'กรุณาแก้ไขที่อยู่จัดส่ง';}
 	
 	$data = [];
@@ -145,8 +145,8 @@ function show_address($db,$cusid)
 	$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
 	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
 	$data['template']['text'] = $address;
-	
-	return $data;
+	*/
+	return $address;
 }
 /* ข้อ 2 */
 
