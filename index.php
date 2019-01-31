@@ -22,13 +22,14 @@ if ( sizeof($request_array['events']) > 0 )
   $reply_message = '';
   $reply_token = $event['replyToken']; 
 
-$check = 0;
+
 
 	 
   if ( $event['type'] == 'message' ) 
   {
    if( $event['message']['type'] == 'text' )
    {
+	   $check = 0;
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid'");
