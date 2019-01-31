@@ -22,7 +22,7 @@ if ( sizeof($request_array['events']) > 0 )
   $reply_message = '';
   $reply_token = $event['replyToken']; 
 
-
+$check = 0;
 
 	 
   if ( $event['type'] == 'message' ) 
@@ -42,13 +42,18 @@ if ( sizeof($request_array['events']) > 0 )
 		if($text == $prod)
 		{	
 			
-			$post = [
+			$check=1;
+
+		}
+	}
+	if($check ==1)
+	{
+				$post = [
     'replyToken' => $reply_token,
     'messages' => [['type' => 'text', 'text' => 'ok']]
    ];
 			//$post = format_message($reply_token,$array_carousel);	
-			send_reply_message($API_URL, $POST_HEADER, $post);	
-		}
+			send_reply_message($API_URL, $POST_HEADER, $post);		
 	}
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
