@@ -6,7 +6,14 @@ require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
 
-print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
+$trackingNumber = 'SHX306592865TH';
+$track = new Trackingmore;
+$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH','en');
+print_r($track);
+echo '///////////////////////////</br>';
+echo $track;
+	
+
 
 //echo $db;
 
