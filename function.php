@@ -158,6 +158,8 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    $pd_type = pg_query($db,"SELECT * FROM product WHERE prod_type = '$type'");  
    $num_carousel = pg_num_rows($pd_type);
    $list = pg_fetch_row($pd_type);
+   $prod = array();
+   $prod_num = 0;
    //$times = $num_carousel/10;
    $running = 0;
    $carousel = array();
@@ -167,21 +169,25 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	$datas['template']['actions'] = [];
+	while($list = pg_fetch_row($pd_type))
+	{
+		$prod[$prod_num] = $list;
+		$prod_num++;
+	}
       for ($i=0; $i<$num_carousel;$i++)
      {
-  
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
-        $datas['template']['columns'][$i]['title'] = $list[$i][$prod_name];
-        $datas['template']['columns'][$i]['text'] = $list[$i][$prod_description];
+  	$list = pg_fetch_row($pd_type);
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][$prod_img]; 
+        $datas['template']['columns'][$i]['title'] = $prod[$i][$prod_name];
+        $datas['template']['columns'][$i]['text'] = $prod[$i][$prod_description];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][$prod_id];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$list[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][$prod_id];
      }
      $carousel[0] = $datas;
      return $carousel;
