@@ -8,7 +8,7 @@ require 'track.class.php';
 
 $trackingNumber = 'SHX306592865TH';
 $track = new Trackingmore;
-$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH','en');
+$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
 print_r($track);
 echo '///////////////////////////</br>';
 echo $track;
