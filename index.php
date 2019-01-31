@@ -66,47 +66,36 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
-		$data = [];
-		$data['type'] = 'template';
-		$data['altText'] = 'this is a buttons template';
-		$data['template']['type'] = 'buttons';
-		$data['template']['actions'][0]['type'] = 'message';
-		$data['template']['actions'][0]['label'] = 'แก้ไขที่อยู่จัดส่ง';
-		$data['template']['actions'][0]['text'] = 'แก้ไขที่อยู่';
-		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
-		$data['template']['text'] = 'abcd';
-		
-		
 		
 		$show = show_address($db,$userid);
-		/*$post = [
-		    'replyToken' => $reply_token,
-		    'messages' => [$data]
-		   ];
-		   */
-		
 		$post = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
-	/*   
+	/*  
        elseif ($text=='ดูที่อยู่จัดส่ง')
 	{
 	       $address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'");
 	       $show_address = pg_fetch_row($address)[0];
 	       format_message($reply_token,$show_address);	       
 	       send_reply_message($API_URL, $POST_HEADER, $data);
-	} 
-       elseif ($text=='แก้ไขที่อยู่')
+	} */
+       elseif ($text=='แก้ไขชื่อและที่อยู่')
 	{
-		pg_query($db,"UPDATE customer SET cus_description = $cusaddress WHERE cus_id = '$cusid' ");
-		$data = [
-		    'replyToken' => $reply_token,
-		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
-		   ];
+	        $ans = ['type'='text','text' = 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
+	 	$data = format_message($reply_token,$ans);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
+       } 
+       elseif (explode("@",$text)[0] == '')   
+       {
+	       $address = explode("@",$text)[1];
+	       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$cusid' AND cus_default = '1'");
+		$show = show_address($db,$userid);
+		$post = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
-       }  
-       
+       }
+	   
+       /*
        elseif ($text=='สินค้าที่ชอบ')
 	{
 		$post = carousel_show_favorite($userid);
