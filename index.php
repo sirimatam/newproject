@@ -4,7 +4,7 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
-print_r(sizeof(carousel_product_type($db,'เดรส')));
+print_r(carousel_product_type($db,'เดรส'));
 
 //echo $db;
 
