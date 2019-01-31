@@ -77,6 +77,7 @@ $data = [];
 		$post = format_message($reply_token,$array_carousel);	
 	        $send_result = send_reply_message($API_URL, $POST_HEADER, $post);
 		file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+		file_put_contents("php://stderr", "POST REQUEST =====> ".$post_body);
 
 		/*
 		if(sizeof($array_carousel) > 1)
