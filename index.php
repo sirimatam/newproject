@@ -221,13 +221,13 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		if(explode(" ",$info)[1] == $sku_id)
 		{
-			if(explode(" ",$info)[0]) == 'Cart')
+			if(explode(" ",$info)[0] == 'Cart')
 			{
 			  $cart_qtt = 1;
 			  $data = add_to_cart($sku_id,$userid,$cart_qtt);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
-			if(explode(" ",$info)[0]) == 'Delete')
+			if(explode(" ",$info)[0] == 'Delete')
 			{
 			  delete_from_cart($sku_id,$userid);
 			  $data = $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
