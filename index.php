@@ -38,7 +38,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','1')");
 		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
-	/*
+	
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
 		
@@ -46,9 +46,10 @@ if ( sizeof($request_array['events']) > 0 )
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
+	 /*  
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
-		$post = carousel_product_type($text);
+		$post = carousel_product_type($db,$text);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
@@ -96,7 +97,7 @@ if ( sizeof($request_array['events']) > 0 )
 	       send_reply_message($API_URL, $POST_HEADER,$data);
        }
 	   
-       /*
+       
        elseif ($text=='สินค้าที่ชอบ')
 	{
 		$post = carousel_show_favorite($userid);
@@ -113,7 +114,7 @@ if ( sizeof($request_array['events']) > 0 )
 			
 		}
 	}  
-        /*else
+        else
 	   if ($text=='เช็คสถานะ')
 	{
 		$trackingNumber = 'SHX306592865TH';
@@ -137,10 +138,11 @@ if ( sizeof($request_array['events']) > 0 )
 			$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
 			send_reply_message($API_URL, $POST_HEADER, $track);
 		}
+		*/
 		
 	}
 	   
-	
+	/*
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
