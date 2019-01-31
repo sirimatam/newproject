@@ -58,7 +58,7 @@ function customer_address($db,$cusid)
 
   
   
-  
+  /*
 function button_all_type();
   {
     [
@@ -129,6 +129,8 @@ function button_all_type();
 ];
    return $data;
   }  
+  
+  */
 function show_address($db,$cusid)
 {
 	$query = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = $cusid");
