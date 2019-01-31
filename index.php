@@ -41,9 +41,10 @@ if ( sizeof($request_array['events']) > 0 )
 	/*
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
-    
-		$post = button_all_type();
-		send_reply_message($API_URL, $POST_HEADER, $post);
+		
+		$data = format_message($reply_token,button_all_type());
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
+		
 	}
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
