@@ -19,7 +19,7 @@ print_r(show_address($db,'U93b77cb796b8f440cb888401981cf6e2'));
 
 
 //echo $db;
-
+$GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
@@ -40,7 +40,8 @@ if ( sizeof($request_array['events']) > 0 )
   {
    if( $event['message']['type'] == 'text' )
    {
-        $text = $event['message']['text']; 
+        $text = $event['message']['text'];
+	$msgid =  $event['message']['id'];  
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
@@ -113,14 +114,24 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = carousel_show_favorite($userid);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	
-        elseif ($text=='เช็คสถานะ')
+	elseif ($text=='เช็คสถานะ')
+	{
+		$data = format_message($reply_token,button_pay_track());
+		send_reply_message($API_URL, $POST_HEADER, $data);
+	}
+	elseif ($text=='แจ้งโอนเงิน')
+	{
+		
+	}	
+        elseif ($text=='เช็คสถานะพัสดุ')
 	{
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
 		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH',Array());
 		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
+		
+		
 		/*
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
