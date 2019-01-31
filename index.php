@@ -74,9 +74,14 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
 		$data['template']['text'] = 'aaaaa';
 		
+		$ans = [
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => 'aaa' ]]
+		   ];
+		
 		//$button = show_address($db,$userid);
-		$post = format_message($reply_token,json_encode($data));
-		send_reply_message($API_URL, $POST_HEADER, $post);
+		//$post = format_message($reply_token,json_encode($data));
+		send_reply_message($API_URL, $POST_HEADER, $ans);
 
 	}
 	/*   
