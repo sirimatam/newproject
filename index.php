@@ -40,8 +40,13 @@ if ( sizeof($request_array['events']) > 0 )
 	foreach($type_prod as $prod)
 	{
 		if($text == $prod)
-		{
-			$post = format_message($reply_token,$array_carousel);	
+		{	
+			
+			$post = [
+    'replyToken' => $reply_token,
+    'messages' => [['type' => 'text', 'text' => 'ok']]
+   ];
+			//$post = format_message($reply_token,$array_carousel);	
 			send_reply_message($API_URL, $POST_HEADER, $post);	
 		}
 	}
