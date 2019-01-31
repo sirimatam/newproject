@@ -392,15 +392,15 @@ function add_to_cart($sku_id,$cus_id,$cart_qtt)
 
   {
     /* check cart cannot more than 10 */
-    $cartp_id = pg_fetch_row(pg_query($db,'SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = $cus_id'));
-    $check = pg_query($db,'SELECT * FROM cart_product WHERE cartp_id = $cartp_id');
+    $cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$cus_id' "));
+    $check = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id' ");
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
 
   
-    pg_query($db,"INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,$cart_qtt)"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    pg_query($db,"INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
 
     }
   }    
@@ -408,8 +408,8 @@ function add_to_cart($sku_id,$cus_id,$cart_qtt)
  
 function carousel_cart($db,$cus_id)
 {
-    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = $cus_id AND createcart.cart_used = '0'"))[0];
-    $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = $cartid");
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$cus_id' AND createcart.cart_used = '0'"))[0];
+    $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
     $skurow = pg_fetch_row($skuid);
@@ -423,13 +423,13 @@ function carousel_cart($db,$cus_id)
     $run2 = 0;
     for($i=0; $i<=pg_num_rows($skuid);$i++)
     {
-	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM product WHERE stock.sku_id = $skuarray[$i] AND Stock.prod_id = Product.prod_id"));
+	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM product WHERE stock.sku_id = '$skuarray[$i]' AND Stock.prod_id = Product.prod_id"));
 	 $namearray[$run2] = array($x[0],$x[1],$x[2]) ;
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
     
-    $cartitems = pg_query($db,'SELECT * FROM cart_product WHERE cart_product.cartp_id = $cartid');
+    $cartitems = pg_query($db,"SELECT * FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $list = pg_fetch_row($cartitems);
     for ($i=0; $i<pg_num_rows($skuid);$i++)
      {	
@@ -470,10 +470,10 @@ function flex_order($db,$order_id)
 	
 	
 	$show = array();
-	$order_array = pg_fetch_row($db,"SELECT * From order WHERE order_id = $order_id");
+	$order_array = pg_fetch_row($db,"SELECT * From order WHERE order_id = '$order_id'");
 	$cartp_id = $order_array[1];
 	$total_price = $order_array[2];
-	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_id,cart_prod_qtt) From cart_product WHERE cart_product.cartp_id = $cartp_id");
+	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_id,cart_prod_qtt) From cart_product WHERE cart_product.cartp_id = '$cartp_id' ");
 	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
 		$show[$i] = [$cartp_array[$i][0],'prodid','prodname','skucolor','skusize',$cartp_array[$i][2],'prod_pro_price']; 	
@@ -481,12 +481,12 @@ function flex_order($db,$order_id)
 	
 	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
-		$skudatas = pg_fetch_row(pg_query($db,"SELECT (prod_id,sku_color,sku_size) FROM stock WHERE stock.sku_id = $show[$i][0]"));
+		$skudatas = pg_fetch_row(pg_query($db,"SELECT (prod_id,sku_color,sku_size) FROM stock WHERE stock.sku_id = '$show[$i][0]'"));
 		$show[$i] = [$show[$i][0],$skudatas[0],'prodname',$skudatas[1],$skudatas[2],$show[$i][5],'prod_pro_price'];
 	}
 	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
-		$pd = pg_fetch_row(pg_query($db,"SELECT (prod_name,prod_pro_price) FROM product WHERE product.prod_id = $show[$i][1]"));
+		$pd = pg_fetch_row(pg_query($db,"SELECT (prod_name,prod_pro_price) FROM product WHERE product.prod_id = '$show[$i][1]'"));
 		$show[$i] = [$show[$i][0],$show[$i][1],$pd[0],$show[$i][3],$show[$i][4],$show[$i][5],$pd[1]];
 	}
 	
@@ -544,20 +544,20 @@ function add_to_order($db,$cus_id)
 {
 	
 	$order_id = uniqid();
-	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
+	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_id = $cart_avail");
 	$total_price = 0;
 	while($skuid = pg_fetch_row($skuids))
 	{
-		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id=$skuid"))[0];
-		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE stock.sku_id=$skuid AND product.prod_id=$prod_id"));
+		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
+		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE stock.sku_id='$skuid' AND product.prod_id='$prod_id'"));
 		$total_price = $prod_price; 
 	}
 	date_default_timezone_set("Asia/Bangkok");
 	$time = date("H:i:sa");
 	$date = date("Y/m/d") ;
 	pg_query($db,"INSERT INTO order VALUES ($order_id,$cart_avail,$total_price,$date,$time,'waiting for payment')");
-	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = $cart_avail");
+	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
 	pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ($cus_id,'0')");
 	return $order_id;
 	
