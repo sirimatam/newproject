@@ -192,6 +192,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   $get = get_user_content($GET_url,$POST_HEADER);
 	   
 	   pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
+	   
+	   $data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
+	   send_reply_message($API_URL, $POST_HEADER, $data);
    }
   }
   elseif($event['type'] == 'postback')
