@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-//require 'function.php';
+require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
@@ -61,14 +61,13 @@ if ( sizeof($request_array['events']) > 0 )
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
 	*/
-	   /*
+	   
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
-		
+		$button = show_address($db,$cusid);
+		$post = format_message($reply_token,$button);
+		send_reply_message($API_URL, $POST_HEADER, $post);
 
-//send_reply_message($API_URL, $POST_HEADER, $post_body);
-
-		
 	}
 	/*   
        elseif ($text=='ดูที่อยู่จัดส่ง')
