@@ -48,7 +48,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 	           elseif ($text=='เช็คสถานะ')
 	{
-$data = array();
+$data = [];
     $data['type'] = 'template';
     $data['altText'] = 'this is a buttons template';
     $data['template']['type'] = 'buttons';
