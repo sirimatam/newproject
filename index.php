@@ -34,7 +34,7 @@ if ( sizeof($request_array['events']) > 0 )
 	if( pg_num_rows($findid) == 0)
 	{
 		pg_query($db,"INSERT INTO customer (cus_id,default) VALUES ('$userid',0)");
-		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES ('$userid')");
+		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
 	/*
 	if ($text=='ดูและสั่งซื้อสินค้า')
