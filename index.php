@@ -77,7 +77,11 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['text'] = 'abcd';
 		
 		//$nnn = show_address($db,$userid);
-		$post = ['replyToken' => $reply_token,'messages' =>  $data ];
+		$post = [
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
+		   ];
+		//$post = ['replyToken' => $reply_token,'messages' =>  $data ];
 		//$post = format_message($reply_token,$data);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
