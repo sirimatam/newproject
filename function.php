@@ -168,7 +168,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
 	$datas['template']['actions'] = [];
-      for ($i=0; $i<=$num_carousel;$i++)
+      for ($i=0; $i<$num_carousel;$i++)
      {
   
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$prod_img]; 
