@@ -83,7 +83,7 @@ if ( sizeof($request_array['events']) > 0 )
 		//$nnn = show_address($db,$userid);
 		$post = [
 		    'replyToken' => $reply_token,
-		    'messages' => [$test]
+		    'messages' => [$data]
 		   ];
 		//$post = ['replyToken' => $reply_token,'messages' =>  $data ];
 		//$post = format_message($reply_token,$data);
