@@ -215,19 +215,10 @@ if ( sizeof($request_array['events']) > 0 )
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
 
-
-
-   	
-//$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-//send_reply_message($API_URL, $POST_HEADER, $post_body);
-
-    
-  
-}
-} 
-
-
 */
+}}}}
+
+
 
 
 
@@ -253,6 +244,6 @@ function send_reply_message($url, $post_header, $post)
  return $result;
 } 
 
-   }}}}
+   
  
 ?>
