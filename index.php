@@ -33,7 +33,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id) VALUES ('$userid')");
+		pg_query($db,"INSERT INTO customer (cus_id,default) VALUES ('$userid',0)");
 		pg_query($db,"INSERT INTO createcart VALUES (cus_id) VALUES ('$userid')");
 	}
 	/*
@@ -60,6 +60,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = carousel_cart($userid,$cartp_id);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
+	*/
+	   /*
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
@@ -68,21 +70,17 @@ if ( sizeof($request_array['events']) > 0 )
 
 		
 	}
-	   
+	/*   
        elseif ($text=='ดูที่อยู่จัดส่ง')
 	{
-		$address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = $cusid");
+	       $address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'n");
 	       $show_address = pg_fetch_row($address)[0];
-	       $data = [
-		    'replyToken' => $reply_token,
-		    'messages' => [['type' => 'text', 'text' => $show_address]]
-		   ];
-	       
+	       format_message($reply_token,$show_address);	       
 	       send_reply_message($API_URL, $POST_HEADER, $data);
-	}
+	} 
        elseif ($text=='แก้ไขที่อยู่')
 	{
-		pg_query($db,"UPDATE customer SET cus_description = $cusaddress WHERE cus_id = $cusid");
+		pg_query($db,"UPDATE customer SET cus_description = $cusaddress WHERE cus_id = '$cusid' ");
 		$data = [
 		    'replyToken' => $reply_token,
 		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
@@ -105,8 +103,8 @@ if ( sizeof($request_array['events']) > 0 )
 			send_reply_message($API_URL, $POST_HEADER, $data);
 			
 		}
-	}  */
-        //else
+	}  
+        /*else
 	   if ($text=='เช็คสถานะ')
 	{
 		$trackingNumber = 'SHX306592865TH';
@@ -130,10 +128,10 @@ if ( sizeof($request_array['events']) > 0 )
 			$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
 			send_reply_message($API_URL, $POST_HEADER, $track);
 		}
-		*/
+		
 	}
 	   
-	/* start
+	
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
