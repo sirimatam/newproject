@@ -64,8 +64,17 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
-		$button = show_address($db,$userid);
-		$post = format_message($reply_token,$button);
+		$data['type'] = 'template';
+		$data['altText'] = 'this is a buttons template';
+		$data['template']['type'] = 'buttons';
+		$data['template']['actions']['type'] = 'message';
+		$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
+		$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
+		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
+		$data['template']['text'] = 'abcd';
+		
+		//$button = show_address($db,$userid);
+		$post = format_message($reply_token,$data);
 		send_reply_message($API_URL, $POST_HEADER, json_encode($post));
 
 	}
