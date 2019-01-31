@@ -135,7 +135,7 @@ function show_address($db,$cusid)
 	$address = pg_fetch_row($query)[0];
 	
 	if ($address == '')
-	{ $address = 'กรุณาแก้ไขที่อยู่จัดส่ง';}
+	{ $address = 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น </br> @นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111';}
 	
 	$data = [];
 	$data['type'] = 'template';
