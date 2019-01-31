@@ -62,10 +62,13 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	*/
 	   
-	elseif ($text=='ที่อยู่จัดส่ง')
+	if ($text=='ที่อยู่จัดส่ง')
 	{
 		$button = show_address($db,$userid);
-		$post = format_message($reply_token,$button);
+		$post = $data = [
+		    'replyToken' => $reply_token,
+		    'messages' => [['type' => 'text', 'text' => $button ]]
+		   ];
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
