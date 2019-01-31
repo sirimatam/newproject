@@ -4,6 +4,8 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
+print_r(carousel_product_type($db,'เดรส));
+
 //echo $db;
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -323,7 +325,7 @@ $data =
 ];
    return $data;
 }
-print_r($array_carousel);
+
 
 function send_reply_message($url, $post_header, $post)
 {
