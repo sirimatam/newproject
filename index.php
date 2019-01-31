@@ -7,9 +7,9 @@ require 'track.class.php';
 
 
 $trackingNumber = 'SHX306592865TH';
-$track = new Trackingmore;
-$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
-print_r($track);
+//$track = new Trackingmore;
+//$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
+//print_r($track);
 echo '///////////////////////////</br></br></br></br></br>';
 
 print_r(show_address($db,'U93b77cb796b8f440cb888401981cf6e2'));
@@ -118,7 +118,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
-		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH',Aray());
+		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH',Array());
 		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		/*
