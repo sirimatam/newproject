@@ -38,6 +38,8 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid',0)");
 		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
+	   
+	$type_prod = array('เดรส','กางเกงขายาว');
 	foreach($type_prod as $prod)
 	{
 		if($text == $prod)
