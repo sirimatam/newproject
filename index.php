@@ -5,7 +5,7 @@ require 'function.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
-print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
+
 
 
 //echo $db;
@@ -66,6 +66,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
+		print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
+		echo 'echo pukky';
+		print_r('this is print r');
 		$nnn = show_address($db,$userid);
 		$post = ['replyToken' => $reply_token,'messages' =>  [$nnn] ];
 		//$post = format_message($reply_token,$button);
