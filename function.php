@@ -157,7 +157,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
   // how to check whether prod_qtt > 0
    $pd_type = pg_query($db,"SELECT * FROM product WHERE prod_type = '$type'");  
    $num_carousel = pg_num_rows($pd_type);
-   $list = pg_fetch_row($pd_type);
+   //$list = pg_fetch_row($pd_type);
    $prod = array();
    $prod_num = 0;
    //$times = $num_carousel/10;
@@ -169,7 +169,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	$datas['template']['actions'] = [];
+
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
@@ -177,7 +177,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	}
       for ($i=0; $i<$num_carousel;$i++)
      {
-  	$list = pg_fetch_row($pd_type);
+  	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][$prod_img]; 
         $datas['template']['columns'][$i]['title'] = $prod[$i][$prod_name];
         $datas['template']['columns'][$i]['text'] = $prod[$i][$prod_description];
