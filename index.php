@@ -224,7 +224,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 function format_message($reply_token,$message)
 {
-	$data = ['replyToken' => $reply_token,'messages' =>  $message ];
+	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
 	return $data;
 }
 
