@@ -72,7 +72,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
 		$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
 		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
-		$data['template']['text'] = $;
+		$data['template']['text'] = 'aaaaa';
 		
 		//$button = show_address($db,$userid);
 		$post = format_message($reply_token,json_encode($data));
