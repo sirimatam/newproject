@@ -67,7 +67,7 @@ $data = [];
 			   $send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
 	}
 
-	   
+	$type_prod = array('กางเกงขาสั้น','กางเกงขายาว','เดรส','เสื้อมีแขน',$text=='เสื้อสายเดี่ยว/แขนกุด')   
 
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
@@ -75,7 +75,7 @@ $data = [];
 		
 		if(sizeof($array_carousel) > 1)
 		{
-			for($i=0;$i<=sizeof($array_carousel);$i++)
+			for($i=0;$i<sizeof($array_carousel);$i++)
 			{
 				$post = format_message($reply_token,$array_carousel);	 
 				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
