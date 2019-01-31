@@ -48,12 +48,23 @@ if ( sizeof($request_array['events']) > 0 )
 
 	           elseif ($text=='เช็คสถานะ')
 	{
-		$reply_message = "6";
-			   $dtaa = [
-    'replyToken' => $reply_token,
-    'messages' => [['type' => 'text', 'text' => json_encode($dtaa)]]
-   ];
-			   $send_result = send_reply_message($API_URL, $POST_HEADER, $dtaa);
+$data = [];
+    $data['type'] = 'template';
+    $data['altText'] = 'this is a buttons template';
+    $data['template']['type'] = 'buttons';
+    $data['template']['action'][0]['type'] = 'message';
+    $data['template']['action'][0]['label'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['action'][0]['text'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['action'][1]['type'] = 'message';
+    $data['template']['action'][1]['label'] = 'แจ้งโอนเงิน';
+    $data['template']['action'][1]['text'] = 'แจ้งโอนเงิน';
+    $data['template']['action'][2]['type'] = 'message';
+    $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
+		$data1 = format_message($reply_token,$data);
+			   
+			   $send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
 	}
 
 	   
