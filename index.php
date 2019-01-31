@@ -119,7 +119,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
 		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH','en');
-		$data = format_message($reply_token,['type'=>'text','text'=>$track]);
+		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		/*
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
