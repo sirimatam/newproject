@@ -89,7 +89,7 @@ if ( sizeof($request_array['events']) > 0 )
        elseif (explode("@",$text)[0] == '')   
        {
 	       $address = explode("@",$text)[1];
-	       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$cusid' AND cus_default = '1'");
+	       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$userid' AND cus_default = '1'");
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
