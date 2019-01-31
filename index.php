@@ -30,7 +30,7 @@ if ( sizeof($request_array['events']) > 0 )
    {
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$userid' ");
+	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
 	{
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid',0)");
