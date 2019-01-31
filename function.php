@@ -297,7 +297,7 @@ function add_favorite($db,$prod_id,$cus_id)
     /* check fav cannot more than 10 */
     $check = pg_query($db,'SELECT * FROM favorite WHERE favorite.cus_id = $cus_id');
     $count = pg_num_rows($check);
-    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
+    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
     $fave_id++;
