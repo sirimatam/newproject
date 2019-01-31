@@ -131,9 +131,9 @@ function button_all_type()
   }  
 function show_address($db,$cusid)
 {
-	//$query = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'");
-	//$address = pg_fetch_row($query)[0];
-	$address = 'ddd';
+	$query = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'");
+	$address = pg_fetch_row($query)[0];
+	//$address = 'ddd';
 	if ($address == NULL)
 	{ $address = 'กรุณาแก้ไขที่อยู่จัดส่ง';}
 	
@@ -147,7 +147,7 @@ function show_address($db,$cusid)
 	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
 	$data['template']['text'] = $address;
 	
-	return $address;
+	return $data;
 }
 /* ข้อ 2 */
 
