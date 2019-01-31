@@ -145,7 +145,7 @@ function show_address($db,$cusid)
 	$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
 	$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
 	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
-	$data['template']['text'] = $address;
+	$data['template']['text'] = 'abcd';
 	
 	return $data;
 }
