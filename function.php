@@ -135,16 +135,16 @@ function show_address($db,$cusid)
 	$address = pg_fetch_row($query)[0];
 	
 	if ($address == '')
-	{ $address = 'พิมพ์ @ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@นางสาวเสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111';}
+	{ $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง';}
 	
 	$data = [];
 	$data['type'] = 'template';
 	$data['altText'] = 'this is a buttons template';
 	$data['template']['type'] = 'buttons';
 	$data['template']['actions'][0]['type'] = 'message';
-	$data['template']['actions'][0]['label'] = 'แก้ไขที่อยู่จัดส่ง';
-	$data['template']['actions'][0]['text'] = 'แก้ไขที่อยู่';
-	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
+	$data['template']['actions'][0]['label'] = 'แก้ไขชื่อและที่อยู่จัดส่ง';
+	$data['template']['actions'][0]['text'] = 'แก้ไขชื่อและที่อยู่';
+	$data['template']['title'] = 'ชื่อและที่อยู่จัดส่งปัจจุบัน';
 	$data['template']['text'] = $address;
 	
 	return $data;
