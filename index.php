@@ -48,19 +48,19 @@ if ( sizeof($request_array['events']) > 0 )
 
 	           elseif ($text=='เช็คสถานะ')
 	{
-$data = [];
+$data = array();
     $data['type'] = 'template';
     $data['altText'] = 'this is a buttons template';
     $data['template']['type'] = 'buttons';
-    $data['template']['action'][0]['type'] = 'message';
-    $data['template']['action'][0]['label'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][0]['text'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][1]['type'] = 'message';
-    $data['template']['action'][1]['label'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][1]['text'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][2]['type'] = 'message';
-    $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['actions'][0]['type'] = 'message';
+    $data['template']['actions'][0]['label'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['actions'][0]['text'] = 'เลขที่บัญชีของร้าน';
+    $data['template']['actions'][1]['type'] = 'message';
+    $data['template']['actions'][1]['label'] = 'แจ้งโอนเงิน';
+    $data['template']['actions'][1]['text'] = 'แจ้งโอนเงิน';
+    $data['template']['actions'][2]['type'] = 'message';
+    $data['template']['actions'][2]['label'] = 'เช็คสถานะการจัดส่ง';
+    $data['template']['actions'][2]['text'] = 'เช็คสถานะการจัดส่ง';
     $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
 		$data1 = format_message($reply_token,$data);
 			   
@@ -78,7 +78,9 @@ $data = [];
 			for($i=0;$i<=sizeof($array_carousel);$i++)
 			{
 				$post = format_message($reply_token,$array_carousel);	 
-				send_reply_message($API_URL_push, $POST_HEADER, $post);
+				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
+				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+
 			}
 		}
 		else
