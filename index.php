@@ -74,7 +74,9 @@ $data = [];
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$array_carousel = carousel_product_type($db,$text);
-		
+		$post = format_message($reply_token,$array_carousel);	
+			send_reply_message($API_URL, $POST_HEADER, $post);
+		/*
 		if(sizeof($array_carousel) > 1)
 		{
 			for($i=0;$i<sizeof($array_carousel);$i++)
@@ -89,7 +91,7 @@ $data = [];
 		{
 			$post = format_message($reply_token,$array_carousel);	
 			send_reply_message($API_URL, $POST_HEADER, $post);
-		}
+		}*/
 
 	}
 /*	elseif ($text=='โปรโมชัน')
