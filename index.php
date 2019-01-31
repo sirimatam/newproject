@@ -38,7 +38,7 @@ if ( sizeof($request_array['events']) > 0 )
    if( $event['message']['type'] == 'text' )
    {
         $text = $event['message']['text'];
-	$msgid =  $event['message']['id'];  
+	   
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
@@ -186,8 +186,11 @@ if ( sizeof($request_array['events']) > 0 )
    }
    elseif( $event['message']['type'] == 'image' )
    {
+	   
 	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
+	   
+	   $msgid =  $event['message']['id'];  
 	   
 	   $get = get_user_content($GET_url,$POST_HEADER);
 	   
