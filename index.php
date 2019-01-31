@@ -35,7 +35,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid',1)");
+		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','1')");
 		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
 	/*
@@ -66,12 +66,19 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
-		print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
-		echo 'echo pukky';
-		print_r('this is print r');
-		$nnn = show_address($db,$userid);
-		$post = ['replyToken' => $reply_token,'messages' =>  [$nnn] ];
-		//$post = format_message($reply_token,$button);
+		$data = [];
+		$data['type'] = 'template';
+		$data['altText'] = 'this is a buttons template';
+		$data['template']['type'] = 'buttons';
+		$data['template']['actions']['type'] = 'message';
+		$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
+		$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
+		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
+		$data['template']['text'] = 'abcd';
+		
+		//$nnn = show_address($db,$userid);
+		//$post = ['replyToken' => $reply_token,'messages' =>  [$nnn] ];
+		$post = format_message($reply_token,$data);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
