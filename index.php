@@ -77,16 +77,15 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['text'] = 'abcd';
 		
 		
-		$test = [];
-		$test['type'] = 'text';
-		$test['text'] = 'test';
-		//$nnn = show_address($db,$userid);
-		$post = [
+		
+		$show = show_address($db,$userid);
+		/*$post = [
 		    'replyToken' => $reply_token,
 		    'messages' => [$data]
 		   ];
-		//$post = ['replyToken' => $reply_token,'messages' =>  $data ];
-		//$post = format_message($reply_token,$data);
+		   */
+		
+		$post = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
