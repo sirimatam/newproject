@@ -70,9 +70,9 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['type'] = 'template';
 		$data['altText'] = 'this is a buttons template';
 		$data['template']['type'] = 'buttons';
-		$data['template']['actions']['type'] = 'message';
-		$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
-		$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
+		$data['template']['actions'][0]['type'] = 'message';
+		$data['template']['actions'][0]['label'] = 'แก้ไขที่อยู่จัดส่ง';
+		$data['template']['actions'][0]['text'] = 'แก้ไขที่อยู่';
 		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
 		$data['template']['text'] = 'abcd';
 		
