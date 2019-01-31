@@ -6,7 +6,7 @@ require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
 
-
+print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
 
 //echo $db;
 
@@ -76,10 +76,14 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
 		$data['template']['text'] = 'abcd';
 		
+		
+		$test = [];
+		$test['type'] = 'text';
+		$test['text'] = 'test';
 		//$nnn = show_address($db,$userid);
 		$post = [
 		    'replyToken' => $reply_token,
-		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
+		    'messages' => [$test]
 		   ];
 		//$post = ['replyToken' => $reply_token,'messages' =>  $data ];
 		//$post = format_message($reply_token,$data);
