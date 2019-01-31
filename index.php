@@ -66,7 +66,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	*/
 	   
-	if ($text=='ที่อยู่จัดส่ง')
+	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
 		$show = show_address($db,$userid);
@@ -103,19 +103,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = carousel_show_favorite($userid);
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
-	{
-		if(explode(" ",$text)[0] == $sku_id)
-		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id,$userid,$cart_qtt);
-			send_reply_message($API_URL, $POST_HEADER, $data);
-			
-		}
-	}  
-        else
-	   if ($text=='เช็คสถานะ')
+	
+        elseif ($text=='เช็คสถานะ')
 	{
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
