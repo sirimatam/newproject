@@ -10,8 +10,11 @@ $trackingNumber = 'SHX306592865TH';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
 print_r($track);
-echo '///////////////////////////</br>';
-echo $track;
+echo '///////////////////////////</br></br></br></br></br>';
+
+print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
+
+
 	
 
 
