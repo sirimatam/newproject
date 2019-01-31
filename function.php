@@ -284,11 +284,22 @@ function carousel_view_more($db,$prod_id)
   
 }
 
-function add_more_than_one()
+function button_pay_track()
 {
+	$data = [];
+	$data['type'] = 'template';
+	$data['altText'] = 'this is a buttons template';
+	$data['template']['type'] = 'buttons';
+	$data['template']['actions'][0]['type'] = 'message';
+	$data['template']['actions'][0]['label'] = "แจ้งโอนเงิน";
+	$data['template']['actions'][0]['text'] = "แจ้งโอนเงิน";
+	$data['template']['actions'][1]['type'] = 'message';
+	$data['template']['actions'][1]['label'] = "เช็คสถานะพัสดุ";
+	$data['template']['actions'][1]['text'] = "เช็คสถานะพัสดุ";
+	$data['template']['text'] = "กรุณาเลือกเมนู";
 	
-	
-	
+	return $data;
+		
 }
 
 
