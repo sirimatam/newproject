@@ -66,15 +66,16 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
-		$button = show_address($db,$userid);
-		$post = format_message($reply_token,$button);
+		$nnn = show_address($db,$userid);
+		$post = ['replyToken' => $reply_token,'messages' =>  [$nnn] ];
+		//$post = format_message($reply_token,$button);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
 	/*   
        elseif ($text=='ดูที่อยู่จัดส่ง')
 	{
-	       $address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'n");
+	       $address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'");
 	       $show_address = pg_fetch_row($address)[0];
 	       format_message($reply_token,$show_address);	       
 	       send_reply_message($API_URL, $POST_HEADER, $data);
