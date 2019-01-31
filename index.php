@@ -72,11 +72,11 @@ if ( sizeof($request_array['events']) > 0 )
 		$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
 		$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
 		$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
-		$data['template']['text'] = 'abcd';
+		$data['template']['text'] = $;
 		
 		//$button = show_address($db,$userid);
-		$post = format_message($reply_token,$data);
-		send_reply_message($API_URL, $POST_HEADER, json_encode($post));
+		$post = format_message($reply_token,json_encode($data));
+		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
 	/*   
