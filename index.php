@@ -37,7 +37,14 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid',0)");
 		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
-	
+	foreach($type_prod as $prod)
+	{
+		if($text == $prod)
+		{
+			$post = format_message($reply_token,$array_carousel);	
+			send_reply_message($API_URL, $POST_HEADER, $post);	
+		}
+	}
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
 		
@@ -67,15 +74,7 @@ $data = [];
 			   $send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
 	}
 
-	$type_prod = array('กางเกงขาสั้น','กางเกงขายาว','เดรส','เสื้อมีแขน','เสื้อสายเดี่ยว/แขนกุด');
-	foreach($type_prod as $prod)
-	{
-		if($text == $prod)
-		{
-			$post = format_message($reply_token,$array_carousel);	
-			send_reply_message($API_URL, $POST_HEADER, $post);	
-		}
-	}
+	
  /*
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
