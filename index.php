@@ -7,6 +7,7 @@ require 'RichMenu/setrichMenuDefault.php';
 //echo $db;
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
+$API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 $request = file_get_contents('php://input');   // Get request content
@@ -57,8 +58,20 @@ if ( sizeof($request_array['events']) > 0 )
 
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
-		$post = format_message($reply_token,carousel_product_type($db,$text));
-		send_reply_message($API_URL, $POST_HEADER, $post);
+		$array_carousel = carousel_product_type($db,$text);
+		if(sizeof($array_carousel) > 1)
+		{
+			for($i=0;$i<=sizeof($array_carousel);$i++)
+			{
+				$post = format_message($reply_token,$array_carouosel);	 
+				send_reply_message($API_URL_push, $POST_HEADER, $post);
+			}
+		}
+		else
+		{
+			$post = format_message($reply_token,$array_carouosel);	
+			send_reply_message($API_URL, $POST_HEADER, $post);
+		}
 
 	}
 /*	elseif ($text=='โปรโมชัน')
@@ -227,6 +240,9 @@ function format_message($reply_token,$message)
 	$data = ['replyToken' => $reply_token,'messages' => [ $message ]];
 	return $data;
 }
+
+
+
 
 function t()
 {
