@@ -163,7 +163,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    $carousel = array();
    if($num_carousel <=10)
    {
-      for ($i=0; $i<10;$i++)
+      for ($i=0; $i<=$num_carousel;$i++)
      {
         $datas = [];
         $datas['type'] = 'template';
