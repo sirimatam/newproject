@@ -5,7 +5,7 @@ require 'function.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
-print_r($db,'U4d994fb88c95746450218fa07134c6b4');
+print_r(show_address($db,'U4d994fb88c95746450218fa07134c6b4'));
 
 
 //echo $db;
