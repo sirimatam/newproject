@@ -189,7 +189,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    else
    {
    while( $running < $num_carousel)  
-   
+   {
 	   $datas = [];
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
