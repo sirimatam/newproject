@@ -64,6 +64,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ที่อยู่จัดส่ง')
 	{
+		$data = [];
 		$data['type'] = 'template';
 		$data['altText'] = 'this is a buttons template';
 		$data['template']['type'] = 'buttons';
