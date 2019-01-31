@@ -131,7 +131,7 @@ function button_all_type()
   }  
 function show_address($db,$cusid)
 {
-	$query = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = $cusid");
+	$query = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'");
 	$address = pg_fetch_row($query)[0];
 	
 	$data = [];
