@@ -336,7 +336,7 @@ function add_favorite($db,$cus_id,$prod_id)
 
 
   
-  function carousel_show_favorite($cus_id)
+  function carousel_show_favorite($db,$cus_id)
   {
     $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'"); 
     //$list = pg_fetch_row($check);
