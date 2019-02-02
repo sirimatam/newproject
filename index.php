@@ -214,9 +214,8 @@ if ( sizeof($request_array['events']) > 0 )
 	if(explode(" ",$info)[0] == 'Delete_fav')
 	{
 		$fav_id = explode(" ",$info)[1];
-		//delete_favorite($db,$fav_id);
-		$data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$fav_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
-			  send_reply_message($API_URL, $POST_HEADER, $data);
+		delete_favorite($db,$fav_id);
+		
 	}
 	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
