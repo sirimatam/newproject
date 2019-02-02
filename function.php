@@ -269,6 +269,10 @@ function carousel_view_more($db,$prod_id)
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
         $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
+	$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
+	$datas['template']['columns'][$i]['actions'][0]['data'] = 'สั่งสินค้ามากว่า 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';  
@@ -318,7 +322,7 @@ function carousel_view_more($db,$prod_id)
   
 //if message['text'] == 'Favorite'.$prod_id
   
-function add_favorite($db,$prod_id,$cus_id)
+function add_favorite($db,$cus_id,$prod_id)
   {
     /* check fav cannot more than 10 */
    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'");
