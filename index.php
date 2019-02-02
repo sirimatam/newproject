@@ -48,26 +48,13 @@ if ( sizeof($request_array['events']) > 0 )
 		
 	}
 
-	           elseif ($text=='เช็คสถานะ')
+	elseif ($text=='เช็คสถานะ')
 	{
-$data = [];
-    $data['type'] = 'template';
-    $data['altText'] = 'this is a buttons template';
-    $data['template']['type'] = 'buttons';
-    $data['template']['actions'][0]['type'] = 'message';
-    $data['template']['actions'][0]['label'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['actions'][0]['text'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['actions'][1]['type'] = 'message';
-    $data['template']['actions'][1]['label'] = 'แจ้งโอนเงิน';
-    $data['template']['actions'][1]['text'] = 'แจ้งโอนเงิน';
-    $data['template']['actions'][2]['type'] = 'message';
-    $data['template']['actions'][2]['label'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['actions'][2]['text'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
+		$data = button_order_status($cus_id);
 		$data1 = format_message($reply_token,$data);
 			   
-			   $send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
-			   file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		$send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
+		//file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 
 	
@@ -75,12 +62,12 @@ $data = [];
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$array_carousel = carousel_product_type($db,$text);
-		$post = format_message($reply_token,$array_carousel);	
-	        $send_result = send_reply_message($API_URL, $POST_HEADER, $post);
-		file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		//$post = format_message($reply_token,$array_carousel);	
+	        //$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
+		//file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+		//file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 
-		/*
+		
 		if(sizeof($array_carousel) > 1)
 		{
 			for($i=0;$i<sizeof($array_carousel);$i++)
@@ -95,7 +82,7 @@ $data = [];
 		{
 			$post = format_message($reply_token,$array_carousel);	
 			send_reply_message($API_URL, $POST_HEADER, $post);
-		}*/
+		}
 
 	}
 /*	elseif ($text=='โปรโมชัน')
