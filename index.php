@@ -3,27 +3,20 @@ require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
-
 print_r(carousel_product_type($db,'เดรส'));
-
 //echo $db;
-
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
-
 if ( sizeof($request_array['events']) > 0 )
 {
  foreach ($request_array['events'] as $event)
  {
   $reply_message = '';
   $reply_token = $event['replyToken']; 
-
-
-
 	 
   if ( $event['type'] == 'message' ) 
   {
@@ -47,7 +40,6 @@ if ( sizeof($request_array['events']) > 0 )
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
-
 	elseif ($text=='เช็คสถานะ')
 	{
 		$data = button_order_status($cus_id);
@@ -56,7 +48,6 @@ if ( sizeof($request_array['events']) > 0 )
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
 		//file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
-
 	
  
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
@@ -66,7 +57,6 @@ if ( sizeof($request_array['events']) > 0 )
 	        //$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
 		//file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 		//file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
-
 		
 		if(sizeof($array_carousel) > 1)
 		{
@@ -75,7 +65,6 @@ if ( sizeof($request_array['events']) > 0 )
 				$post = format_message($reply_token,$array_carousel);	 
 				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
 				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-
 			}
 		}
 		else
@@ -83,13 +72,11 @@ if ( sizeof($request_array['events']) > 0 )
 			$post = format_message($reply_token,$array_carousel);	
 			send_reply_message($API_URL, $POST_HEADER, $post);
 		}
-
 	}
 /*	elseif ($text=='โปรโมชัน')
 	{
 		$post = show_promotion_product();
 		send_reply_message($API_URL, $POST_HEADER, $post);
-
 	}
        elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
 	{
@@ -99,9 +86,7 @@ if ( sizeof($request_array['events']) > 0 )
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
-
 //send_reply_message($API_URL, $POST_HEADER, $post_body);
-
 		
 	}
 	   
@@ -191,23 +176,23 @@ if ( sizeof($request_array['events']) > 0 )
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
 	
-	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
+/*	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
 		if(explode(" ",$info)[1] == $prod_id)
 		{
-			if(explode(" ",$info)[0] == 'View')
+			if(explode(" ",$info)[0]) == 'View')
 			{
-			  $data = format_message($reply_token,carousel_view_more($db,$prod_id));
+			  $data = carousel_view_more($prod_id);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
-			if(explode(" ",$text)[0] == 'Favorite')
+			if(explode(" ",$text)[0]) == 'Favorite')
 			{
-			  //add_favorite($db,$prod_id,$userid);	
+			  add_favorite($prod_id,$userid);	
 			}
 		}
 	}
-	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
 		if(explode(" ",$info)[1] == $sku_id)
@@ -229,32 +214,18 @@ if ( sizeof($request_array['events']) > 0 )
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
-
-
-
    	
 //$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 //send_reply_message($API_URL, $POST_HEADER, $post_body);
-
     
   
 }
 } 
-
-
-
-
-
-
 function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
 	return $data;
 }
-
-
-
-
 function t()
 {
 $data = 
@@ -333,8 +304,6 @@ $data =
 ];
    return $data;
 }
-
-
 function send_reply_message($url, $post_header, $post)
 {
  $ch = curl_init($url);
@@ -347,7 +316,5 @@ function send_reply_message($url, $post_header, $post)
  curl_close($ch);
  return $result;
 } 
-
-
  
 ?>
