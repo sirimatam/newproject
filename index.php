@@ -225,7 +225,7 @@ if ( sizeof($request_array['events']) > 0 )
 			{
 			 /* $cart_qtt = 1;
 			  $data = add_to_cart($sku_id[0],$userid,$cart_qtt);
-			  send_reply_message($API_URL, $POST_HEADER, $data);*/
+			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
 			{
