@@ -167,7 +167,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}	
 	}
-	
+	print_r($types);
 
 //   elseif (substr($text,0,6) =='addcus') //comment
 	{
@@ -186,7 +186,7 @@ if ( sizeof($request_array['events']) > 0 )
    }
    elseif( $event['message']['type'] == 'image' )
    {
-	   
+	   /*
 	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   
@@ -196,6 +196,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
 	   
+	   */
 	   $data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
 	   send_reply_message($API_URL, $POST_HEADER, $data);
    }
