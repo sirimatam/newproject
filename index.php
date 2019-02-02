@@ -201,10 +201,10 @@ if ( sizeof($request_array['events']) > 0 )
 		// ทดสอบดูค่าของ header ด้วยคำสั่ง getHeaders()
 		$dataHeader = $response->getHeaders();   
 		   //$data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
-		$dataa = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
-	   	send_reply_message($API_URL, $POST_HEADER, $dataa);
-		
+			
 	   }
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
+	   send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   //$get = get_user_content($GET_url,$POST_HEADER);
 
 	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
