@@ -314,20 +314,19 @@ function carousel_view_more($db,$prod_id)
 
 
 
-/*
+
   
 //if message['text'] == 'Favorite'.$prod_id
   
-function add_favorite($prod_id,$cus_id)
+function add_favorite($db,$prod_id,$cus_id)
   {
     /* check fav cannot more than 10 */
-   /* $check = pg_query($db,'SELECT * FROM Favorite WHERE Favorite.cus_id = $cus_id');
+   $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'");
     $count = pg_num_rows($check);
-    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น'}  
+    if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    $fave_id++;
-    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
+    pg_query($db,"INSERT INTO favorite (cus_id,prod_id) VALUES ($cus_id,$prod_id)");
     }
   }  
 
