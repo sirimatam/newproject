@@ -186,15 +186,26 @@ if ( sizeof($request_array['events']) > 0 )
    }
    elseif( $event['message']['type'] == 'image' )
    {
-	   $data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
-	   send_reply_message($API_URL, $POST_HEADER, $data);
+	   
 	   /*
 	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
-	   $msgid =  $event['message']['id'];  
-	   
-	   $get = get_user_content($GET_url,$POST_HEADER);
+	   $msgid =  $event['message']['id']; 
+	   $response = getMessageContent($msgid);
+	   if ($response->isSucceeded()) 
+	   {
+		// คำสั่ง getRawBody() ในกรณีนี้ จะได้ข้อมูลส่งกลับมาเป็น binary 
+		// เราสามารถเอาข้อมูลไปบันทึกเป็นไฟล์ได้
+		$dataBinary = $response->getRawBody(); // return binary
+		// ทดสอบดูค่าของ header ด้วยคำสั่ง getHeaders()
+		$dataHeader = $response->getHeaders();   
+		   //$data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
+		$data = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
+	   	send_reply_message($API_URL, $POST_HEADER, $data);
+		
+	   }
+	   //$get = get_user_content($GET_url,$POST_HEADER);
 
 	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
 	   
@@ -202,7 +213,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $time = date("H:i:sa");
 	   $date = date("Y/m/d") ;
 	   
-	   pg_guery($db,"INSERT INTO payment VALUES ('1',$get,$date,$time,'order1','0')");
+	   //pg_guery($db,"INSERT INTO payment VALUES ('1',$get,$date,$time,'order1','0')");
 	   
 	   
    }
@@ -291,6 +302,10 @@ function get_user_content($url, $post_header)
  return $result;
 } 
 
+function getMessageContent($messageId)
+    {
+        return $this->httpClient->get($this->endpointBase . '/v2/bot/message/' . urlencode($messageId) . '/content');
+    }	
    
  
 ?>
