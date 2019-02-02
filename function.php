@@ -178,7 +178,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
       for ($i=0; $i<$num_carousel;$i++)
      {
   	
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
+        //$datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $prod[$i][1];
         $datas['template']['columns'][$i]['text'] = $prod[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
