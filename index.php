@@ -303,6 +303,9 @@ function getMessageContent($messageId)
     {
         return $this->httpClient->get($this->endpointBase . '/v2/bot/message/' . urlencode($messageId) . '/content');
     }	
-   
+function getRawBody()
+{
+    return $this->body;
+}   
  
 ?>
