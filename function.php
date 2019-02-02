@@ -202,20 +202,25 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
 	//$datas['template']['actions'] = [];
+	while($list = pg_fetch_row($pd_type))
+	{
+		$prod[$prod_num] = $list;
+		$prod_num++;
+	}
      for ($i=0;$i<10;$i++)
      {
       
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][$prod_img]; 
-        $datas['template']['columns'][$i]['title'] = $prod[$i][$prod_name];
-        $datas['template']['columns'][$i]['text'] = $prod[$i][$prod_description];
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
+        $datas['template']['columns'][$i]['title'] = $prod[$i][1];
+        $datas['template']['columns'][$i]['text'] = $prod[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][$prod_id];
+        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
         $running++;
      }
      $carousel[ceil($running-10)/10] = $datas;
@@ -235,33 +240,41 @@ function carousel_view_more($db,$prod_id)
   
   $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM Product WHERE prod_id = '$prod_id'"))[0];
   $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM Product WHERE prod_id = '$prod_id'"))[0];
-  $pd_sku = pg_query($db,'SELECT sku_id FROM STOCK WHERE stock.prod_id = $prod_id');
-  $list = pg_fetch_row($pd_sku);
+  $pd_sku = pg_query($db,"SELECT * FROM STOCK WHERE stock.prod_id = '$prod_id'");
+  //$list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
+  $sku = array();
+  $sku_num =0;
   //$times = $num_carousel/10;
    $running = 0;
    $carousel = array();
   if($num_carousel <=10)
    {
-      for ($i=0; $i<10;$i++)
-     {
-        $datas = [];
+	$datas = [];
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_img]; 
+	while($list = pg_fetch_row($pd_sku))
+	{
+		$sku[$sku_num] = $list;
+		$sku_num++;
+	}
+      for ($i=0; $i<10;$i++)
+     {
+     
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $pd_name;
-        $datas['template']['columns'][$i]['text'] = $list[$i][$prod_description]."</br>".$list[$i][$sku_color]."ขนาด".$list[$i][$sku_size]."</br>".$list[$i][$sku_qtt];
+        $datas['template']['columns'][$i]['text'] = $pd_des."</br>".$sku[$i][3]."ขนาด".$sku[$i][4]."</br>".$sku[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$list[$i][$sku_color].' ลงตะกร้าเรียบร้อยแล้ว';
-        $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$list[$i][$sku_id];
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
+        $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';  
      }
-     $carousel[0] = $datas;
-     return $carousel;
+     //$carousel[0] = $datas;
+     return $datas;
    }
    else
    {
