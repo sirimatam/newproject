@@ -191,7 +191,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
      }
      $carousel[0] = $datas;
-     return $data;
+     return $datas;
    }
    else
    {
