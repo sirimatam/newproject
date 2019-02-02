@@ -50,11 +50,11 @@ if ( sizeof($request_array['events']) > 0 )
 
 	elseif ($text=='เช็คสถานะ')
 	{
-		$data = button_order_status($cus_id);
+		$data = button_order_status($userid);
 		$data1 = format_message($reply_token,$data);
 			   
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
-		//file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 
 	
@@ -80,8 +80,9 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		else
 		{
-			$post = format_message($reply_token,$array_carousel);	
+			$post = format_message($reply_token,$array_carousel[0]);	
 			send_reply_message($API_URL, $POST_HEADER, $post);
+			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 		}
 
 	}
