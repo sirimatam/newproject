@@ -86,14 +86,6 @@ if ( sizeof($request_array['events']) > 0 )
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
-	/*  
-       elseif ($text=='ดูที่อยู่จัดส่ง')
-	{
-	       $address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = '$cusid'");
-	       $show_address = pg_fetch_row($address)[0];
-	       format_message($reply_token,$show_address);	       
-	       send_reply_message($API_URL, $POST_HEADER, $data);
-	} */
        elseif ($text=='แก้ไขชื่อและที่อยู่')
 	{
 	        $ans = ['type'=>'text','text' => 'พิมพ์ @@ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@@น.ส.เสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
@@ -128,6 +120,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}	
         elseif ($text=='เช็คสถานะพัสดุ')
 	{
+		/* ทำได้ๆๆๆ 
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
 		$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
@@ -135,7 +128,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
-		/*
+		*/
 		
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
@@ -143,17 +136,18 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			if($payment == 0)
 			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
-			else { $reply = 'กำลังจัดเตรียมสินค้า'}
+			else { $reply = 'กำลังจัดเตรียมสินค้า';}
 			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
 			send_reply_message($API_URL, $POST_HEADER, $data);
 		}
 		else
 		{
 			$track = new Trackingmore;
-			$track = $track->getSingleTrackingResult('kerry-logistics',$trackingNumber,'en');
-			send_reply_message($API_URL, $POST_HEADER, $track);
+			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,,Array());
+			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+			send_reply_message($API_URL, $POST_HEADER, $data);
 		}
-		*/
+		
 		
 	}
 	   
