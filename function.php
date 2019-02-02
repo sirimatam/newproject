@@ -328,7 +328,7 @@ function add_favorite($prod_id,$cus_id)
     else{
     $fave_id++;
     pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
-    }*/
+    }
   }  
 
 
