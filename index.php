@@ -5,7 +5,7 @@ require 'function.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
-
+/*
 $trackingNumber = 'SHX306592865TH';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
@@ -17,7 +17,7 @@ echo '</br></br></br></br></br></br> above is trace // below is encode trace';
 
 print_r(json_encode($trace));
 
-
+*/
 
 	
 $GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
@@ -130,9 +130,9 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
-		$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
-		//$trace = implode(" ",$track['data']['items'][0]['lastEvent']);
-		$data = format_message($reply_token,['type'=>'text','text'=>$trace]);
+		$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
+		
+		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 		/*
