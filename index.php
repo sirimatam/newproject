@@ -10,8 +10,12 @@ $trackingNumber = 'SHX306592865TH';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
 print_r($track);
-echo '///////////////////////////</br></br></br></br></br>';
+echo '</br></br></br></br></br></br>';
+$trace = $track['data']['items'][0]['lastEvent'];
+print_r($trace);
+echo '</br></br></br></br></br></br> above is trace // below is encode trace';
 
+print_r(json_encode($trace));
 
 
 
