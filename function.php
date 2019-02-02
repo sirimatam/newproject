@@ -369,17 +369,17 @@ function add_favorite($db,$cus_id,$prod_id)
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
-        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete '.$fav[$i];
+        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
      }
     return $datas;
   }
   
   /* if message['text'] == delete.$fav_id' */
-  /*function delete_favorite($fav_id)
+  function delete_favorite($db,$fav_id)
   {
-    pg_query('DELETE FROM Favorite WHERE fav_id = $fav_id');
+    pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-
+/*
   function delete_from_cart($sku_id,$cus_id)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
