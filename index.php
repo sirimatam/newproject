@@ -127,7 +127,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$trackingNumber = 'SHX306592865TH';
 		$track = new Trackingmore;
 		$track = $track->getSingleTrackingResult('kerry-logistics','SHX306592865TH',Array());
-		$data = format_message($reply_token,['type'=>'text','text'=>json_encode($track)]);
+		$trace = implode(" ",$track['data']['items'][0]['lastEvent']);
+		$data = format_message($reply_token,['type'=>'text','text'=>json_encode($trace)]);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 		/*
