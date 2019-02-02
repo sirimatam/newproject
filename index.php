@@ -200,7 +200,7 @@ if ( sizeof($request_array['events']) > 0 )
 			if(explode(" ",$info)[0] == 'View')
 			{
 			  $data = format_message($reply_token,carousel_view_more($db,$prod_id[0]));
-			  send_reply_message($API_URL, $POST_HEADER, $data);
+			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
 			if(explode(" ",$text)[0] == 'Favorite')
