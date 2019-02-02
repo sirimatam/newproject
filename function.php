@@ -330,7 +330,7 @@ function add_favorite($db,$cus_id,$prod_id)
     if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    pg_query($db,"INSERT INTO favorite (cus_id,prod_id) VALUES ($cus_id,$prod_id)");
+    pg_query($db,"INSERT INTO favorite (cus_id,prod_id) VALUES ('$cus_id','$prod_id')");
     }
   }  
 
