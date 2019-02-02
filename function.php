@@ -178,17 +178,17 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
       for ($i=0; $i<$num_carousel;$i++)
      {
   	
-        $datas['template']['actions']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
-        $datas['template']['actions']['columns'][$i]['title'] = $prod[$i][1];
-        $datas['template']['actions']['columns'][$i]['text'] = $prod[$i][4];
-        $datas['template']['actions']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['actions']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['actions']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['actions']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
-        $datas['template']['actions']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['actions']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['template']['actions']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas['template']['actions']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
+        $datas['template']['columns'][$i]['title'] = $prod[$i][1];
+        $datas['template']['columns'][$i]['text'] = $prod[$i][4];
+        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
+        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
      }
      $carousel[0] = $datas;
      return $carousel;
