@@ -240,7 +240,7 @@ function carousel_view_more($db,$prod_id)
   
   $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM Product WHERE prod_id = '$prod_id'"))[0];
   $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM Product WHERE prod_id = '$prod_id'"))[0];
-  $pd_sku = pg_query($db,"SELECT * FROM STOCK WHERE stock.prod_id = '$prod_id'");
+  $pd_sku = pg_query($db,"SELECT * FROM stock WHERE stock.prod_id = '$prod_id'");
   //$list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
   $sku = array();
@@ -360,7 +360,7 @@ function add_favorite($db,$cus_id,$prod_id)
      {
         
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod_array[0]; //check prod_name ว่าต้องมี [$i] มั้ย
+        $datas['template']['columns'][$i]['title'] = $prod_array[$i][0]; //check prod_name ว่าต้องมี [$i] มั้ย
         $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
