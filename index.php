@@ -197,11 +197,11 @@ if ( sizeof($request_array['events']) > 0 )
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
-		if(explode(" ",$info)[1] == $prod_id)
+		if(explode(" ",$info)[1] == $prod_id[0])
 		{
 			if(explode(" ",$info)[0] == 'View')
 			{
-			  $data = format_message($reply_token,carousel_view_more($db,$prod_id));
+			  $data = format_message($reply_token,carousel_view_more($db,$prod_id[0]));
 			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
@@ -211,6 +211,11 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
+	if(explode(" ",$info)[0] == 'Delete_fav')
+	{
+		$fav_id = explode(" ",$info)[1];
+		delete_favorite($db,$fav_id);	
+	}
 	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
@@ -218,14 +223,14 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			if(explode(" ",$info)[0]) == 'Cart')
 			{
-			  $cart_qtt = 1;
+			 /* $cart_qtt = 1;
 			  $data = add_to_cart($sku_id[0],$userid,$cart_qtt);
-			  send_reply_message($API_URL, $POST_HEADER, $data);
+			  send_reply_message($API_URL, $POST_HEADER, $data);*/
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
 			{
 			  delete_from_cart($sku_id,$userid);
-			  $data = $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
+			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 		}
