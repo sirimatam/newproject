@@ -143,7 +143,7 @@ if ( sizeof($request_array['events']) > 0 )
 		else
 		{
 			$track = new Trackingmore;
-			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,,Array());
+			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
 			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
 			send_reply_message($API_URL, $POST_HEADER, $data);
 		}
