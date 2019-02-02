@@ -157,7 +157,7 @@ if ( sizeof($request_array['events']) > 0 )
 		
 	}
 	   
-	
+/*	
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -187,8 +187,8 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		$reply_message = "$custlist";
 	}
-
-   }
+*/
+   } 
    elseif( $event['message']['type'] == 'image' )
    {
 	   
