@@ -192,17 +192,15 @@ if ( sizeof($request_array['events']) > 0 )
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
 	   $msgid =  $event['message']['id']; 
-	   $response = getMessageContent($msgid);
-	    if ($response->isSucceeded()) {
+	   $response = get_user_content($GET_url,$POST_HEADER);
+	    
 		// คำสั่ง getRawBody() ในกรณีนี้ จะได้ข้อมูลส่งกลับมาเป็น binary 
 		// เราสามารถเอาข้อมูลไปบันทึกเป็นไฟล์ได้
 		$dataBinary = $response->getRawBody(); // return binary
 		// ทดสอบดูค่าของ header ด้วยคำสั่ง getHeaders()
 		$dataHeader = $response->getHeaders();   
 		$dataa = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
-	   	send_reply_message($API_URL, $POST_HEADER, $dataa);
-		break;
-	    }
+	   	send_reply_message($API_URL, $POST_HEADER, $dataa);	    }
 	   
 	   //$get = get_user_content($GET_url,$POST_HEADER);
 
@@ -289,9 +287,9 @@ function send_reply_message($url, $post_header, $post)
  return $result;
 } 
 
-function get_user_content($url, $post_header)
+function get_user_content($get_url, $post_header)
 {
- $ch = curl_init($url);
+ $ch = curl_init($get_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
