@@ -190,7 +190,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
         $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
      }
-     $carousel[0] = $datas;
+     //$carousel[0] = $datas;
      return $datas;
    }
    else
@@ -355,7 +355,7 @@ function add_favorite($prod_id,$cus_id)
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
     pg_query('DELETE FROM Cart_product WHERE sku_id = $sku_id AND cartp_id = $cart_avail');
   }
-  
+  */
   function button_order_status($cus_id)
   {
     $data = [];
@@ -376,7 +376,7 @@ function add_favorite($prod_id,$cus_id)
     return $data;
   }
 
-  
+  /*
 
   
   
