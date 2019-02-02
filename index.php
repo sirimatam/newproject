@@ -134,7 +134,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
 		if(strlen($trackingNumber)=0)
 		{
-			if($payment == 0)
+			if(strlen($payment) == 0)
 			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
 			else { $reply = 'กำลังจัดเตรียมสินค้า';}
 			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
