@@ -195,11 +195,11 @@ if ( sizeof($request_array['events']) > 0 )
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
-		if(explode(" ",$info)[1] == $prod_id)
+		if(explode(" ",$info)[1] == $prod_id[0])
 		{
 			if(explode(" ",$info)[0] == 'View')
 			{
-			  $data = format_message($reply_token,carousel_view_more($db,$prod_id));
+			  $data = format_message($reply_token,carousel_view_more($db,$prod_id[0]));
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
