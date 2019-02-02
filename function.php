@@ -228,12 +228,13 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 }
   
   
-/*
+
   
-function carousel_view_more($prod_id) 
+function carousel_view_more($db,$prod_id) 
 {
-  $pd_name = pg_fetch_row(pg_query($db,'SELECT prod_name FROM Product WHERE prod_id = $prod_id'))[0];
-  $pd_des = pg_fetch_row(pg_query($db,'SELECT prod_description FROM Product WHERE prod_id = $prod_id'))[0];
+  
+  $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM Product WHERE prod_id = '$prod_id'"))[0];
+  $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM Product WHERE prod_id = '$prod_id'"))[0];
   $pd_sku = pg_query($db,'SELECT sku_id FROM STOCK WHERE stock.prod_id = $prod_id');
   $list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
@@ -296,11 +297,11 @@ function carousel_view_more($prod_id)
   
   
 }
-*/
 
 
 
 
+/*
   
 //if message['text'] == 'Favorite'.$prod_id
   
