@@ -191,22 +191,22 @@ if ( sizeof($request_array['events']) > 0 )
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
 	
-/*	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
+	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
 		if(explode(" ",$info)[1] == $prod_id)
 		{
-			if(explode(" ",$info)[0]) == 'View')
+			if(explode(" ",$info)[0] == 'View')
 			{
-			  $data = carousel_view_more($prod_id);
+			  $data = format_message($reply_token,carousel_view_more($db,$prod_id));
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
-			if(explode(" ",$text)[0]) == 'Favorite')
+			if(explode(" ",$text)[0] == 'Favorite')
 			{
-			  add_favorite($prod_id,$userid);	
+			  //add_favorite($db,$prod_id,$userid);	
 			}
 		}
-	}
+	}/*
 	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
