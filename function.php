@@ -219,7 +219,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึก '.$prod[$i][1].' เป็น Favorite';   
         $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
         $running++;
      }
