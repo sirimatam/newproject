@@ -67,6 +67,7 @@ $data = [];
 		$data1 = format_message($reply_token,$data);
 			   
 			   $send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
+			   file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 
 	
