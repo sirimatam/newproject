@@ -259,7 +259,7 @@ if ( sizeof($request_array['events']) > 0 )
   }
  }
 }
-
+}
 
 
 
