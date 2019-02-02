@@ -196,11 +196,11 @@ if ( sizeof($request_array['events']) > 0 )
 	    
 		// คำสั่ง getRawBody() ในกรณีนี้ จะได้ข้อมูลส่งกลับมาเป็น binary 
 		// เราสามารถเอาข้อมูลไปบันทึกเป็นไฟล์ได้
-		$dataBinary = $response->getRawBody(); // return binary
+		$dataBinary = getRawBody(); // return binary
 		// ทดสอบดูค่าของ header ด้วยคำสั่ง getHeaders()
 		$dataHeader = $response->getHeaders();   
 		$dataa = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
-	   	send_reply_message($API_URL, $POST_HEADER, $dataa);	    }
+	   	send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   
 	   //$get = get_user_content($GET_url,$POST_HEADER);
 
@@ -299,13 +299,5 @@ function get_user_content($get_url, $post_header)
  return $result;
 } 
 
-function getMessageContent($messageId)
-    {
-        return $this->httpClient->get($this->endpointBase . '/v2/bot/message/' . urlencode($messageId) . '/content');
-    }	
-function getRawBody()
-{
-    return $this->body;
-}   
- 
+
 ?>
