@@ -205,7 +205,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 			if(explode(" ",$text)[0] == 'Favorite')
 			{
-			  //add_favorite($db,$prod_id,$userid);	
+			  add_favorite($db,$userid,$prod_id[0]);	
 			}
 		}
 	}
