@@ -126,23 +126,24 @@ if ( sizeof($request_array['events']) > 0 )
 		   ];
 	       send_reply_message($API_URL, $POST_HEADER,$data);
        }  
-       
+       */
        elseif ($text=='สินค้าที่ชอบ')
 	{
-		$post = carousel_show_favorite($userid);
+		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
-		if(explode(" ",$text)[0] == $sku_id)
+		if(explode(" ",$text)[0] == $sku_id[0])
 		{
 			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id,$userid,$cart_qtt);
+			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
 			send_reply_message($API_URL, $POST_HEADER, $data);
 			
 		}
 	}
+	   
         elseif ($text=='เช็คสถานะ')
 	{
 		$reply_message = "6";
@@ -212,12 +213,12 @@ if ( sizeof($request_array['events']) > 0 )
 	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
-		if(explode(" ",$info)[1] == $sku_id)
+		if(explode(" ",$info)[1] == $sku_id[0])
 		{
 			if(explode(" ",$info)[0]) == 'Cart')
 			{
 			  $cart_qtt = 1;
-			  $data = add_to_cart($sku_id,$userid,$cart_qtt);
+			  $data = add_to_cart($sku_id[0],$userid,$cart_qtt);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
