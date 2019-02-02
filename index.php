@@ -206,8 +206,8 @@ if ( sizeof($request_array['events']) > 0 )
 			  //add_favorite($db,$prod_id,$userid);	
 			}
 		}
-	}/*
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	}
+	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
 		if(explode(" ",$info)[1] == $sku_id)
