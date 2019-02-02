@@ -193,16 +193,14 @@ if ( sizeof($request_array['events']) > 0 )
 	   */
 	   $msgid =  $event['message']['id']; 
 	   $response = getMessageContent($msgid);
-	   if ($response->isSucceeded()) 
-	   {
-		// คำสั่ง getRawBody() ในกรณีนี้ จะได้ข้อมูลส่งกลับมาเป็น binary 
+	   // คำสั่ง getRawBody() ในกรณีนี้ จะได้ข้อมูลส่งกลับมาเป็น binary 
 		// เราสามารถเอาข้อมูลไปบันทึกเป็นไฟล์ได้
 		$dataBinary = $response->getRawBody(); // return binary
 		// ทดสอบดูค่าของ header ด้วยคำสั่ง getHeaders()
 		$dataHeader = $response->getHeaders();   
 		   //$data = format_message($reply_token,['type'=>'text','text'=> 'ได้รับสลิปแล้วค่ะ กรุณารอการยืนยันจากแอดมิน']);
 			
-	   }
+	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> $dataHeader]);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   //$get = get_user_content($GET_url,$POST_HEADER);
