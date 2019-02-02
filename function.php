@@ -345,7 +345,7 @@ function add_favorite($db,$cus_id,$prod_id)
     $fav = array();
     while ($list = pg_fetch_row($check))
     {
-	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]'"))[0]; 
+	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]'")); 
 	    $prod_array[$i] = $prod; 
 	    $fav[$i] = $list[0];
 	    $i++;
@@ -360,7 +360,7 @@ function add_favorite($db,$cus_id,$prod_id)
      {
         
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod_array[$i][0]; //check prod_name ว่าต้องมี [$i] มั้ย
+        $datas['template']['columns'][$i]['title'] = $prod_array[$i][1]; //check prod_name ว่าต้องมี [$i] มั้ย
         $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
