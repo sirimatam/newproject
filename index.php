@@ -217,7 +217,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
    }
-  }
+  
   elseif($event['type'] == 'postback')
   {
   	$userid = $event['source']['userId'];
