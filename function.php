@@ -264,7 +264,7 @@ function carousel_view_more($db,$prod_id)
      
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $pd_name;
-        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."จำนวน : ".$sku[$i][2];
+        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."\n"."จำนวน : ".$sku[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
