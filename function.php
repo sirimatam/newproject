@@ -259,7 +259,7 @@ function carousel_view_more($db,$prod_id)
 		$sku[$sku_num] = $list;
 		$sku_num++;
 	}
-      for ($i=0; $i<10;$i++)
+      for ($i=0; $i<$num_carousel;$i++)
      {
      
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
