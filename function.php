@@ -379,13 +379,13 @@ function add_favorite($db,$cus_id,$prod_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-/*
-  function delete_from_cart($sku_id,$cus_id)
+
+  function delete_from_cart($db,$sku_id,$cus_id)
   {
-    $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
-    pg_query('DELETE FROM Cart_product WHERE sku_id = $sku_id AND cartp_id = $cart_avail');
+    $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
+    pg_query("DELETE FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'");
   }
-  */
+  
   function button_order_status($cus_id)
   {
     $data = [];
