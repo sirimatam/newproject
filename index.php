@@ -196,6 +196,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   $response = get_user_content($GET_url,$POST_HEADER);
 	   $img_binary = $response->getRawBody();
+	   file_put_contents("php://stderr", "image id ===> ".$img_binary);
 	   //$fileFullSavePath = '$response->getHeaders()'.'.jpg';  อันนี้เอาชื่อรูป
 	   
 	   
