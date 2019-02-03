@@ -94,10 +94,12 @@ if ( sizeof($request_array['events']) > 0 )
 	}*/
        elseif ($text=='ตะกร้าสินค้า')
 	{
-		$post = format_message_push($reply_token,carousel_cart($db,$userid));
+	        for($i=0;$i<2;$i++)
+		{
+		$post = format_message($reply_token,carousel_cart($db,$userid)[$i]);
 		send_reply_message($API_URL_push, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
-
+		}
 	}
 /*	elseif ($text=='ที่อยู่จัดส่ง')
 	{
