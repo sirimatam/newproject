@@ -443,50 +443,51 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
   }    
   
 //ยังแก้ไม่เสร็จ  
-/*function carousel_cart($cus_id)
+function carousel_cart($db,$cus_id)
 {
-    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE Createcart.cus_id = $cus_id AND Createcart.cart_used = '0'"))[0];
-    $skuid = pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid");
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$cus_id' AND createcart.cart_used = '0'"))[0];
+    $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
-    $skurow = pg_fetch_row(pg_query($db,"SELECT sku_id FROM Cart_product WHERE Cart_product.cartp_id = $cartid"));
-    while($aaa = $skurow)
+    while($aaa = pg_fetch_row($skuid)[0])
     {
-	    $skuarray[$run1] = $aaa;
+	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
+	    $skuarray[$run1] = $sku_detail;
 	    $run1++;
     }
+    
 	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
     $namearray = array();
     $run2 = 0;
-    for($i=0; $i<=pg_num_rows($skuid);$i++)
+    for($i=0; $i<pg_num_rows($skuid);$i++)
     {
-	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.sku_id = $skuarray[$i] AND Stock.prod_id = Product.prod_id"));
-	 $namearray[$run2] = array($x[0],$x[1],$x[2]) ;
+	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM product WHERE prod_id = '$skuarray[$i][1]'"));
+	 $namearray[$run2][0] = $x[0] ;
+	 $namearray[$run2][1] = $x[1] ;
+	 $namearray[$run2][2] = $x[2] ;
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
     
-    $cartitems = pg_query($db,'SELECT * FROM Cart_product WHERE Cart_product.cartp_id = $cartid');
-    $list = pg_fetch_row($cartitems);
-    for ($i=0; $i<pg_num_rows($skuid);$i++)
-     {	
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';        
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $list[$i][$sku_id]; 
+    for ($i=0; $i<pg_num_rows($skuid);$i++)
+     {	
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
         $datas['template']['columns'][$i]['text'] = $namearray[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$namearray[$i][0].'ออกจาก Favorite เรียบร้อย';  
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i];
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$skuarray[$i][0].'ออกจากตะกร้าเรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
     return $datas;
   }
     
     
-
+/*
 function flex_order($order_id)
 {
 	$data = [];
