@@ -463,8 +463,8 @@ function carousel_cart($db,$cus_id)
     for($i=0; $i<pg_num_rows($skuid);$i++)
     {
 	 $prod_id = $skuarray[$i][1];
-	 $x = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '4'"))[0];
-	 $y = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '4'"))[0];
+	 $x = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$prod_id'"))[0];
+	 $y = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$prod_id'"))[0];
 	 $namearray[$run2][0] = $skuarray[$i][1];
 	 $namearray[$run2][1] = $x;
 	 $namearray[$run2][2] = $y;
