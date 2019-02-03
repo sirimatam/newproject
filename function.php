@@ -473,7 +473,7 @@ function carousel_cart($db,$cus_id)
         $datas['template']['type'] = 'carousel';        
     for ($i=0; $i<pg_num_rows($skuid);$i++)
      {	
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][1]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
         $datas['template']['columns'][$i]['text'] = $namearray[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
