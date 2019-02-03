@@ -132,7 +132,7 @@ if ( sizeof($request_array['events']) > 0 )
        */
        elseif ($text=='สินค้าที่ชอบ')
 	{
-		$post = format_message($userid,carousel_show_favorite($db,$userid));
+		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
