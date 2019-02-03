@@ -193,7 +193,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $msgid =  $event['message']['id']; 
 	   $response = get_user_content($GET_url,$POST_HEADER);
 	    
-	   $dataa = format_message($reply_token,['type'=>'text','text'=> json_encode($response)]);
+	   
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   
 	   //$get = get_user_content($GET_url,$POST_HEADER);
@@ -206,6 +206,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   //pg_guery($db,"INSERT INTO payment VALUES ('1',$get,$date,$time,'order1','0')");
 	   
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> $response]);
 	   
    }
   
