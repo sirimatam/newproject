@@ -459,8 +459,10 @@ function carousel_cart($db,$cus_id)
 	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
     $namearray = array();
     $run2 = 0;
+    
     for($i=0; $i<pg_num_rows($skuid);$i++)
     {
+	 $x = array();
 	 $x = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$skuarray[$i][1]'"));
 	 $namearray[$run2] = $x;
 	 $run2++;
@@ -473,7 +475,7 @@ function carousel_cart($db,$cus_id)
         $datas['template']['type'] = 'carousel';        
     for ($i=0; $i<pg_num_rows($skuid);$i++)
      {	
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][1]; 
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
         $datas['template']['columns'][$i]['text'] = $namearray[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
