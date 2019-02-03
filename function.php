@@ -480,7 +480,7 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2];
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' จำนวน 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$skuarray[$i][0].'ออกจากตะกร้าเรียบร้อย';  
