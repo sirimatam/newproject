@@ -96,6 +96,8 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$post = format_message($reply_token,carousel_cart($db,$userid));
 		send_reply_message($API_URL, $POST_HEADER, $post);
+	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+
 	}
 /*	elseif ($text=='ที่อยู่จัดส่ง')
 	{
