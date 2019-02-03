@@ -445,7 +445,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 //ยังแก้ไม่เสร็จ  
 function carousel_cart($db,$cus_id)
 {
-    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$cus_id' AND createcart.cart_used = '0'"))[0];
+    $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
     $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
