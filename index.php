@@ -191,6 +191,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
 	   $msgid =  $event['message']['id']; 
+	   
+	   file_put_contents("php://stderr", "image id ===> ".$msgid);
+	   
 	   $response = get_user_content($GET_url,$POST_HEADER);
 	   $img_binary = $response->getRawBody();
 	   //$fileFullSavePath = '$response->getHeaders()'.'.jpg';  อันนี้เอาชื่อรูป
@@ -293,6 +296,7 @@ function get_user_content($get_url, $post_header)
 {
  $ch = curl_init($get_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  $result = curl_exec($ch);
  curl_close($ch);
