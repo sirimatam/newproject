@@ -92,7 +92,7 @@ if ( sizeof($request_array['events']) > 0 )
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}*/
-       elseif ($text=='ตะกร้าสินค้าที่บันทึกไว้')
+       elseif ($text=='ตะกร้าสินค้า')
 	{
 		$post = format_message($reply_token,carousel_cart($db,$userid));
 		send_reply_message($API_URL, $POST_HEADER, $post);
