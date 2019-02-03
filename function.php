@@ -269,10 +269,10 @@ function carousel_view_more($db,$prod_id)
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
         $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
-	$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+	/*$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][0]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
-	$datas['template']['columns'][$i]['actions'][0]['data'] = 'สั่งสินค้ามากว่า 1 ชิ้น';
+	$datas['template']['columns'][$i]['actions'][0]['data'] = 'สั่งสินค้ามากว่า 1 ชิ้น';*/
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';  
@@ -429,17 +429,17 @@ function add_favorite($db,$cus_id,$prod_id)
   
   
 //if message['text'] == 'Cart'.$sku_id
-function add_to_cart($sku_id,$cus_id,$cart_qtt)
+function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
   {
     /* check cart cannot more than 10 */
-  /*  $cartp_id = pg_fetch_row(pg_query($db,'SELECT cartp_id FROM Createcart WHERE cart_used = '0' AND cus_id = $cus_id'));
-    $check = pg_query($db,'SELECT * FROM Cart_product WHERE cartp_id = $cartp_id');
+    $cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$cus_id'"))[0];
+    $check = pg_query($db,"SELECT * FROM Cart_product WHERE cartp_id = '$cartp_id'");
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    pg_query($db,"INSERT INTO Cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ($cartp_id,$sku_id,$cart_qtt)"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
-    }*/
+    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    }
   }    
   
 //ยังแก้ไม่เสร็จ  
