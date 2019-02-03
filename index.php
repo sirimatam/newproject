@@ -228,7 +228,7 @@ if ( sizeof($request_array['events']) > 0 )
 			  $data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
-			if(explode(" ",$info)[0]) == 'Delete')
+			if(explode(" ",$info)[0] == 'Delete')
 			{
 			  delete_from_cart($sku_id,$userid);
 			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id.' ออกจากตะกร้าเรียบร้อยแล้ว']]];
