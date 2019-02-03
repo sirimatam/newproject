@@ -95,7 +95,7 @@ if ( sizeof($request_array['events']) > 0 )
        elseif ($text=='ตะกร้าสินค้า')
 	{
 		$post = format_message($reply_token,carousel_cart($db,$userid));
-		send_reply_message($API_URL, $POST_HEADER, $post);
+		send_reply_message($API_URL_push, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 
 	}
@@ -168,22 +168,6 @@ if ( sizeof($request_array['events']) > 0 )
 		}	
 	}
 	*/
-/*
-//   elseif (substr($text,0,6) =='addcus') //comment
-	{
-		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
-		//$cardata = explode(" ",$text);
-		pg_query($db,"INSERT INTO Customer1 (cus_id,cus_name,cus_lastname,cus_pic) VALUES ($cusid,$cusname,$cuslast,$cuspic)");
-		$result = pg_query($db,"SELECT cus_name FROM Customer1");
-		while ($list = pg_fetch_row($result))
-		{
-			$cust = $list[0]."\n";
-			$custlist .= $cust;
-		}
-		$reply_message = "$custlist";
-	}
-	   // comment
-   */
 	else
 	$reply_message = 'why dont you say hello to me';
    }
@@ -263,87 +247,10 @@ function format_message($reply_token,$message)
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
 	return $data;
 }
-
-
-
-
-function t()
+function format_message_push($reply_token,$message)
 {
-$data = 
-	
-		[
-			'type' => 'flex', 
-			'altText' => 'This is flex message',
-			'contents' => [
-				'type' => 'carousel',
-				'contents' => [
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'first bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'postback',
-								'label' => 'Go',
-								'text' => 'Go',
-								'data' => 'test'
-							]
-						]
-					]
-				]
-			],
-				[
-				'type' => 'bubble',
-				'body' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-					'contents' => [
-						[
-							'type' => 'text',
-							'text' => 'second bubble',
-							'wrap' => true,
-						]
-						]
-					   ],
-				'footer' => [
-					'type' => 'box',
-					'layout' => 'horizontal',
-				
-					'contents' => [
-						[
-							'type' => 'button',
-							'style' => 'primary',
-							
-							'action' => [
-								'type' => 'uri',
-								'label' => 'Go',
-								'uri' => "https://developers.line.me"
-							]
-						]
-					]
-				]
-			]
-			]
-	]
-];
-   return $data;
+	$data = ['replyToken' => $reply_token,'messages' =>  $message ];
+	return $data;
 }
 
 
