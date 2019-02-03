@@ -222,7 +222,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		if(explode(" ",$info)[1] == $sku_id[0])
 		{
-			if(explode(" ",$info)[0]) == 'Cart')
+			if(explode(" ",$info)[0] == 'Cart')
 			{
 			 $cart_qtt = 1;
 			  $data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
