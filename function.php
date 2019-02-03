@@ -461,10 +461,8 @@ function carousel_cart($db,$cus_id)
     $run2 = 0;
     for($i=0; $i<pg_num_rows($skuid);$i++)
     {
-	 $x = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM product WHERE prod_id = '$skuarray[$i][1]'"));
-	 $namearray[$run2][0] = $x[0] ;
-	 $namearray[$run2][1] = $x[1] ;
-	 $namearray[$run2][2] = $x[2] ;
+	 $x = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$skuarray[$i][1]'"));
+	 $namearray[$run2] = $x;
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
@@ -477,7 +475,7 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2];
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$skuarray[$i][0].'ออกจากตะกร้าเรียบร้อย';  
