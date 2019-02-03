@@ -471,7 +471,12 @@ function carousel_cart($db,$cus_id)
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
-    
+    if(pg_num_rows($skuid) == 0)
+    {
+	 $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า']]]; 
+	 return $data;
+    }
+    else{
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
@@ -483,10 +488,11 @@ function carousel_cart($db,$cus_id)
         $datas['template']['columns'][$i]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' จำนวน 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'Delete'.$skuarray[$i][0].'ออกจากตะกร้าเรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
     return $datas;
+    }
   }
     
     
