@@ -96,7 +96,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 	        for($i=0;$i<2;$i++)
 		{
-		$post = format_message($reply_token,carousel_cart($db,$userid)[$i]);
+		$post = format_message_push($reply_token,carousel_cart($db,$userid));
 		send_reply_message($API_URL_push, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 		}
@@ -133,7 +133,7 @@ if ( sizeof($request_array['events']) > 0 )
        */
        elseif ($text=='สินค้าที่ชอบ')
 	{
-		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
+		$post = format_message($userid,carousel_show_favorite($db,$userid));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
@@ -244,14 +244,14 @@ if ( sizeof($request_array['events']) > 0 )
 
 
 
-function format_message($reply_token,$message)
+function format_message($userid,$message)
 {
-	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
+	$data = ['replyToken' => $userid,'messages' =>  [$message] ];
 	return $data;
 }
 function format_message_push($reply_token,$message)
 {
-	$data = ['replyToken' => $reply_token,'messages' =>  $message ];
+	$data = ['to' => $reply_token,'messages' =>  $message ];
 	return $data;
 }
 
