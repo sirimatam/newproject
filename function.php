@@ -446,13 +446,15 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 function carousel_cart($db,$cus_id)
 {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
-    $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
+    $skuid = pg_query($db,"SELECT * FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
-    while($aaa = pg_fetch_row($skuid)[0])
+    $total = 0;
+    while($aaa = pg_fetch_row($skuid))
     {
-	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
+	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa[0]'"));
 	    $skuarray[$run1] = $sku_detail;
+	    $total += $aaa[3];
 	    $run1++;
     }
     
@@ -477,6 +479,8 @@ function carousel_cart($db,$cus_id)
 	 return $data;
     }
     else{
+	$push_array = [];
+	    
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
@@ -491,9 +495,29 @@ function carousel_cart($db,$cus_id)
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
-    return $datas;
+	$datas2 = [];
+	$datas2['type'] = 'template';
+        $datas2['altText'] = 'this is a confirm template';
+        $datas2['template']['type'] = 'confirm';
+    for ($i=0; $i<pg_num_rows($skuid);$i++)
+     {	
+        $datas2['template']['actions'][0]['type'] = 'postback';
+        $datas2['template']['actions'][0]['label'] = 'สั่งซื้อสินค้าในตะกร้า';
+        $datas2['template']['actions'][0]['text'] = 'สั่งซื้อสินค้าในตะกร้า';  
+        $datas2['template']['actions'][0]['data'] =  'Order '.$cartid;
+	$datas2['template']['actions'][1]['type'] = 'postback';
+        $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้าสินค้า';
+        $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้าสินค้า';  
+        $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
+	$datas2['template']['text'] = 'มีสินค้าในตะกร้าทั้งหมดจำนวน '.$total.' ชิ้น';
+     }
+    $push_array[0] = $datas;
+    $push_array[1] = $datas2;	
+    return $push_array;
     }
+	
   }
+	  
     
     
 /*
