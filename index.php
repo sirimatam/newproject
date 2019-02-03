@@ -192,7 +192,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   */
 	   $msgid =  $event['message']['id']; 
 	   $response = get_user_content($GET_url,$POST_HEADER);
-	   $test = fopen($GET_url,'w+');
+	   $test = fopen($GET_url,'r');
 	    
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> $test]);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
