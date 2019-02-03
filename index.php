@@ -298,7 +298,7 @@ function get_user_content($get_url, $post_header)
 {
  $ch = curl_init($get_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
- curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  $result = curl_exec($ch);
  curl_close($ch);
