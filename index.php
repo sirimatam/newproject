@@ -217,15 +217,15 @@ if ( sizeof($request_array['events']) > 0 )
 		delete_favorite($db,$fav_id);
 		
 	}
-	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
 		if(explode(" ",$info)[1] == $sku_id[0])
 		{
 			if(explode(" ",$info)[0]) == 'Cart')
 			{
-			 /* $cart_qtt = 1;
-			  $data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			 $cart_qtt = 1;
+			  $data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 			if(explode(" ",$info)[0]) == 'Delete')
@@ -235,7 +235,7 @@ if ( sizeof($request_array['events']) > 0 )
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 		}
-	}*/
+	}
   }
   else
    $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
