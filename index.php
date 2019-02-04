@@ -306,13 +306,15 @@ function get_user_content($get_url, $post_header)
  curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
  curl_setopt($ch, CURLOPT_FAILONERROR, 1);	
  $result = curl_exec($ch);
- if(!curl_errno($ch))
+ return curl_getinfo($ch);
+ /*
+	if(!curl_errno($ch))
 {
     //send out headers and output
     header ("Content-type: ".curl_getinfo($ch, CURLINFO_CONTENT_TYPE)."");
     header ("Content-Length: ".curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD)."");
-    return curl_getinfo($ch);
-} else echo 'Curl error: ' . curl_error($ch);	
+    
+} else echo 'Curl error: ' . curl_error($ch); */	
  curl_close($ch);
  
 } 
