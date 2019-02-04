@@ -497,6 +497,21 @@ function carousel_cart($db,$cus_id)
      }
 	$datas2 = [];
 	$datas2['type'] = 'template';
+        $datas2['altText'] = 'this is a carousel template';
+        $datas2['template']['type'] = 'carousel';        
+        $datas2['template']['columns'][0]['title'] = $namearray[$i][1];
+        $datas2['template']['columns'][0]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' 1 ชิ้น';
+        $datas2['template']['columns'][0]['actions'][0]['type'] = 'postback';
+        $datas2['template']['columns'][0]['actions'][0]['label'] = 'สั่งซื้อ';
+        $datas2['template']['columns'][0]['actions'][0]['text'] = 'สั่งซื้อ';  
+        $datas2['template']['columns'][0]['actions'][0]['data'] =  'Order '.$cartid;
+        $datas2['template']['columns'][0]['actions'][0]['type'] = 'postback';
+        $datas2['template']['columns'][0]['actions'][0]['label'] = 'ล้างตะกร้า';
+        $datas2['template']['columns'][0]['actions'][0]['text'] = 'ล้างตะกร้า';  
+        $datas2['template']['columns'][0]['actions'][0]['data'] =  'Clear '.$cartid;
+     
+	/*$datas2 = [];
+	$datas2['type'] = 'template';
         $datas2['altText'] = 'this is a confirm template';
         $datas2['template']['type'] = 'confirm';
     for ($i=0; $i<pg_num_rows($skuid);$i++)
@@ -510,7 +525,7 @@ function carousel_cart($db,$cus_id)
         $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
         $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
 	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total.' ชิ้น';
-     }
+     }*/
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
     return $push_array;
