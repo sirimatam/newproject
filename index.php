@@ -96,7 +96,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 	 	for($i=0;$i<2;$i++)
 		{
-		$post = format_message_push($userid,carousel_cart($db,$userid[$i]));
+		$post = format_message_push($userid,carousel_cart($db,$userid)[$i]);
 		send_reply_message($API_URL_push, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 		}
