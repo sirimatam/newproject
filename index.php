@@ -5,6 +5,9 @@ require 'function.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 
+
+
+
 /*
 $trackingNumber = 'SHX306592865TH';
 $track = new Trackingmore;
@@ -298,9 +301,11 @@ function get_user_content($get_url, $post_header)
 {
  $ch = curl_init($get_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
- $result = curl_exec($ch);
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
+ curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
+ curl_setopt($ch, CURLOPT_FAILONERROR, 1);	
+ $result = CURLOPT_FILE();
  curl_close($ch);
  return $result;
 } 
