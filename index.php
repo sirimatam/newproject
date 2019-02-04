@@ -311,7 +311,8 @@ function get_user_content($msgid, $post_header)
  curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
  $result = curl_exec($ch);
  curl_close($ch);
- return $result;
+	
+ return $get_url;
  /*
 	if(!curl_errno($ch))
 {
