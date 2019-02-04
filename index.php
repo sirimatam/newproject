@@ -207,8 +207,8 @@ if ( sizeof($request_array['events']) > 0 )
 	if(explode(" ",$info)[0] == 'Clear')
 	{
 		$cartid = explode(" ",$info)[1];
-		$post = format_message($reply_token,clear_cart($db,$userid,$cartid));
-		
+		$data = format_message($reply_token,clear_cart($db,$userid,$cartid));
+		send_reply_message($API_URL, $POST_HEADER, $data);
 	}
 	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
