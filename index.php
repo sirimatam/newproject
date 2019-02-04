@@ -194,12 +194,11 @@ if ( sizeof($request_array['events']) > 0 )
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
 	   $msgid =  $event['message']['id']; 
-	   $GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
+	   
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
-	   $response = get_user_content($GET_url,$POST_HEADER);
+	   $response = get_user_content($msgid,$POST_HEADER);
 	   
-	   file_put_contents("php://stderr", "get_url ===> ".$GET_url);
 	   file_put_contents("php://stderr", "response ===> ".json_encode($response));
 	   //$img_binary = $response->getRawBody();
 	   
@@ -302,9 +301,9 @@ function send_reply_message($url, $post_header, $post)
 
 //$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-function get_user_content($get_url, $post_header)
+function get_user_content($msgid, $post_header)
 {
- $ch = curl_init($get_url);
+ $ch = curl_init('https://api.line.me/v2/bot/message/'.$msgid.'/content';);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
