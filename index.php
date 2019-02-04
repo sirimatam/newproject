@@ -303,7 +303,8 @@ function send_reply_message($url, $post_header, $post)
 
 function get_user_content($msgid, $post_header)
 {
- $ch = curl_init('https://api.line.me/v2/bot/message/'.$msgid.'/content');
+ $get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
+ $ch = curl_init($get_url);
  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
