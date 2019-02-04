@@ -311,7 +311,7 @@ function get_user_content($get_url, $post_header)
     //send out headers and output
     header ("Content-type: ".curl_getinfo($ch, CURLINFO_CONTENT_TYPE)."");
     header ("Content-Length: ".curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD)."");
-    return $result;
+    return curl_getinfo($ch);
 } else echo 'Curl error: ' . curl_error($ch);	
  curl_close($ch);
  
