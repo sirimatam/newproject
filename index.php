@@ -298,6 +298,8 @@ function send_reply_message($url, $post_header, $post)
  return $result;
 } 
 
+//$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
+
 function get_user_content($get_url, $post_header)
 {
  $ch = curl_init($get_url);
