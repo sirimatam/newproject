@@ -609,7 +609,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 	}
 	date_default_timezone_set("Asia/Bangkok");
 	$time = date("H:i:sa");
-	$date = date("Y/m/d") ;
+	$date = date("Y-m-d") ;
 	pg_query($db,"INSERT INTO order VALUES ('$order_id','$cart_avail','$total_price','$date','$time','waiting for payment')");
 	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
 	pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$cus_id','0')");
