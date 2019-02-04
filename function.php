@@ -522,7 +522,7 @@ function carousel_cart($db,$cus_id)
     
     
 
-function flex_order($db,$order_id)
+function flex_order($db,$order_id,$cartp_id)
 {
 	$data = [];
 	$data['type'] = 'flex';
@@ -540,8 +540,8 @@ function flex_order($db,$order_id)
 	$data['contents']['body']['layout'] = 'vertical';
 	$data['contents']['body']['spacing'] = 'md';
 	
-	$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
-	$cartp_id = $order_array[1];
+	//$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
+	//$cartp_id = $order_array[1];
 	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
@@ -593,11 +593,11 @@ function flex_order($db,$order_id)
     
     
     
-function add_to_order($db,$cus_id)
+function add_to_order($db,$cus_id,$cart_avail)
 {
 	
 	$order_id = uniqid();
-	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
+	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_id = '$cart_avail'");
 	$total_price = 0;
 	while($skuid = pg_fetch_row($skuids))
