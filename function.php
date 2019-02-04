@@ -489,33 +489,18 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' 1 ชิ้น';
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].' '.$skuarray[$i][3].' 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
-	$datas2 = [];
-	$datas2['type'] = 'template';
-        $datas2['altText'] = 'this is a carousel template';
-        $datas2['template']['type'] = 'carousel';        
-        $datas2['template']['columns'][0]['title'] = $namearray[$i][1];
-        $datas2['template']['columns'][0]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' 1 ชิ้น';
-        $datas2['template']['columns'][0]['actions'][0]['type'] = 'postback';
-        $datas2['template']['columns'][0]['actions'][0]['label'] = 'สั่งซื้อ';
-        $datas2['template']['columns'][0]['actions'][0]['text'] = 'สั่งซื้อ';  
-        $datas2['template']['columns'][0]['actions'][0]['data'] =  'Order '.$cartid;
-        $datas2['template']['columns'][0]['actions'][0]['type'] = 'postback';
-        $datas2['template']['columns'][0]['actions'][0]['label'] = 'ล้างตะกร้า';
-        $datas2['template']['columns'][0]['actions'][0]['text'] = 'ล้างตะกร้า';  
-        $datas2['template']['columns'][0]['actions'][0]['data'] =  'Clear '.$cartid;
+	
      
-	/*$datas2 = [];
+	$datas2 = [];
 	$datas2['type'] = 'template';
         $datas2['altText'] = 'this is a confirm template';
         $datas2['template']['type'] = 'confirm';
-    for ($i=0; $i<pg_num_rows($skuid);$i++)
-     {	
         $datas2['template']['actions'][0]['type'] = 'postback';
         $datas2['template']['actions'][0]['label'] = 'สั่งซื้อ';
         $datas2['template']['actions'][0]['text'] = 'สั่งซื้อ';  
@@ -525,7 +510,7 @@ function carousel_cart($db,$cus_id)
         $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
         $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
 	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total.' ชิ้น';
-     }*/
+     
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
     return $push_array;
@@ -598,37 +583,44 @@ function flex_order($order_id)
 	
 }
 
-
+*/
     
     
     
     
-function add_to_order($cus_id)
+function add_to_order($db,$cus_id)
 {
 	
 	$order_id = uniqid();
-	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM Createcart WHERE cus_id = $cus_id AND cart_used = '0'"))[0];
-	$skuids = pg_query($db,"SELECT sku_id FROM Cart_product WHERE cart_id = $cart_avail");
+	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
+	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_id = '$cart_avail'");
 	$total_price = 0;
 	while($skuid = pg_fetch_row($skuids))
 	{
-		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE sku_id=$skuid"))[0];
-		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM Product WHERE Stock.sku_id=$skuid AND Product.prod_id=$prod_id"));
-		$total_price = $prod_price; 
+		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id=$skuid"))[0];
+		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
+		$total_price += $prod_price; 
 	}
 	date_default_timezone_set("Asia/Bangkok");
 	$time = date("H:i:sa");
 	$date = date("Y/m/d") ;
-	pg_query($db,"INSERT INTO Order VALUES ($order_id,$cart_avail,$total_price,$date,$time,'waiting for payment')");
-	pg_query($db,"UPDATE Createcart SET cart_used = '1' WHERE cartp_id = $cart_avail");
-	pg_query($db,"INSERT INTO Createcart (cus_id,cart_used) VALUES ($cus_id,'0')");
+	pg_query($db,"INSERT INTO order VALUES ('$order_id','$cart_avail','$total_price','$date','$time','waiting for payment')");
+	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
+	pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$cus_id','0')");
 	return $order_id;
 	
+}
+
+function clear_cart($db,$cus_id)
+{
+	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
+	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
+
 }
   
   
   
-  */
+  
   
   
   
