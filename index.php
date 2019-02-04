@@ -198,7 +198,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($GET_url,$POST_HEADER);
-	   file_put_contents("php://stderr", "response ===> ".$response);
+	   file_put_contents("php://stderr", "response ===> ".json_encode($response));
 	   //$img_binary = $response->getRawBody();
 	   
 	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
