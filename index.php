@@ -250,7 +250,7 @@ function format_message($userid,$message)
 }
 function format_message_push($reply_token,$message)
 {
-	$data = ['to' => $reply_token,'messages' =>  [$message] ];
+	$data = ['to' => $reply_token,'messages' =>  $message ];
 	return $data;
 }
 
