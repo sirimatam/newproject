@@ -563,7 +563,9 @@ function flex_order($db,$order_id,$cartp_id)
 	$pd = [];
 	foreach ( $pdid_array as $pdid )
 	{
-		$pd[$running] = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_pro_price) FROM product WHERE prod_id = '$pdid'"));
+		$pd[$running][0] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
+		$pd[$running][1] = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
+		$pd[$running][2] = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
 		$running++;
 	}
 	for($i=0;$i<sizeof($pd);$i++)
