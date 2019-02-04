@@ -307,7 +307,7 @@ function get_user_content($get_url, $post_header)
  curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
  curl_setopt($ch, CURLOPT_FAILONERROR, 1);	
  $result = curl_exec($ch);
- return curl_getinfo($ch);
+ return $result;
  /*
 	if(!curl_errno($ch))
 {
