@@ -204,6 +204,12 @@ if ( sizeof($request_array['events']) > 0 )
 		delete_favorite($db,$fav_id);
 		
 	}
+	if(explode(" ",$info)[0] == 'Clear')
+	{
+		$cartid = explode(" ",$info)[1];
+		clear_cart($db,$userid,$cartid);
+		
+	}
 	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
