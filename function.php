@@ -521,8 +521,8 @@ function carousel_cart($db,$cus_id)
 	  
     
     
-/*
-function flex_order($order_id)
+
+function flex_order($db,$order_id)
 {
 	$data = [];
 	$data['type'] = 'flex';
@@ -540,26 +540,30 @@ function flex_order($order_id)
 	$data['contents']['body']['layout'] = 'vertical';
 	$data['contents']['body']['spacing'] = 'md';
 	
-	$order_array = pg_fetch_row($db,"SELECT * From Order WHERE order_id = $order_id");
+	$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
 	$cartp_id = $order_array[1];
-	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_id) From Cart_product WHERE Cart_product.cartp_id = $cartp_id");
-	$sku_tuple = array();
-	for($i=0;$i<pg_num_rows($cartp_array);$i++)
+	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$skuid_array = array();
+	$i = 0;
+	while($cartp = pg_fetch_row($cartp_array)[0])
 	{
-		$sku_tuple[$i] = ($cartp_array[0] => $cartp_array[1]);
+		$skuid_array[$i] = $cartp;
+		$i++;
 	}
-	$pd_id = array();
+	$pdid_array = array();
+	$sku_color = array();
 	$run =0;
-	foreach( $sku_tuple as $sku_id => $order_qty)
+	foreach( $skuid_array as $skuid)
 	{
-		$pd_id[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM Stock WHERE Stock.sku_id = $sku_id"))[0];
+		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$sku_id'"))[0];
+		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$sku_id'"))[0];
 		$run++;
 	}
 	$running = 0;
 	$pd = [];
-	foreach ( $pd_id as $pdt_id )
+	foreach ( $pdid_array as $pdid )
 	{
-		$pd[$running] = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_pro_price) FROM Product WHERE Product.prod_id = $pdt_id"))[0];
+		$pd[$running] = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_pro_price) FROM product WHERE prod_id = '$pdid'"));
 		$running++;
 	}
 	for($i=0;$i<sizeof($pd);$i++)
@@ -567,7 +571,7 @@ function flex_order($order_id)
 		$data['contents']['header']['contents'][$i]['type'] = 'box';
 		$data['contents']['header']['contents'][$i]['layout'] = 'baseline';
 		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['type'] = 'text';
-		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['text'] = $pd[$i][1]; //prod_name
+		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
 		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['flex'] = 0;
 		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['margin'] = 'sm';
 		$data['contents']['header']['contents'][$i]['layout']['contents'][0]['weight'] = 'regular';
@@ -579,12 +583,12 @@ function flex_order($order_id)
 		
 	}
 	
-	
+	return $data;
 
 	
 }
 
-*/
+
     
     
     
