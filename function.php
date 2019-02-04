@@ -611,10 +611,11 @@ function add_to_order($db,$cus_id)
 	
 }
 
-function clear_cart($db,$cus_id)
+function clear_cart($db,$cus_id,$cart_avail)
 {
-	$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
 	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
+	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว']ว
+	return $data;
 
 }
   
