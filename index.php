@@ -312,7 +312,7 @@ function get_user_content($msgid, $post_header)
  $result = curl_exec($ch);
  curl_close($ch);
 	
- return $get_url;
+ return $result;
  /*
 	if(!curl_errno($ch))
 {
