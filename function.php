@@ -614,7 +614,7 @@ function add_to_order($db,$cus_id)
 function clear_cart($db,$cus_id,$cart_avail)
 {
 	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
-	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว']ว
+	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว'];
 	return $data;
 
 }
