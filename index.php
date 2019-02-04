@@ -198,9 +198,10 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($GET_url,$POST_HEADER);
-	   $img_binary = $response->getRawBody();
 	   file_put_contents("php://stderr", "response ===> ".$response);
-	   file_put_contents("php://stderr", "image binary ===> ".$img_binary);
+	   //$img_binary = $response->getRawBody();
+	   
+	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
 	   //$fileFullSavePath = '$response->getHeaders()'.'.jpg';  อันนี้เอาชื่อรูป
 	   
 	   date_default_timezone_set("Asia/Bangkok");
