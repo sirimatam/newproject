@@ -305,7 +305,6 @@ function get_user_content($get_url, $post_header)
  curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
  curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
- curl_setopt($ch, CURLOPT_FAILONERROR, 1);	
  $result = curl_exec($ch);
  return $result;
  /*
