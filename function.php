@@ -598,11 +598,11 @@ function add_to_order($db,$cus_id,$cart_avail)
 	
 	$order_id = uniqid();
 	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
-	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_id = '$cart_avail'");
+	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
 	$total_price = 0;
-	while($skuid = pg_fetch_row($skuids))
+	while($skuid = pg_fetch_row($skuids)[0])
 	{
-		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id=$skuid"))[0];
+		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
 		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
 		$total_price += $prod_price; 
 	}
