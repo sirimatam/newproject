@@ -95,8 +95,8 @@ if ( sizeof($request_array['events']) > 0 )
        elseif ($text=='ตะกร้าสินค้า')
 	{
 	 	
-		$post = format_message_push($userid,carousel_cart($db,$userid));
-		send_reply_message($API_URL_push, $POST_HEADER, $post);
+		$post = format_message($reply_token,carousel_cart($db,$userid));
+		send_reply_message($API_URL, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 		
 	}
@@ -252,6 +252,11 @@ if ( sizeof($request_array['events']) > 0 )
 function format_message($userid,$message)
 {
 	$data = ['replyToken' => $userid,'messages' =>  [$message] ];
+	return $data;
+}
+function format_message_v2($userid,$message)
+{
+	$data = ['replyToken' => $userid,'messages' =>  $message ];
 	return $data;
 }
 function format_message_push($reply_token,$message)
