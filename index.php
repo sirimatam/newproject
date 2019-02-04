@@ -200,7 +200,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image binary ===> ".$img_binary);
 	   //$fileFullSavePath = '$response->getHeaders()'.'.jpg';  อันนี้เอาชื่อรูป
 	   
-	   
+	   date_default_timezone_set("Asia/Bangkok");
+	   $time = date("H:i:sa");
+	   $date = date("Y/m/d") ;
 	   
 	   pg_guery($db,"INSERT INTO payment VALUES ('1',$img_binary,$date,$time,'order1','0')");
 	   
@@ -212,9 +214,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
 	   
-	   date_default_timezone_set("Asia/Bangkok");
-	   $time = date("H:i:sa");
-	   $date = date("Y/m/d") ;
+
 	   
 	   
 	   
