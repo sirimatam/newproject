@@ -23,7 +23,7 @@ print_r(json_encode($trace));
 */
 
 	
-$GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
+
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
@@ -194,7 +194,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
 	   $msgid =  $event['message']['id']; 
-	   
+	   $GET_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($GET_url,$POST_HEADER);
