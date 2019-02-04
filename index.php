@@ -245,7 +245,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 function format_message($userid,$message)
 {
-	$data = ['replyToken' => $userid,'messages' =>  [$message] ];
+	$data = ['replyToken' => $userid,'messages' =>  $message ];
 	return $data;
 }
 function format_message_push($reply_token,$message)
