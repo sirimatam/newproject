@@ -199,7 +199,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
 	   
-	   define('UPLOAD_DIR', 'image/');
+	   define('UPLOAD_DIR', '/image/');
 	   $img=base64_encode($response); 
 	   $data = base64_decode($img);
 	   
