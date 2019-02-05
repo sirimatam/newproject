@@ -199,7 +199,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
 	   	   
-	   file_put_contents("php://stderr", "response ===> ".json_encode($response));
+	   file_put_contents("php://stderr", "response ===> ".$response);
 	   
 	   date_default_timezone_set("Asia/Bangkok");
 	   $time = date("H:i:sa");
