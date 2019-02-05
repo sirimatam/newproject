@@ -608,7 +608,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 		$total_price += $prod_price; 
 	}
 	date_default_timezone_set("Asia/Bangkok");
-	$time = date("H:i:sa");
+	$time = date("H:i:s");
 	$date = date("Y-m-d") ;
 	pg_query($db,"INSERT INTO orderlist (order_id,cartp_id,total_price,order_date,order_time,order_status) VALUES ('$order_id','$cart_avail','$total_price','$date','$time','waiting for payment')");
 	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
