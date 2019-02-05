@@ -208,10 +208,10 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image 64  ===> ".$img);
 	   
 	   date_default_timezone_set("Asia/Bangkok");
+	   $date = date("Y-m-d");
 	   $time = date("H:i:s");
-	   $date = date("Y-m-d") ;
 	   
-	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid',$date,$time,'order1','0')");
+	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid','$date','$time','order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
