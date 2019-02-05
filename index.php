@@ -204,10 +204,10 @@ if ( sizeof($request_array['events']) > 0 )
 	   $data = base64_decode($img);
 	   
 	   $file = UPLOAD_DIR . $imgid . '.png';
-	   shell_exec('git init');
-	   shell_exec('git add $file');
-	   shell_exec('git commit $file');
-	   shell_exec('git push origin/master');
+	   exec('git init');
+	   exec('git add $file');
+	   exec('git commit $file');
+	   exec('git push origin/master');
 	   
 	   $success = file_put_contents($file, $data);	   
 	   
