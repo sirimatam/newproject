@@ -1,5 +1,34 @@
 <?php
 
+function get_user_content($msgid, $post_header)
+{
+	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
+	$ch = curl_init($get_url);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
+	curl_setopt($ch, CURLOPT_ENCODING, "");
+	curl_setopt($ch, CURLOPT_MAXREDIRS, 10); 
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
+	$response = curl_exec($ch);
+	$err = curl_error($ch);
+	curl_close($ch);
+	if ($err) {
+  	 return $msg = "cURL Error #:" . $err;
+	} 
+	else {
+		define('UPLOAD_DIR', 'tmp_image/');
+		$img=base64_encode($response);
+		$data = base64_decode($img);
+		$file = UPLOAD_DIR . uniqid() . '.png';
+		$success = file_put_contents($file, $data);
+		return $success;
+	     }
+
+}
 	   
 function show_promotion_product($db) 
 { 
