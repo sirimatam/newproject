@@ -19,10 +19,10 @@ function get_user_content($msgid, $post_header)
   	 return $msg = "cURL Error #:" . $err;
 	} 
 	else {
-		define('UPLOAD_DIR', 'tmp_image/');
+		define('UPLOAD_DIR', 'image/');
 		$img=base64_encode($response);
 		$data = base64_decode($img);
-		$file = UPLOAD_DIR . uniqid() . '.png';
+		$file = UPLOAD_DIR . $msgid . '.png';
 		$success = file_put_contents($file, $data);
 		return $success;
 	     }
