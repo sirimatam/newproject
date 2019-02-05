@@ -198,8 +198,14 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   	   
-	   file_put_contents("php://stderr", "response ===> ".$response);
+	   define('UPLOAD_DIR', 'image/');
+	   $img=base64_encode($response);
+	   
+	   $data = base64_decode($img);
+	   $file = UPLOAD_DIR . $msgid . '.png';
+	   $success = file_put_contents($file, $data);	   
+	   
+	   file_put_contents("php://stderr", "image 64  ===> ".$img);
 	   
 	   date_default_timezone_set("Asia/Bangkok");
 	   $time = date("H:i:sa");
