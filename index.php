@@ -198,7 +198,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   $img_body = $response->getHeaders();;
+	   $img_body = getHeader($response);
 	   
 	   file_put_contents("php://stderr", "response ===> ".$response);
 	   file_put_contents("php://stderr", "img header ===> ".$img_body);
