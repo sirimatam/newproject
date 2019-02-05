@@ -208,9 +208,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   file_put_contents("php://stderr", "image 64  ===> ".$img);
 	   
+	   $datetime = get_datetime();
 	   
-	   
-	   pg_query($db,"INSERT INTO payment VALUES ('2','$imgid','get_datetime()[0]','get_datetime()[1]','order1','0')");
+	   pg_query($db,"INSERT INTO payment VALUES ('2','$imgid','$datetime[0]','$datetime[1]','order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
