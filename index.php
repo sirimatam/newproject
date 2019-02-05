@@ -198,20 +198,19 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   define('UPLOAD_DIR', 'image/');
-	   $img=base64_encode($response);
 	   
+	   define('UPLOAD_DIR', 'image/');
+	   $img=base64_encode($response); 
 	   $data = base64_decode($img);
+	   
 	   $file = UPLOAD_DIR . $imgid . '.png';
 	   $success = file_put_contents($file, $data);	   
 	   
 	   file_put_contents("php://stderr", "image 64  ===> ".$img);
 	   
-	   date_default_timezone_set("Asia/Bangkok");
-	   $date = date("Y-m-d");
-	   $time = date("H:i:s");
 	   
-	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid','$date','$time','order1','0')");
+	   
+	   pg_query($db,"INSERT INTO payment VALUES ('2','$imgid','get_datetime()[0]','get_datetime()[1]','order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
