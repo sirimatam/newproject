@@ -555,8 +555,8 @@ function flex_order($db,$order_id,$cartp_id)
 	$run =0;
 	foreach( $skuid_array as $skuid)
 	{
-		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$sku_id'"))[0];
-		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$sku_id'"))[0];
+		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
+		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
 		$run++;
 	}
 	$running = 0;
