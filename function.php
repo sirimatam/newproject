@@ -7,7 +7,6 @@ function get_user_content($msgid, $post_header)
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
 	curl_setopt($ch, CURLOPT_ENCODING, "");
 	curl_setopt($ch, CURLOPT_MAXREDIRS, 10); 
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
