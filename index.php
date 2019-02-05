@@ -210,7 +210,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   $datetime = get_datetime();
 	   
-	   pg_query($db,"INSERT INTO payment VALUES ('$imgid','$datetime[0]','$datetime[1]','order1','0')");
+	   pg_query($db,"INSERT INTO payment (pay_slip,date,time,order_id,check) VALUES ('$imgid','$datetime[0]','$datetime[1]','order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
