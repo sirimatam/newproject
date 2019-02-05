@@ -198,10 +198,10 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   $img_decode = base64_decode($encoded_image);
+	   $img_body = $response->getRawBody();
 	   
 	   file_put_contents("php://stderr", "response ===> ".$response);
-	   file_put_contents("php://stderr", "img_decode ===> ".$img_decode);
+	   file_put_contents("php://stderr", "img_decode ===> ".json_encode($img_body));
 	   //$img_binary = $response->getRawBody();
 	   
 	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
