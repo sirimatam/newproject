@@ -201,7 +201,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $img_body = $response->getRawBody();
 	   
 	   file_put_contents("php://stderr", "response ===> ".$response);
-	   file_put_contents("php://stderr", "img_decode ===> ".json_encode($img_body));
+	   file_put_contents("php://stderr", "img_decode ===> ".$img_body);
 	   //$img_binary = $response->getRawBody();
 	   
 	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
