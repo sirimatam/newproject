@@ -205,7 +205,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $time = date("H:i:sa");
 	   $date = date("Y/m/d") ;
 	   
-	   pg_query($db,"INSERT INTO payment VALUES ('1',$response,$date,$time,'order1','0')");
+	   pg_query($db,"INSERT INTO payment VALUES ('1','$response',$date,$time,'order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
