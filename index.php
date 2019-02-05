@@ -209,7 +209,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   date_default_timezone_set("Asia/Bangkok");
 	   $time = date("H:i:s");
-	   $date = date("Y/m/d") ;
+	   $date = date("Y-m-d") ;
 	   
 	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid',$date,$time,'order1','0')");
 	   
