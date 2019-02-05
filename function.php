@@ -1,5 +1,14 @@
 <?php
 
+function get_datetime()
+{
+	date_default_timezone_set("Asia/Bangkok");
+	$date = date("Y-m-d");
+	$time = date("H:i:s");
+	return [$date,$time];
+}
+
+
 function get_user_content($msgid, $post_header)
 {
 	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
@@ -12,20 +21,9 @@ function get_user_content($msgid, $post_header)
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
 	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
+	
 	$response = curl_exec($ch);
-	$err = curl_error($ch);
 	curl_close($ch);
-	if ($err) {
-  	 return $msg = "cURL Error #:" . $err;
-	} 
-	else {
-		define('UPLOAD_DIR', 'image/');
-		$img=base64_encode($response);
-		$data = base64_decode($img);
-		$file = UPLOAD_DIR . $msgid . '.png';
-		$success = file_put_contents($file, $data);
-		return $success;
-	     }
 
 }
 	   
