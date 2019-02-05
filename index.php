@@ -198,10 +198,10 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   $img_body = $response->getRawBody();
+	   $img_body = $response->getHeaders();;
 	   
 	   file_put_contents("php://stderr", "response ===> ".$response);
-	   file_put_contents("php://stderr", "img_decode ===> ".$img_body);
+	   file_put_contents("php://stderr", "img header ===> ".$img_body);
 	   //$img_binary = $response->getRawBody();
 	   
 	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
