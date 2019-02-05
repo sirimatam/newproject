@@ -208,7 +208,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image 64  ===> ".$img);
 	   
 	   date_default_timezone_set("Asia/Bangkok");
-	   $time = date("H:i:sa");
+	   $time = date("H:i:s");
 	   $date = date("Y/m/d") ;
 	   
 	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid',$date,$time,'order1','0')");
