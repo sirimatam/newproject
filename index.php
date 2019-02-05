@@ -193,16 +193,16 @@ if ( sizeof($request_array['events']) > 0 )
 	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
 	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
 	   */
-	   $msgid =  $event['message']['id']; 
+	   $imgid =  $event['message']['id']; 
 	   
-	   file_put_contents("php://stderr", "image id ===> ".$msgid);
+	   file_put_contents("php://stderr", "image id ===> ".$imgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
 	   define('UPLOAD_DIR', 'image/');
 	   $img=base64_encode($response);
 	   
 	   $data = base64_decode($img);
-	   $file = UPLOAD_DIR . $msgid . '.png';
+	   $file = UPLOAD_DIR . $imgid . '.png';
 	   $success = file_put_contents($file, $data);	   
 	   
 	   file_put_contents("php://stderr", "image 64  ===> ".$img);
@@ -211,7 +211,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $time = date("H:i:sa");
 	   $date = date("Y/m/d") ;
 	   
-	   pg_query($db,"INSERT INTO payment VALUES ('1','$img',$date,$time,'order1','0')");
+	   pg_query($db,"INSERT INTO payment VALUES ('1','$imgid',$date,$time,'order1','0')");
 	   
 	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
