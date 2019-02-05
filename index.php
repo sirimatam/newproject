@@ -198,14 +198,8 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "image id ===> ".$msgid);
 	   
 	   $response = get_user_content($msgid,$POST_HEADER);
-	   $img_body = getHeader($response);
-	   
-	   file_put_contents("php://stderr", "response ===> ".$response);
-	   file_put_contents("php://stderr", "img header ===> ".$img_body);
-	   //$img_binary = $response->getRawBody();
-	   
-	   //file_put_contents("php://stderr", "image binary ===> ".$img_binary);
-	   //$fileFullSavePath = '$response->getHeaders()'.'.jpg';  อันนี้เอาชื่อรูป
+	   	   
+	   file_put_contents("php://stderr", "response ===> ".json_encode($response));
 	   
 	   date_default_timezone_set("Asia/Bangkok");
 	   $time = date("H:i:sa");
@@ -299,32 +293,6 @@ function send_reply_message($url, $post_header, $post)
  $result = curl_exec($ch);
  curl_close($ch);
  return $result;
-} 
-
-//$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
-
-function get_user_content($msgid, $post_header)
-{
- $get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
- $ch = curl_init($get_url);
- curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
- curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
- curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
- curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1); //do a binary transfer
- $result = curl_exec($ch);
- curl_close($ch);
-	
- return $result;
- /*
-	if(!curl_errno($ch))
-{
-    //send out headers and output
-    header ("Content-type: ".curl_getinfo($ch, CURLINFO_CONTENT_TYPE)."");
-    header ("Content-Length: ".curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD)."");
-    
-} else echo 'Curl error: ' . curl_error($ch); */	
-
- 
 } 
 
 
