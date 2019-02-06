@@ -163,17 +163,18 @@ function show_address($db,$cusid)
 	$query = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$cusid' ");
 	$check = 0;
 	if(pg_num_rows($query)==1)
-	 { $cus_primary = pg_fetch_row($query)[0];
-	   pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");
+	 { 
+	   //$cus_primary = pg_fetch_row($query)[0];
+	   //pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");   >>มันเป็น 1อยู่แล้ว
 	   $address = pg_fetch_row($query)[2];
 	   if($address == '')
-		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }
-	   		
+		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }	   		
 	 }
+	
 	else
 	{	
-	$real = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
-	$address = pg_fetch_row($real)[0];
+	$current = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
+	$address = pg_fetch_row($current)[0];
 	
 	$other = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '0'");
 	
