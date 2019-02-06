@@ -153,8 +153,7 @@ if ( sizeof($request_array['events']) > 0 )
 		
 		
 	}
-	   
-/*	
+	else {
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -169,22 +168,10 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}	
 	}
-	print_r($types);
 
-//   elseif (substr($text,0,6) =='addcus') //comment
-	{
-		list($order, $cusid, $cusname, $cuslast, $cuspic) = split(" ", $text, 5);
-		//$cardata = explode(" ",$text);
-		pg_query($db,"INSERT INTO Customer1 (cus_id,cus_name,cus_lastname,cus_pic) VALUES ($cusid,$cusname,$cuslast,$cuspic)");
-		$result = pg_query($db,"SELECT cus_name FROM Customer1");
-		while ($list = pg_fetch_row($result))
-		{
-			$cust = $list[0]."\n";
-			$custlist .= $cust;
-		}
-		$reply_message = "$custlist";
 	}
-*/
+
+
    } 
    elseif( $event['message']['type'] == 'image' )
    {
@@ -200,7 +187,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $response = get_user_content($msgid,$POST_HEADER);
 	   
 	   define('UPLOAD_DIR', '/image/');
-	   $img=base64_encode($response); 
+	   $img = base64_encode($response); 
 	   $data = base64_decode($img);
 	   
 	   $file = UPLOAD_DIR . $imgid . '.png';
