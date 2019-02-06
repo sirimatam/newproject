@@ -217,6 +217,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_message,flex_order($db,$order_id,$cart_avail));
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
+		file_put_contents("php://stderr", "POST RESULT2 =====> ".$send_result);
 	}
 	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
