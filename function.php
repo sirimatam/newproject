@@ -550,7 +550,7 @@ function flex_order($db,$order_id,$cartp_id)
 		$pd[$running][2] = $z;
 		$running++;
 	}
-	for($i=0;$i<pg_num_rows($cartp_array);$i++)
+	for($i=1;$i<=pg_num_rows($cartp_array);$i++)
 	{
 		$data['contents']['header']['contents'][$i]['type'] = 'box';
 		$data['contents']['header']['contents'][$i]['layout'] = 'baseline';
