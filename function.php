@@ -491,14 +491,14 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' จำนวน 1 ชิ้น';
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2]."\n".$skuarray[$i][3]." จำนวน 1 ชิ้น";
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
 	
-     /*
+     
 	$datas2 = [];
 	$datas2['type'] = 'template';
         $datas2['altText'] = 'this is a confirm template';
@@ -512,10 +512,10 @@ function carousel_cart($db,$cus_id)
         $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
         $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
 	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total.' ชิ้น';
-     */
+     
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
-    return $datas;
+    return $push_array;
     }
 	
   }
