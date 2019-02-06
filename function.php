@@ -429,7 +429,7 @@ function carousel_cart($db,$cus_id)
     $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
-    $total = 0;
+    $total = pg_num_rows($skuid);
     while($aaa = pg_fetch_row($skuid)[0])
     {
 	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
