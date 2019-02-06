@@ -155,27 +155,65 @@ function button_all_type()
 ];
    return $data;
   }  
+
+
+
 function show_address($db,$cusid)
 {
-	$query = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'");
-	$address = pg_fetch_row($query)[0];
+	$query = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' ");
+	$check = 0;
+	if(pg_num_rows($query)==0)
+		{ $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }
+	elseif(pg_num_rows($query)==1)
+		{ $address = pg_fetch_row($query)[0]; }
+	else
+	{	
+	$real = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
+	$address = pg_fetch_row($real)[0];
 	
-	if ($address == '')
-	{ $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง';}
+	$other = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '0'");
+	$other_address = pg_fetch_row($other)[0];
+		
+	$check = 1;	
+	}
 	
-	$data = [];
-	$data['type'] = 'template';
-	$data['altText'] = 'this is a buttons template';
-	$data['template']['type'] = 'buttons';
-	$data['template']['actions'][0]['type'] = 'message';
-	$data['template']['actions'][0]['label'] = 'แก้ไขชื่อและที่อยู่จัดส่ง';
-	$data['template']['actions'][0]['text'] = 'แก้ไขชื่อและที่อยู่';
-	$data['template']['title'] = 'ชื่อและที่อยู่จัดส่งปัจจุบัน';
-	$data['template']['text'] = $address;
+	$datas = [];
+	$datas['type'] = 'template';
+	$datas['altText'] = 'this is a carousel template';
+	$datas['template']['type'] = 'carousel';
+	$datas['template']['columns'][0]['title'] = 'ชื่อและที่อยู่จัดส่งปัจจุบัน';
+	$datas['template']['columns'][0]['text'] = $address;
+	$datas['template']['columns'][0]['actions'][0]['type'] = 'message';
+	$datas['template']['columns'][0]['actions'][0]['label'] = 'เพิ่มชื่อและที่อยู่ใหม่';
+	$datas['template']['columns'][0]['actions'][0]['text'] = 'เพิ่มชื่อและที่อยู่ใหม่';
+	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
+	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
+	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$other_address[$i].' '.$cusid;
 	
-	return $data;
+	if($check==1){
+		
+		for ($i=0; $i<10;$i++)
+		{
+		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
+		$datas['template']['columns'][$i]['text'] = $other_address[$i];
+		$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+		$datas['template']['columns'][$i]['actions'][0]['label'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
+		$datas['template']['columns'][$i]['actions'][0]['text'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
+		$datas['template']['columns'][$i]['actions'][0]['data'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน'.$other_address[$i].' '.$cusid;
+		$datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+		$datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
+		$datas['template']['columns'][$i]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
+		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$other_address[$i].' '.$cusid;
+		}	
+	
+	}
+	return $datas;
+		
+		
 }
-/* ข้อ 2 */
+	
+	
+	
 
 function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 { 
