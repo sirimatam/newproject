@@ -518,6 +518,8 @@ function flex_order($db,$order_id,$cartp_id)
 	//$data['contents']['body']['type'] = 'box';
 	//$data['contents']['body']['layout'] = 'vertical';
 	//$data['contents']['body']['spacing'] = 'md';
+	$data['contents']['body']['type'] = 'box';
+	$data['contents']['body']['layout'] = 'vertical';
 	$data['contents']['body']['contents'][0]['type'] = 'box';
 	$data['contents']['body']['contents'][0]['layout'] = 'baseline';
 	$data['contents']['body']['contents'][0]['flex'] = 0;
