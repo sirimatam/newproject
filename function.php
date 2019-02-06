@@ -160,12 +160,16 @@ function button_all_type()
 
 function show_address($db,$cusid)
 {
-	$query = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' ");
+	$query = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$cusid' ");
 	$check = 0;
-	if(pg_num_rows($query)==0)
-		{ $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }
-	elseif(pg_num_rows($query)==1)
-		{ $address = pg_fetch_row($query)[0]; }
+	if(pg_num_rows($query)==1)
+	 { $cus_primary = pg_fetch_row($query)[0];
+	   pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");
+	   $address = pg_fetch_row($query)[2];
+	   if($address == '')
+		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }
+	   		
+	 }
 	else
 	{	
 	$real = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
