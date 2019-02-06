@@ -208,7 +208,7 @@ function show_address($db,$cusid)
 		   $a++;
 	   }
 	   
-	   for($i=1;$i<$a;$i++)	
+	   for($i=1;$i<=$a;$i++)	
 	   {
 		
 		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
