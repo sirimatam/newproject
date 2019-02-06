@@ -164,8 +164,8 @@ function show_address($db,$cusid)
 	$check = 0;
 	if(pg_num_rows($query)==1)
 	 { 
-	   //$cus_primary = pg_fetch_row($query)[0];
-	   //pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");   >>มันเป็น 1อยู่แล้ว
+	   $cus_primary = pg_fetch_row($query)[0];
+	   pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");  // in case ลบอันปัจจุบัน อันที่เหลือ =1
 	   $address = pg_fetch_row($query)[2];
 	   if($address == '')
 		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }	
