@@ -89,7 +89,7 @@ if ( sizeof($request_array['events']) > 0 )
 		send_reply_message($API_URL, $POST_HEADER, $post);
 
 	}
-       elseif ($text=='แก้ไขชื่อและที่อยู่')
+       elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
 	{
 	        $ans = ['type'=>'text','text' => 'พิมพ์ @@ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@@น.ส.เสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
 	 	$data = format_message($reply_token,$ans);
@@ -98,12 +98,12 @@ if ( sizeof($request_array['events']) > 0 )
        elseif (explode("@@",$text)[0] == '')   
        {
 	       $address = explode("@@",$text)[1];
-	       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$userid' AND cus_default = '1'");
+	       pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES = ('$userid','$address','0') ");
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
        }
-	   
+       
        
        elseif ($text=='สินค้าที่ชอบ')
 	{
@@ -221,7 +221,20 @@ if ( sizeof($request_array['events']) > 0 )
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
 	
-	
+	if(explode(" ",$info)[0] == 'ลบชื่อและที่อยู่นี้')
+	{
+		$data = explode(" ",$info);
+		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+	}
+	elseif(explode(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
+	{
+		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$data[2]' AND cus_default = '1' ");
+		
+		$data = explode(" ",$info);
+		pg_query($db,"UPDATE Customer SET cus_default = '1' WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+	}  
+	  
+	  
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
