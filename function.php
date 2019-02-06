@@ -1,5 +1,4 @@
 <?php
-
 	/*   
 function show_promotion_product() 
 { 
@@ -55,7 +54,6 @@ function customer_address($cusid)
 	pg_query($db,"UPDATE Customer SET cus_name = 'C001', cus_address = '', cus_tel = '' WHERE cus_id = $cusid ");
 }
 	   
-
   
   */
   
@@ -131,7 +129,6 @@ function button_all_type()
 	
    return $data;
   }  
-
 /*
 function show_address($cusid)
 {
@@ -151,7 +148,6 @@ function show_address($cusid)
 	return $data;
 }*/
 /* ข้อ 2 */
-
 function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
@@ -226,14 +222,10 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
      $carousel[ceil($running-10)/10] = $datas;
    }
     return $carousel;
-
    }
-
-
 }
   
   
-
   
 function carousel_view_more($db,$prod_id) 
 {
@@ -308,17 +300,10 @@ function carousel_view_more($db,$prod_id)
      }
      $carousel[ceil($running-10)/10] = $datas;
    }  
-
    }
-
   
   
 }
-
-
-
-
-
   
 //if message['text'] == 'Favorite'.$prod_id
   
@@ -333,8 +318,6 @@ function add_favorite($db,$cus_id,$prod_id)
     pg_query($db,"INSERT INTO favorite (cus_id,prod_id) VALUES ('$cus_id','$prod_id')");
     }
   }  
-
-
   
   function carousel_show_favorite($db,$cus_id)
   {
@@ -379,7 +362,6 @@ function add_favorite($db,$cus_id,$prod_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-
   function delete_from_cart($db,$sku_id,$cus_id)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
@@ -405,9 +387,7 @@ function add_favorite($db,$cus_id,$prod_id)
 	  
     return $data;
   }
-
   /*
-
   
   
  function create_cart($cus_id)
@@ -449,8 +429,7 @@ function carousel_cart($db,$cus_id)
     $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
-    $total_price = 0;
-    $total_num = pg_num_rows($skuid);
+    $total = 0;
     while($aaa = pg_fetch_row($skuid)[0])
     {
 	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
@@ -472,7 +451,6 @@ function carousel_cart($db,$cus_id)
 	 $namearray[$run2][1] = $x;
 	 $namearray[$run2][2] = $y;
 	 $namearray[$run2][3] = $z;
-	 $total_price += $z;
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
@@ -493,7 +471,7 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2]."\n".$skuarray[$i][3]." จำนวน 1 ชิ้น ".$namearray[$i][3]." บาท";
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2]."\n".$skuarray[$i][3]." จำนวน 1 ชิ้น";
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
@@ -513,7 +491,7 @@ function carousel_cart($db,$cus_id)
         $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้า';
         $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
         $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
-	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total_num.' ชิ้น ราคา '.$total_price.' บาท';
+	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total.' ชิ้น';
      
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
@@ -524,7 +502,6 @@ function carousel_cart($db,$cus_id)
 	  
     
     
-
 function flex_order($db,$order_id,$cartp_id)
 {
 	$data = [];
@@ -584,15 +561,11 @@ function flex_order($db,$order_id,$cartp_id)
 		$data['contents']['header']['contents'][$i]['contents'][1]['margin'] = 'sm';
 		$data['contents']['header']['contents'][$i]['contents'][1]['weight'] = 'regular';
 		$data['contents']['header']['contents'][$i]['contents'][1]['align'] = 'end';
-
 	}
 	
 	return $data;
-
 	
 }
-
-
     
     
     
@@ -619,13 +592,11 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-
 function clear_cart($db,$cus_id,$cart_avail)
 {
 	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
 	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว'];
 	return $data;
-
 }
   
   
