@@ -4,7 +4,7 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
-print_r(carousel_product_type($db,'เดรส'));
+//print_r( flex_order($db,$order_id,$cartp_id));
 
 //echo $db;
 
