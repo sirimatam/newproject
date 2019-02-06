@@ -510,7 +510,6 @@ function flex_order($db,$order_id,$cartp_id)
 	$data['contents']['type'] = 'bubble';
 	$data['contents']['header']['type'] = 'box';
 	$data['contents']['header']['layout'] = 'vertical';
-	$data['contents']['header']['flex'] = 0;
 	$data['contents']['header']['contents'][0]['type'] = 'text';
 	$data['contents']['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
 	$data['contents']['header']['contents'][0]['size'] = 'xl';
@@ -543,15 +542,19 @@ function flex_order($db,$order_id,$cartp_id)
 	$pd = [];
 	foreach ( $pdid_array as $pdid )
 	{
-		$pd[$running][0] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
-		$pd[$running][1] = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
-		$pd[$running][2] = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
+		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
+		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
+		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
+		$pd[$running][0] = $x;
+		$pd[$running][0] = $y;
+		$pd[$running][0] = $z;
 		$running++;
 	}
-	for($i=1;$i<=sizeof($pd);$i++)
+	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
 		$data['contents']['header']['contents'][$i]['type'] = 'box';
 		$data['contents']['header']['contents'][$i]['layout'] = 'baseline';
+		$data['contents']['header']['contents'][$i]['flex'] = 0;
 		$data['contents']['header']['contents'][$i]['contents'][0]['type'] = 'text';
 		$data['contents']['header']['contents'][$i]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
 		$data['contents']['header']['contents'][$i]['contents'][0]['margin'] = 'sm';
