@@ -207,7 +207,19 @@ function show_address($db,$cusid)
 	   }
 	   for($i=0;$i<9;$i++)	
 	   {
-			
+		$datas = [];
+	$datas['type'] = 'template';
+	$datas['altText'] = 'this is a carousel template';
+	$datas['template']['type'] = 'carousel';
+	$datas['template']['columns'][0]['title'] = 'ชื่อและที่อยู่จัดส่งปัจจุบัน';
+	$datas['template']['columns'][0]['text'] = $address;
+	$datas['template']['columns'][0]['actions'][0]['type'] = 'message';
+	$datas['template']['columns'][0]['actions'][0]['label'] = 'เพิ่มชื่อและที่อยู่ใหม่';
+	$datas['template']['columns'][0]['actions'][0]['text'] = 'เพิ่มชื่อและที่อยู่ใหม่';
+	$datas['template']['columns'][0]['actions'][1]['type'] = 'postback';
+	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
+	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
+	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;	
 		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
 		$datas['template']['columns'][$i]['text'] = $address_array[$i];
 		$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
