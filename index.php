@@ -98,14 +98,22 @@ if ( sizeof($request_array['events']) > 0 )
        } 
        elseif (explode("@@",$text)[0] == '')   
        {
+	       $address = explode("@@",$text)[1];
 	       // check ว่า ใส่ address ครั้งแรกหรือเปล่า
 	       
-	       $address = explode("@@",$text)[1];
+	       $firsttime = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$userid' AND cus_default = '1' ");
+	       if(pg_fetch_row($firsttime)[0] == '')
+	       {
+		       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$userid' AND cus_default = '1' ");
+	       }
+	       else{
+	       
+	       
 	       
 	       file_put_contents("php://stderr", "can explode ===> ".$address);
 	       
 	       
-	        pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES ('$userid','$address','0') ");
+	        pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES ('$userid','$address','0') "); }
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
