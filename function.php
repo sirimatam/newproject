@@ -550,20 +550,20 @@ function flex_order($db,$order_id,$cartp_id)
 		$pd[$running][2] = $z;
 		$running++;
 	}
-	for($i=1;$i<=pg_num_rows($cartp_array);$i++)
+	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
-		$data['contents']['header']['contents'][$i]['type'] = 'box';
-		$data['contents']['header']['contents'][$i]['layout'] = 'baseline';
-		$data['contents']['header']['contents'][$i]['flex'] = 0;
-		$data['contents']['header']['contents'][$i]['contents'][0]['type'] = 'text';
-		$data['contents']['header']['contents'][$i]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
-		$data['contents']['header']['contents'][$i]['contents'][0]['margin'] = 'sm';
-		$data['contents']['header']['contents'][$i]['contents'][0]['weight'] = 'regular';
-		$data['contents']['header']['contents'][$i]['contents'][1]['type'] = 'text';
-		$data['contents']['header']['contents'][$i]['contents'][1]['text'] = $pd[$i][2]; //prod_name
-		$data['contents']['header']['contents'][$i]['contents'][1]['margin'] = 'sm';
-		$data['contents']['header']['contents'][$i]['contents'][1]['weight'] = 'regular';
-		$data['contents']['header']['contents'][$i]['contents'][1]['align'] = 'end';
+		$data['contents']['header']['contents'][$i+1]['type'] = 'box';
+		$data['contents']['header']['contents'][$i+1]['layout'] = 'baseline';
+		$data['contents']['header']['contents'][$i+1]['flex'] = 0;
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['text'] = $pd[$i][2]; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
 	}
 	
 	return $data;
