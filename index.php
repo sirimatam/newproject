@@ -50,7 +50,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','1')");
+		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','0')");
 		pg_query($db,"INSERT INTO createcart (cus_id) VALUES ('$userid')");
 	}
 	
@@ -98,6 +98,7 @@ if ( sizeof($request_array['events']) > 0 )
        } 
        elseif (explode("@@",$text)[0] == '')   
        {
+	       // check ว่า ใส่ address ครั้งแรกหรือเปล่า
 	       $address = explode("@@",$text)[1];
 	       pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES = ('$userid','$address','0') ");
 		$show = show_address($db,$userid);
