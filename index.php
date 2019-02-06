@@ -207,7 +207,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   	   
 	   $success = file_put_contents('$file', $data);	   
 	   
-	   file_put_contents("php://stderr", "image 64  ===> ".$img);
+	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
 	   
 	   $datetime = get_datetime();
 	   
