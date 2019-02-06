@@ -240,6 +240,9 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$data = explode(" ",$info);
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+		$show = show_address($db,$userid);
+		$data = format_message($reply_token,$show);
+	       send_reply_message($API_URL, $POST_HEADER,$data);
 	}
 	elseif(explode(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
 	{
@@ -247,6 +250,9 @@ if ( sizeof($request_array['events']) > 0 )
 		
 		$data = explode(" ",$info);
 		pg_query($db,"UPDATE Customer SET cus_default = '1' WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+		$show = show_address($db,$userid);
+		$data = format_message($reply_token,$show);
+	       send_reply_message($API_URL, $POST_HEADER,$data);
 	}  
 	  
 	  
