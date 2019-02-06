@@ -188,16 +188,16 @@ function show_address($db,$cusid)
 	$datas['template']['columns'][0]['actions'][0]['text'] = 'เพิ่มชื่อและที่อยู่ใหม่';
 	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
-	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$other_address[$i].' '.$cusid;
+	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;
 	
 	if($check==1)
 	{
-	   $i = 0;	
+	   $a = 0;	
 	   $address_array = [];
 	   while($other_address = pg_fetch_row($other)[0])
 	   {
 		   $address_array[$i] = $other_address;
-		   $i++;
+		   $a++;
 	   }
 	   for($i=1;$i<9;$i++)	
 	   {
