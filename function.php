@@ -515,9 +515,9 @@ function flex_order($db,$order_id,$cartp_id)
 	$data['contents']['header']['contents'][0]['size'] = 'xl';
 	$data['contents']['header']['contents'][0]['align'] = 'center';
 	$data['contents']['header']['contents'][0]['weight'] = 'bold';
-	$data['contents']['body']['type'] = 'box';
-	$data['contents']['body']['layout'] = 'vertical';
-	$data['contents']['body']['spacing'] = 'md';
+	//$data['contents']['body']['type'] = 'box';
+	//$data['contents']['body']['layout'] = 'vertical';
+	//$data['contents']['body']['spacing'] = 'md';
 	
 	//$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
 	//$cartp_id = $order_array[1];
