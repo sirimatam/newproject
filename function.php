@@ -186,6 +186,7 @@ function show_address($db,$cusid)
 	$datas['template']['columns'][0]['actions'][0]['type'] = 'message';
 	$datas['template']['columns'][0]['actions'][0]['label'] = 'เพิ่มชื่อและที่อยู่ใหม่';
 	$datas['template']['columns'][0]['actions'][0]['text'] = 'เพิ่มชื่อและที่อยู่ใหม่';
+	$datas['template']['columns'][0]['actions'][1]['type'] = 'postback';
 	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;
@@ -196,10 +197,10 @@ function show_address($db,$cusid)
 	   $address_array = [];
 	   while($other_address = pg_fetch_row($other)[0])
 	   {
-		   $address_array[$i] = $other_address;
+		   $address_array[$a] = $other_address;
 		   $a++;
 	   }
-	   for($i=1;$i<9;$i++)	
+	   for($i=0;$i<9;$i++)	
 	   {
 			
 		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
