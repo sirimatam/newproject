@@ -168,21 +168,9 @@ function show_address($db,$cusid)
 	   //pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");   >>มันเป็น 1อยู่แล้ว
 	   $address = pg_fetch_row($query)[2];
 	   if($address == '')
-		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }	   		
-	 }
-	
-	else
-	{	
-	$current = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
-	$address = pg_fetch_row($current)[0];
-	
-	$other = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '0'");
-	
+		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }	
 		
-	$check = 1;	
-	}
-	
-	$datas = [];
+	  $datas = [];
 	$datas['type'] = 'template';
 	$datas['altText'] = 'this is a carousel template';
 	$datas['template']['type'] = 'carousel';
@@ -194,10 +182,24 @@ function show_address($db,$cusid)
 	$datas['template']['columns'][0]['actions'][1]['type'] = 'postback';
 	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
-	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;
+	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;	
+	 }
+	
+	else
+	{	
+	$current = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"); //ปัจจุบัน
+	$address = pg_fetch_row($current)[0];
+	
+	$other = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '0'");
+	
+	/*	
+	$check = 1;	
+	}
+	
+	
 	
 	if($check==1)
-	{
+	{ */
 	   $a = 0;	
 	   $address_array = [];
 	   while($other_address = pg_fetch_row($other)[0])
@@ -230,7 +232,7 @@ function show_address($db,$cusid)
 		$datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 		$datas['template']['columns'][$i]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
 		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address_array[$i].' '.$cusid;
-	   }
+	   //}
 		
 	
 	}
