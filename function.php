@@ -172,7 +172,7 @@ function show_address($db,$cusid)
 	$address = pg_fetch_row($real)[0];
 	
 	$other = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '0'");
-	$other_address = pg_fetch_row($other)[0];
+	
 		
 	$check = 1;	
 	}
@@ -190,21 +190,30 @@ function show_address($db,$cusid)
 	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$other_address[$i].' '.$cusid;
 	
-	if($check==1){
-		
-		for ($i=0; $i<10;$i++)
-		{
+	if($check==1)
+	{
+	   $i = 0;	
+	   $address_array = [];
+	   while($other_address = pg_fetch_row($other)[0])
+	   {
+		   $address_array[$i] = $other_address;
+		   $i++;
+	   }
+	   for($i=1;$i<9;$i++)	
+	   {
+			
 		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
-		$datas['template']['columns'][$i]['text'] = $other_address[$i];
+		$datas['template']['columns'][$i]['text'] = $address_array[$i];
 		$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
 		$datas['template']['columns'][$i]['actions'][0]['label'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
 		$datas['template']['columns'][$i]['actions'][0]['text'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
-		$datas['template']['columns'][$i]['actions'][0]['data'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน'.$other_address[$i].' '.$cusid;
+		$datas['template']['columns'][$i]['actions'][0]['data'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน'.$address_array[$i].' '.$cusid;
 		$datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
 		$datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 		$datas['template']['columns'][$i]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
-		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$other_address[$i].' '.$cusid;
-		}	
+		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address_array[$i].' '.$cusid;
+	   }
+		
 	
 	}
 	return $datas;
