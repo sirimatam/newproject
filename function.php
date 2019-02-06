@@ -189,6 +189,7 @@ function show_address($db,$cusid)
 	$datas['template']['type'] = 'carousel';
 	$datas['template']['columns'][0]['title'] = 'ชื่อและที่อยู่จัดส่งปัจจุบัน';
 	$datas['template']['columns'][0]['text'] = $address;
+	$datas['template']['columns'][0]['thumbnailImageUrl'] = '';
 	$datas['template']['columns'][0]['actions'][0]['type'] = 'message';
 	$datas['template']['columns'][0]['actions'][0]['label'] = 'เพิ่มชื่อและที่อยู่ใหม่';
 	$datas['template']['columns'][0]['actions'][0]['text'] = 'เพิ่มชื่อและที่อยู่ใหม่';
@@ -213,6 +214,7 @@ function show_address($db,$cusid)
 		
 		$datas['template']['columns'][$i]['title'] = 'ชื่อและที่อยู่จัดส่งเพิ่มเติม';
 		$datas['template']['columns'][$i]['text'] = $address_array[$i];
+		$datas['template']['columns'][$i]['thumbnailImageUrl'] = '';
 		$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
 		$datas['template']['columns'][$i]['actions'][0]['label'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
 		$datas['template']['columns'][$i]['actions'][0]['text'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
