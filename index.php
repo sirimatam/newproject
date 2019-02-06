@@ -87,6 +87,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$show = show_address($db,$userid);
 		$post = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $post);
+		file_put_contents("php://stderr", "address  ===> ".json_encode($show));
 
 	}
        elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
@@ -176,10 +177,10 @@ if ( sizeof($request_array['events']) > 0 )
    elseif( $event['message']['type'] == 'image' )
    {
 	   
-	   /*
-	   $cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
-	   $orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
-	   */
+	   
+	   //$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
+	   //$orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
+	   
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
