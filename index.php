@@ -99,8 +99,13 @@ if ( sizeof($request_array['events']) > 0 )
        elseif (explode("@@",$text)[0] == '')   
        {
 	       // check ว่า ใส่ address ครั้งแรกหรือเปล่า
+	       
 	       $address = explode("@@",$text)[1];
-	       pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES = ('$userid','$address','0') ");
+	       
+	       file_put_contents("php://stderr", "can explode ===> ".$address);
+	       
+	       
+	        pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES ('$userid','$address','0') ");
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
