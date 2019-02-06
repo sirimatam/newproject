@@ -546,8 +546,8 @@ function flex_order($db,$order_id,$cartp_id)
 		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
 		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
 		$pd[$running][0] = $x;
-		$pd[$running][0] = $y;
-		$pd[$running][0] = $z;
+		$pd[$running][1] = $y;
+		$pd[$running][2] = $z;
 		$running++;
 	}
 	for($i=0;$i<pg_num_rows($cartp_array);$i++)
