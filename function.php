@@ -446,16 +446,16 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 function carousel_cart($db,$cus_id)
 {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
-    $skuid = pg_query($db,"SELECT * FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
+    $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $skuarray = array();
     $run1 = 0;
     $total = 0;
-    while($aaa = pg_fetch_row($skuid))
+    while($aaa = pg_fetch_row($skuid)[0])
     {
-	    $b = $aaa[0];
-	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$b'"));
+	    //$b = $aaa[0];
+	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
 	    $skuarray[$run1] = $sku_detail;
-	    $total += $aaa[3];
+	    //$total += $aaa[3];
 	    $run1++;
     }
     
