@@ -452,7 +452,8 @@ function carousel_cart($db,$cus_id)
     $total = 0;
     while($aaa = pg_fetch_row($skuid))
     {
-	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa[0]'"));
+	    $b = $aaa[0];
+	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$b'"));
 	    $skuarray[$run1] = $sku_detail;
 	    $total += $aaa[3];
 	    $run1++;
