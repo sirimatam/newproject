@@ -452,10 +452,8 @@ function carousel_cart($db,$cus_id)
     $total = 0;
     while($aaa = pg_fetch_row($skuid)[0])
     {
-	    //$b = $aaa[0];
 	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
 	    $skuarray[$run1] = $sku_detail;
-	    //$total += $aaa[3];
 	    $run1++;
     }
     
@@ -468,9 +466,11 @@ function carousel_cart($db,$cus_id)
 	 $prod_id = $skuarray[$i][1];
 	 $x = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$prod_id'"))[0];
 	 $y = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$prod_id'"))[0];
+	 $z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$prod_id'"))[0];
 	 $namearray[$run2][0] = $skuarray[$i][1];
 	 $namearray[$run2][1] = $x;
 	 $namearray[$run2][2] = $y;
+	 $namearray[$run2][3] = $z;
 	 $run2++;
     }
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
@@ -491,7 +491,7 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].' '.$skuarray[$i][3].' 1 ชิ้น';
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2].'\n'.$skuarray[$i][3].' จำนวน 1 ชิ้น'.'\n'.'ราคา '.$namearray[$i][3];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
