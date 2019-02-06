@@ -504,34 +504,6 @@ function carousel_cart($db,$cus_id)
     
 function flex_order($db,$order_id,$cartp_id)
 {
-	$data = [];
-	$data['type'] = 'flex';
-	$data['altText'] = 'Flex Message';
-	$data['contents']['type'] = 'bubble';
-	$data['contents']['header']['type'] = 'box';
-	$data['contents']['header']['layout'] = 'vertical';
-	$data['contents']['header']['contents'][0]['type'] = 'text';
-	$data['contents']['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
-	$data['contents']['header']['contents'][0]['size'] = 'lg';
-	$data['contents']['header']['contents'][0]['align'] = 'center';
-	$data['contents']['header']['contents'][0]['weight'] = 'bold';
-	//$data['contents']['body']['type'] = 'box';
-	//$data['contents']['body']['layout'] = 'vertical';
-	//$data['contents']['body']['spacing'] = 'md';
-	$data['contents']['body']['type'] = 'box';
-	$data['contents']['body']['layout'] = 'vertical';
-	$data['contents']['body']['contents'][0]['type'] = 'box';
-	$data['contents']['body']['contents'][0]['layout'] = 'baseline';
-	$data['contents']['body']['contents'][0]['flex'] = 0;
-	$data['contents']['body']['contents'][0]['contents'][0]['type'] = 'text';
-	$data['contents']['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
-	$data['contents']['body']['contents'][0]['contents'][0]['margin'] = 'sm';
-	$data['contents']['body']['contents'][0]['contents'][0]['weight'] = 'regular';
-	$data['contents']['body']['contents'][0]['contents'][1]['type'] = 'text';
-	$data['contents']['body']['contents'][0]['contents'][1]['text'] = $total.' บาท'; //prod_name
-	$data['contents']['body']['contents'][0]['contents'][1]['margin'] = 'sm';
-	$data['contents']['body']['contents'][0]['contents'][1]['weight'] = 'regular';
-	$data['contents']['body']['contents'][0]['contents'][1]['align'] = 'end';
 	
 	//$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
 	//$cartp_id = $order_array[1];
@@ -566,6 +538,36 @@ function flex_order($db,$order_id,$cartp_id)
 		$total += $z;
 		$running++;
 	}
+	
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'bubble';
+	$data['contents']['header']['type'] = 'box';
+	$data['contents']['header']['layout'] = 'vertical';
+	$data['contents']['header']['contents'][0]['type'] = 'text';
+	$data['contents']['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
+	$data['contents']['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['header']['contents'][0]['align'] = 'center';
+	$data['contents']['header']['contents'][0]['weight'] = 'bold';
+	//$data['contents']['body']['type'] = 'box';
+	//$data['contents']['body']['layout'] = 'vertical';
+	//$data['contents']['body']['spacing'] = 'md';
+	$data['contents']['body']['type'] = 'box';
+	$data['contents']['body']['layout'] = 'vertical';
+	$data['contents']['body']['contents'][0]['type'] = 'box';
+	$data['contents']['body']['contents'][0]['layout'] = 'baseline';
+	$data['contents']['body']['contents'][0]['flex'] = 0;
+	$data['contents']['body']['contents'][0]['contents'][0]['type'] = 'text';
+	$data['contents']['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['body']['contents'][0]['contents'][0]['margin'] = 'sm';
+	$data['contents']['body']['contents'][0]['contents'][0]['weight'] = 'regular';
+	$data['contents']['body']['contents'][0]['contents'][1]['type'] = 'text';
+	$data['contents']['body']['contents'][0]['contents'][1]['text'] = $total.' บาท'; //prod_name
+	$data['contents']['body']['contents'][0]['contents'][1]['margin'] = 'sm';
+	$data['contents']['body']['contents'][0]['contents'][1]['weight'] = 'regular';
+	$data['contents']['body']['contents'][0]['contents'][1]['align'] = 'end';
+	
 	for($i=0;$i<pg_num_rows($cartp_array);$i++)
 	{
 		$data['contents']['header']['contents'][$i+1]['type'] = 'box';
