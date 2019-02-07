@@ -171,7 +171,7 @@ function show_address($db,$cusid)
 	$address = pg_fetch_row($current)[0];
 	if(strlen($address)=='')
 	{
-		$other_prim = pg_fetch_row(pg_query($db,"SELECT TOP 1 * FROM customer WHERE cus_id = '$cusid' ")[0];
+		$other_prim = pg_fetch_row(pg_query($db,"SELECT TOP 1 * FROM customer WHERE cus_id = '$cusid' "))[0];
 	        pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$other_prim' AND cus_id = '$cusid' ");
 		// set อันแรกให้เป็นปจบ
 		$address = pg_fetch_row(pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$cusid' AND cus_default = '1'"))[0];		   
