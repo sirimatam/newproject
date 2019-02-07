@@ -4,14 +4,36 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
+require 'track.class.php';
+
+
 //print_r( flex_order($db,$order_id,$cartp_id));
 
-//echo $db;
+
+
+/*
+$trackingNumber = 'SHX306592865TH';
+$track = new Trackingmore;
+$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
+print_r($track);
+echo '</br></br></br></br></br></br>';
+$trace = $track['data']['items'][0]['lastEvent'];
+print_r($trace);
+echo '</br></br></br></br></br></br> above is trace // below is encode trace';
+
+print_r(json_encode($trace));
+
+*/
+
+	
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
+
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
+
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
+
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 
@@ -23,20 +45,21 @@ if ( sizeof($request_array['events']) > 0 )
   $reply_token = $event['replyToken']; 
 
 
-
 	 
   if ( $event['type'] == 'message' ) 
   {
    if( $event['message']['type'] == 'text' )
    {
-	   $check = 0;
-        $text = $event['message']['text']; 
+
+        $text = $event['message']['text'];
+	   
 	$userid = $event['source']['userId'];
-	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid'");
+	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid' ");
 	if( pg_num_rows($findid) == 0)
 	{
-		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','0')");
+		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','1')");
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
+
 	}
 	   
 	
@@ -46,6 +69,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,button_all_type());
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
+
 	}
 
 	elseif ($text=='เช็คสถานะ')
@@ -85,6 +109,7 @@ if ( sizeof($request_array['events']) > 0 )
 			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 		}
 
+
 	}
 /*	elseif ($text=='โปรโมชัน')
 	{
@@ -100,60 +125,104 @@ if ( sizeof($request_array['events']) > 0 )
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 		
 	}
-/*	elseif ($text=='ที่อยู่จัดส่ง')
-	{
-		
 
-//send_reply_message($API_URL, $POST_HEADER, $post_body);
-
-		
-	}
 	   
-       elseif ($text=='ดูที่อยู่จัดส่ง')
+	elseif ($text=='ที่อยู่จัดส่ง')
+
 	{
-		$address = pg_query($db,"SELECT cus_description FROM customer WHERE customer.cus_id = $cusid");
-	       $show_address = pg_fetch_row($address)[0];
-	       $data = [
-		    'replyToken' => $reply_token,
-		    'messages' => [['type' => 'text', 'text' => $show_address]]
-		   ];
-	       
-	       send_reply_message($API_URL, $POST_HEADER, $data);
+		
+		$show = show_address($db,$userid);
+		$post = format_message($reply_token,$show);
+		send_reply_message($API_URL, $POST_HEADER, $post);
+		file_put_contents("php://stderr", "address  ===> ".json_encode($show));
+
 	}
-       elseif ($text=='แก้ไขที่อยู่')
+       elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
 	{
-		pg_query($db,"UPDATE customer SET cus_description = $cusaddress WHERE cus_id = $cusid");
-		$data = [
-		    'replyToken' => $reply_token,
-		    'messages' => [['type' => 'text', 'text' => 'แก้ไขที่อยู่เรียบร้อยแล้ว']]
-		   ];
+	        $ans = ['type'=>'text','text' => 'พิมพ์ @@ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@@น.ส.เสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
+	 	$data = format_message($reply_token,$ans);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
+       } 
+       elseif (explode("@@",$text)[0] == '')   
+       {
+	       $address = explode("@@",$text)[1];
+	       // check ว่า ใส่ address ครั้งแรกหรือเปล่า
+	       
+	       $firsttime = pg_query($db,"SELECT cus_description FROM customer WHERE cus_id = '$userid' AND cus_default = '1' ");
+	       if(pg_fetch_row($firsttime)[0] == '')
+	       {
+		       pg_query($db,"UPDATE customer SET cus_description = '$address' WHERE cus_id = '$userid' AND cus_default = '1' ");
+	       }
+	       else{
+	       
+	       
+	       
+	       file_put_contents("php://stderr", "can explode ===> ".$address);
+	       
+	       
+	        pg_query($db,"INSERT INTO customer (cus_id,cus_description,cus_default) VALUES ('$userid','$address','0') "); }
+		$show = show_address($db,$userid);
+		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
-       }  
-       */
+
+       }
+       
+       
+
        elseif ($text=='สินค้าที่ชอบ')
 	{
 		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
-	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
+
+	elseif ($text=='เช็คสถานะ')
 	{
-		if(explode(" ",$text)[0] == $sku_id[0])
+		$data = format_message($reply_token,button_pay_track());
+		send_reply_message($API_URL, $POST_HEADER, $data);
+	}
+	elseif ($text=='แจ้งโอนเงิน')
+	{
+		$ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
+	 	$data = format_message($reply_token,$ans);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
+	}	
+        elseif ($text=='เช็คสถานะพัสดุ')
+	{
+		/* ทำได้ๆๆๆ 
+		$trackingNumber = 'SHX306592865TH';
+		$track = new Trackingmore;
+		$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
+		
+		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+		send_reply_message($API_URL, $POST_HEADER, $data);
+		
+		*/
+		
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
+		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
+		if(strlen($trackingNumber)==0)
 		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			if(strlen($payment) == 0)
+			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
+			else { $reply = 'กำลังจัดเตรียมสินค้า';}
+			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
+
 			send_reply_message($API_URL, $POST_HEADER, $data);
-			
 		}
+		else
+		{
+			$track = new Trackingmore;
+			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
+			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+		}
+		
+		
 	}
-	   
-        elseif ($text=='เช็คสถานะ')
-	{
-		$reply_message = "6";
-	}
-	   
-	
+
+	else {
+
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
 	while($type = pg_fetch_row($types))
@@ -168,19 +237,84 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}	
 	}
-	*/
-	else
-	$reply_message = 'why dont you say hello to me';
-   }
-   else
-    $reply_message = 'ระบบได้รับ '.ucfirst($event['message']['type']).' ของคุณแล้ว';
+
+
+	}
+
+
+   } /*
+   elseif( $event['message']['type'] == 'image' )
+   {
+	   
+	   
+	   //$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
+	   //$orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
+	   
+	   $imgid =  $event['message']['id']; 
+	   
+	   file_put_contents("php://stderr", "image id ===> ".$imgid);
+	   
+	   $response = get_user_content($msgid,$POST_HEADER);
+	   
+	   define('UPLOAD_DIR', '/image/');
+	   $img = base64_encode($response); 
+	   $data = base64_decode($img);
+	   
+	   $file = UPLOAD_DIR . $imgid . '.png';
+	   	   
+	   $success = file_put_contents('$file', $data);	   
+	   
+	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
+	   
+	   $datetime = get_datetime();
+	   
+	   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','order1','0')");
+	   
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
+	   send_reply_message($API_URL, $POST_HEADER, $dataa);
+	   
+	   //$get = get_user_content($GET_url,$POST_HEADER);
+	   
+
+	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
+	   
+
+	   
+	   
+	   
+	   
+	   
+   } */
+
   
-  }
   elseif($event['type'] == 'postback')
   {
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
-	
+
+	$data = explode(" ",$info);
+	if($data[0] == 'ลบชื่อและที่อยู่นี้')
+	{
+		
+		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+		file_put_contents("php://stderr", "split  ===> ".$data );
+		$show = show_address($db,$userid);
+		$data = format_message($reply_token,$show);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
+	}
+	elseif(explode(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
+	{
+		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$data[2]' AND cus_default = '1' ");
+		
+		$data = explode(" ",$info);
+		pg_query($db,"UPDATE Customer SET cus_default = '1' WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+		$show = show_address($db,$userid);
+		$data = format_message($reply_token,$show);
+	       send_reply_message($API_URL, $POST_HEADER,$data);
+	}  
+	  
+	  
+
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
@@ -192,7 +326,9 @@ if ( sizeof($request_array['events']) > 0 )
 			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
+
 			if(explode(" ",$info)[0] == 'Favorite')
+
 			{
 			  add_favorite($db,$userid,$prod_id[0]);	
 			}
@@ -239,20 +375,9 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 	}
   }
-  else
-   $reply_message = 'ระบบได้รับ Event '.ucfirst($event['type']).' ของคุณแล้ว';
-
-
-
-   	
-//$post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-//send_reply_message($API_URL, $POST_HEADER, $post_body);
-
-    
-  
+ }
 }
-} 
-
+}
 
 
 
@@ -271,6 +396,7 @@ function format_message_v2($userid,$message)
 function format_message_push($reply_token,$message)
 {
 	$data = ['to' => $reply_token,'messages' =>  $message ];
+
 	return $data;
 }
 
@@ -289,5 +415,4 @@ function send_reply_message($url, $post_header, $post)
 } 
 
 
- 
 ?>

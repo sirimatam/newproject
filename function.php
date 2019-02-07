@@ -1,19 +1,49 @@
 <?php
 
-	/*   
-function show_promotion_product() 
+
+	
+
+function get_datetime()
+{
+	date_default_timezone_set("Asia/Bangkok");
+	$date = date("Y-m-d");
+	$time = date("H:i:s");
+	return [$date,$time];
+}
+
+
+function get_user_content($msgid, $post_header)
+{
+	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
+	$ch = curl_init($get_url);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
+	curl_setopt($ch, CURLOPT_ENCODING, "");
+	curl_setopt($ch, CURLOPT_MAXREDIRS, 10); 
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
+	
+	$response = curl_exec($ch);
+	curl_close($ch);
+
+}
+	   
+function show_promotion_product($db) 
+
 { 
-   $promo = pg_query($db,"SELECT * FROM Product WHERE prod_price>prod_pro_price"); 
+   $promo = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price"); 
    $num = pg_num_rows($promo);
    
    if($num>10)
    {
-	$promo_top = pg_query($db,"SELECT TOP 10 * FROM Product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
+	$promo_top = pg_query($db,"SELECT TOP 10 * FROM product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
    	$promo_num = pg_num_rows($promo_top);
    }
    else
    {
-   	$promo_top = pg_query($db,"SELECT * FROM Product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
+   	$promo_top = pg_query($db,"SELECT * FROM product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
    	$promo_num = pg_num_rows($promo_top);
    }
 	
@@ -50,14 +80,15 @@ function show_promotion_product()
    
 }   
 	   
-function customer_address($cusid)
+function customer_address($db,$cusid)
 {
-	pg_query($db,"UPDATE Customer SET cus_name = 'C001', cus_address = '', cus_tel = '' WHERE cus_id = $cusid ");
+	pg_query($db,"UPDATE customer SET cus_name = 'C001', cus_address = '', cus_tel = '' WHERE cus_id = $cusid ");
 }
 	   
   
   */
   
+
 function button_all_type()
   {
 	  $data = 
@@ -130,29 +161,34 @@ function button_all_type()
 	
    return $data;
   }  
+
 /*
 function show_address($cusid)
+
 {
-	$query = pg_query($db,"SELECT cus_description FROM Customer WHERE Customer.cus_id = $cusid");
-	$address = pg_fetch_row($query)[0];
+	$query = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$cusid' ");
+	$check = 0;
+	if(pg_num_rows($query)==1)
+	 { 
+	   $cus_primary = pg_fetch_row($query)[0];
+	   pg_query($db,"UPDATE customer SET cus_default = '1' WHERE cus_primary = '$cus_primary' ");  // in case ลบอันปัจจุบัน อันที่เหลือ =1
+	   $address = pg_fetch_row($query)[2];
+	   $address = pg_fetch_row(pg_query($db,"SELECT cus_description FROM customer WHERE cus_primary = '$cus_primary' "))[0];
+	   if(strlen($address) == 0)
+		 { $address = 'กรุณาเพิ่ม ชื่อ นามสกุล และที่อยู่จัดส่ง'; }
 	
-	$data = [];
-	$data['type'] = 'template';
-	$data['altText'] = 'this is a buttons template';
-	$data['template']['type'] = 'buttons';
-	$data['template']['actions']['type'] = 'message';
-	$data['template']['actions']['label'] = 'แก้ไขที่อยู่จัดส่ง';
-	$data['template']['actions']['text'] = 'แก้ไขที่อยู่';
-	$data['template']['title'] = 'ที่อยู่จัดส่งปัจจุบัน';
-	$data['template']['text'] = $address;
+	 }
 	
+
 	return $data;
 }*/
+
 /* ข้อ 2 */
 function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 { 
   // how to check whether prod_qtt > 0
    $pd_type = pg_query($db,"SELECT * FROM product WHERE prod_type = '$type'");  
+
    $num_carousel = pg_num_rows($pd_type);
    //$list = pg_fetch_row($pd_type);
    $prod = array();
@@ -230,11 +266,14 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
   
 function carousel_view_more($db,$prod_id) 
 {
+
   
   $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM Product WHERE prod_id = '$prod_id'"))[0];
   $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM Product WHERE prod_id = '$prod_id'"))[0];
   $pd_sku = pg_query($db,"SELECT * FROM stock WHERE stock.prod_id = '$prod_id'");
   //$list = pg_fetch_row($pd_sku);
+
+ 
   $num_carousel = pg_num_rows($pd_sku);
   $sku = array();
   $sku_num =0;
@@ -305,6 +344,7 @@ function carousel_view_more($db,$prod_id)
   
   
 }
+
   
 //if message['text'] == 'Favorite'.$prod_id
   
@@ -312,17 +352,21 @@ function add_favorite($db,$cus_id,$prod_id)
   {
     /* check fav cannot more than 10 */
    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'");
+
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถ Favorite ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
+
     pg_query($db,"INSERT INTO favorite (cus_id,prod_id) VALUES ('$cus_id','$prod_id')");
+
     }
   }  
   
   function carousel_show_favorite($db,$cus_id)
   {
     $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'"); 
+
     //$list = pg_fetch_row($check);
     $i = 0;
     $prod_array = array();
@@ -341,6 +385,7 @@ function add_favorite($db,$cus_id,$prod_id)
     $datas['altText'] = 'this is a carousel template';
     $datas['template']['type'] = 'carousel';    
     for ($i=0; $i<pg_num_rows($check);$i++)
+
      {
         
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
@@ -361,12 +406,14 @@ function add_favorite($db,$cus_id,$prod_id)
   /* if message['text'] == delete.$fav_id' */
   function delete_favorite($db,$fav_id)
   {
+
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
   function delete_from_cart($db,$sku_id,$cus_id)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
     pg_query("DELETE FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'");
+
   }
   
   function button_order_status($cus_id)
@@ -398,7 +445,9 @@ function add_favorite($db,$cus_id,$prod_id)
   }
   
   
+
   */
+
   
   
   
@@ -410,15 +459,18 @@ function add_favorite($db,$cus_id,$prod_id)
   
   
 //if message['text'] == 'Cart'.$sku_id
+
 function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
   {
     /* check cart cannot more than 10 */
     $cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$cus_id'"))[0];
     $check = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id'");
+
     $count = pg_num_rows($check);
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
+
     pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
@@ -432,6 +484,7 @@ function carousel_cart($db,$cus_id)
     $run1 = 0;
     $total = pg_num_rows($skuid);
     while($aaa = pg_fetch_row($skuid)[0])
+
     {
 	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
 	    $skuarray[$run1] = $sku_detail;
@@ -439,11 +492,12 @@ function carousel_cart($db,$cus_id)
     }
     
 	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
-    $namearray = array();
+    $namearray = array(); 
     $run2 = 0;
     
     for($i=0; $i<pg_num_rows($skuid);$i++)
     {
+
 	 $prod_id = $skuarray[$i][1];
 	 $x = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$prod_id'"))[0];
 	 $y = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$prod_id'"))[0];
@@ -464,6 +518,7 @@ function carousel_cart($db,$cus_id)
     else{
 	$push_array = [];
 	    
+
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
@@ -503,9 +558,12 @@ function carousel_cart($db,$cus_id)
 	  
     
     
+
 function flex_order($db,$order_id,$cartp_id)
+
 {
 	
+
 	//$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
 	//$cartp_id = $order_array[1];
 	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
@@ -587,21 +645,25 @@ function flex_order($db,$order_id,$cartp_id)
 	
 	return $data;
 	
+
 }
     
     
     
     
+
 function add_to_order($db,$cus_id,$cart_avail)
 {
 	
 	$order_id = uniqid();
 	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
+
 	$total_price = 0;
 	while($skuid = pg_fetch_row($skuids)[0])
 	{
 		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
+
 		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
 		$total_price += $prod_price; 
 	}
@@ -611,6 +673,8 @@ function add_to_order($db,$cus_id,$cart_avail)
 	pg_query($db,"INSERT INTO orderlist (order_id,cartp_id,total_price,order_date,order_time,order_status) VALUES ('$order_id','$cart_avail','$total_price','$date','$time','waiting for payment')");
 	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
 	pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$cus_id','0')");
+
+		
 	return $order_id;
 	
 }
@@ -622,12 +686,7 @@ function clear_cart($db,$cus_id,$cart_avail)
 }
   
   
-  
-  
-  
-  
-  
-  
+
   
   
 ?>
