@@ -235,10 +235,10 @@ if ( sizeof($request_array['events']) > 0 )
   {
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
-	
-	if(explode(" ",$info)[0] == 'ลบชื่อและที่อยู่นี้')
+	$data = explode(" ",$info);
+	if($data[0] == 'ลบชื่อและที่อยู่นี้')
 	{
-		$data = explode(" ",$info);
+		
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
 		file_put_contents("php://stderr", "split  ===> ".$data );
 		$show = show_address($db,$userid);
