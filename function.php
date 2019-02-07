@@ -202,7 +202,7 @@ function show_address($db,$cusid)
     
 	   $a = 0;	
 	   $address_array = [];
-	   while($other_address = pg_fetch_row($other))
+	   while($other_address = pg_fetch_row($other)[0])
 	   {
 		   $address_array[$a] = $other_address;
 		   $a++;
