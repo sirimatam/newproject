@@ -216,7 +216,7 @@ if ( sizeof($request_array['events']) > 0 )
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
 	
-	if(explode(" ",$info)[0] == 'ลบชื่อและที่อยู่นี้')
+	if(explode("###",$info)[0] == 'ลบชื่อและที่อยู่นี้')
 	{
 		$data = explode(" ",$info);
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
@@ -225,7 +225,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,$show);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
 	}
-	elseif(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
+	elseif(explode("###",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
 	{
 		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$data[2]' AND cus_default = '1' ");
 		
