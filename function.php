@@ -1,4 +1,5 @@
 <?php
+
 	/*   
 function show_promotion_product() 
 { 
