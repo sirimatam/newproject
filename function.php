@@ -256,7 +256,7 @@ function carousel_view_more($db,$prod_id)
      
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $pd_name;
-        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."  จำนวน : ".$sku[$i][2];
+        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."  Stock : ".$sku[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
@@ -491,7 +491,7 @@ function carousel_cart($db,$cus_id)
         $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้า';
         $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
         $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
-	$datas2['template']['text'] = 'สินค้าทั้งหมด '.$total.' ชิ้น';
+	$datas2['template']['text'] = 'สินค้า'.$total.' ชิ้น';
      
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
