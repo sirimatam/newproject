@@ -362,10 +362,11 @@ function add_favorite($db,$cus_id,$prod_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-  function delete_from_cart($db,$sku_id,$cus_id)
+  function delete_from_cart($db,$sku_id,$cus_id,$cart_qtt)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
     pg_query("DELETE FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'");
+    pg_query($db,"UPDATE stock SET sku_qtt += '$cart_qtt' WHERE sku_id = '$sku_id'");
   }
   
   function button_order_status($cus_id)
@@ -418,7 +419,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     else{
-    pg_query($db,"UPDATE stock SET sku_qtt -= $cart_qtt WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    pg_query($db,"UPDATE stock SET sku_qtt -= '$cart_qtt' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
@@ -614,10 +615,16 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-function clear_cart($db,$cus_id,$cart_avail)
+function clear_cart($db,$cart_qtt,$cart_avail)
 {
+	$sku_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
+	while($sku_id = pg_fetch_row($sku_array)[0])
+	{
+		pg_query($db,"UPDATE stock SET sku_qtt += '$cart_qtt' WHERE sku_id = '$sku_id'");	
+	}
 	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
 	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว'];
+
 	return $data;
 }
   
