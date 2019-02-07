@@ -4,17 +4,7 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
-/*
-$trackingNumber = 'SHX306592865TH';
-$track = new Trackingmore;
-$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
-print_r($track);
-echo '</br></br></br></br></br></br>';
-$trace = $track['data']['items'][0]['lastEvent'];
-print_r($trace);
-echo '</br></br></br></br></br></br> above is trace // below is encode trace';
-print_r(json_encode($trace));
-*/
+
 	
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
@@ -217,7 +207,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$info = $event['postback']['data'];
 	
 	$cus = explode("###",$info);  
-	if(explode("###",$info)[0] == 'ลบชื่อและที่อยู่นี้')
+	if($cus[0] == 'ลบชื่อและที่อยู่นี้')
 	{
 		
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$cus[2]' AND cus_description = '$cus[1]' ");
@@ -226,7 +216,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,$show);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
 	}
-	elseif(explode("###",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
+	elseif($cus[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
 	{
 		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$cus[2]' AND cus_default = '1' ");
 		// แก้ให้อันเดิมเป็น 0
