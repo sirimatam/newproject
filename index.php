@@ -207,11 +207,13 @@ if ( sizeof($request_array['events']) > 0 )
 	$info = $event['postback']['data'];
 	
 	$cus = explode("###",$info);  
+	  
+	file_put_contents("php://stderr", "cus  ===> ".$cus[0] );  
 	if($cus[0] == 'ลบชื่อและที่อยู่นี้')
 	{
 		
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$cus[2]' AND cus_description = '$cus[1]' ");
-		file_put_contents("php://stderr", "split  ===> ".$cus );
+		
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
