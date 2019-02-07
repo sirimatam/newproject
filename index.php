@@ -216,21 +216,22 @@ if ( sizeof($request_array['events']) > 0 )
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
 	
+	$cus = explode("###",$info);  
 	if(explode("###",$info)[0] == 'ลบชื่อและที่อยู่นี้')
 	{
-		$data = explode(" ",$info);
-		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
-		file_put_contents("php://stderr", "split  ===> ".$data );
+		
+		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$cus[2]' AND cus_description = '$cus[1]' ");
+		file_put_contents("php://stderr", "split  ===> ".$cus );
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
 	}
 	elseif(explode("###",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
 	{
-		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$data[2]' AND cus_default = '1' ");
+		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$cus[2]' AND cus_default = '1' ");
+		// แก้ให้อันเดิมเป็น 0
 		
-		$data = explode(" ",$info);
-		pg_query($db,"UPDATE Customer SET cus_default = '1' WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
+		pg_query($db,"UPDATE Customer SET cus_default = '1' WHERE cus_id = '$cus[2]' AND cus_description = '$cus[1]' ");
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
