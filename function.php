@@ -187,7 +187,7 @@ function show_address($db,$cusid)
 	$datas['template']['columns'][0]['actions'][1]['type'] = 'postback';
 	$datas['template']['columns'][0]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 	$datas['template']['columns'][0]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
-	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address.' '.$cusid;	
+	$datas['template']['columns'][0]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้###'.$address.'###'.$cusid;	
 	
 	if($check==1)
 	{ 
@@ -208,11 +208,11 @@ function show_address($db,$cusid)
 		$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
 		$datas['template']['columns'][$i]['actions'][0]['label'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
 		$datas['template']['columns'][$i]['actions'][0]['text'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน';
-		$datas['template']['columns'][$i]['actions'][0]['data'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน'.$address_array[$i-1].' '.$cusid;
+		$datas['template']['columns'][$i]['actions'][0]['data'] = 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน###'.$address_array[$i-1].'###'.$cusid;
 		$datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
 		$datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบชื่อและที่อยู่นี้';
 		$datas['template']['columns'][$i]['actions'][1]['text'] = 'ลบชื่อและที่อยู่นี้';
-		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้ '.$address_array[$i-1].' '.$cusid;
+		$datas['template']['columns'][$i]['actions'][1]['data'] = 'ลบชื่อและที่อยู่นี้###'.$address_array[$i-1].'###'.$cusid;
 	   }
 		
 	
