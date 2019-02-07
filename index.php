@@ -215,17 +215,17 @@ if ( sizeof($request_array['events']) > 0 )
   {
   	$userid = $event['source']['userId'];
 	$info = $event['postback']['data'];
-	$data = explode(" ",$info);
-	if($data[0] == 'ลบชื่อและที่อยู่นี้')
+	
+	if(explode(" ",$info)[0] == 'ลบชื่อและที่อยู่นี้')
 	{
-		
+		$data = explode(" ",$info);
 		pg_query($db,"DELETE FROM Customer WHERE cus_id = '$data[2]' AND cus_description = '$data[1]' ");
 		file_put_contents("php://stderr", "split  ===> ".$data );
 		$show = show_address($db,$userid);
 		$data = format_message($reply_token,$show);
 	        send_reply_message($API_URL, $POST_HEADER,$data);
 	}
-	elseif(explode(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
+	elseif(" ",$info)[0] == 'ตั้งเป็นที่อยู่จัดส่งปัจจุบัน')
 	{
 		pg_query($db,"UPDATE Customer SET cus_default = '0' WHERE cus_id = '$data[2]' AND cus_default = '1' ");
 		
@@ -236,7 +236,7 @@ if ( sizeof($request_array['events']) > 0 )
 	       send_reply_message($API_URL, $POST_HEADER,$data);
 	}  
 	  
-	  /*
+	 
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
@@ -247,7 +247,7 @@ if ( sizeof($request_array['events']) > 0 )
 			  $data = carousel_view_more($prod_id);
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
-			if(explode(" ",$text)[0] == 'Favorite')
+			if(explode(" ",$info)[0] == 'Favorite')
 			{
 			  add_favorite($prod_id,$userid);	
 			}
@@ -272,7 +272,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
-	  */
+	  
   }
  }
 }
