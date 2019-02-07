@@ -1,4 +1,6 @@
 <?php
+
+
 function get_datetime()
 {
 	date_default_timezone_set("Asia/Bangkok");
@@ -6,6 +8,8 @@ function get_datetime()
 	$time = date("H:i:s");
 	return [$date,$time];
 }
+
+
 function get_user_content($msgid, $post_header)
 {
 	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
