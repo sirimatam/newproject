@@ -200,7 +200,9 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
    } */
-  
+  else { }
+  }
+	 
   elseif($event['type'] == 'postback')
   {
   	$userid = $event['source']['userId'];
@@ -270,7 +272,8 @@ if ( sizeof($request_array['events']) > 0 )
   }
  }
 }
-}
+
+
 function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
