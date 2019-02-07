@@ -191,6 +191,8 @@ function button_order_status($cus_id)
   }
 
 
+
+
 function show_address($db,$cusid)
 {
 	$query = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$cusid' ");
@@ -494,25 +496,8 @@ function add_favorite($db,$cus_id,$prod_id)
     pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
   }
   
-  function button_order_status($cus_id)
-  {
-    $data = [];
-    $data['type'] = 'template';
-    $data['altText'] = 'this is a buttons template';
-    $data['template']['type'] = 'buttons';
-    $data['template']['action'][0]['type'] = 'message';
-    $data['template']['action'][0]['label'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][0]['text'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][1]['type'] = 'message';
-    $data['template']['action'][1]['label'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][1]['text'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][2]['type'] = 'message';
-    $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
-	  
-    return $data;
-  }
+  
+
   /*
   
   
