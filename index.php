@@ -236,7 +236,7 @@ if ( sizeof($request_array['events']) > 0 )
 	       send_reply_message($API_URL, $POST_HEADER,$data);
 	}  
 	  
-	  
+	  /*
 	$prod_ids = pg_query($db,'SELECT prod_id FROM product');
 	while($prod_id = pg_fetch_row($prod_ids))
 	{
@@ -272,6 +272,7 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 		}
 	}
+	  */
   }
  }
 }
