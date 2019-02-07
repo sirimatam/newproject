@@ -206,8 +206,9 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	if(explode(" ",$info)[0] == 'Clear')
 	{
+		$cart_qtt = 1;
 		$cartid = explode(" ",$info)[1];
-		$data = format_message($reply_token,clear_cart($db,$userid,$cartid));
+		$data = format_message($reply_token,clear_cart($db,$cart_qtt,$cartid));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}
 	if(explode(" ",$info)[0] == 'Order')
@@ -232,7 +233,9 @@ if ( sizeof($request_array['events']) > 0 )
 			}
 			if(explode(" ",$info)[0] == 'Delete')
 			{
-			  delete_from_cart($db,$sku_id[0],$userid);
+			  
+			   $cart_qtt = 1;
+			  delete_from_cart($db,$sku_id[0],$userid,$cart_qtt);
 			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id[0].' ออกจากตะกร้าเรียบร้อยแล้ว']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
