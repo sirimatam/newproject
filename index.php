@@ -209,6 +209,7 @@ if ( sizeof($request_array['events']) > 0 )
 	$cus = explode("###",$info);  
 	  
 	file_put_contents("php://stderr", "cus  ===> ".$cus[0] );  
+	  
 	if($cus[0] == 'ลบชื่อและที่อยู่นี้')
 	{
 		
