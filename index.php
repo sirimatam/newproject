@@ -37,7 +37,7 @@ if ( sizeof($request_array['events']) > 0 )
 		
 		$data = format_message($reply_token,button_all_type($db));
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
-		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
+		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
 	elseif ($text=='เช็คสถานะ')
@@ -45,12 +45,13 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = button_order_status($userid);
 		$data1 = format_message($reply_token,$data);
 			   
-		$send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
+		send_reply_message($API_URL, $POST_HEADER, $data1);
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 	elseif ($text=='โปรโมชัน')
 	{
-		$post = show_promotion_product($db);
+		//$post = show_promotion_product($db);
+		$data = format_message($reply_token,show_promotion_product($db));
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	}
 	
