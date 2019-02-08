@@ -113,79 +113,7 @@ function button_all_type($db)
    return $data;
   }  
   
-/*  
-function button_all_type()
-  {
-    $data = [
-  "type" => "flex",
-  "altText" => "Flex Message",
-  "contents" => [
-    "type" => "bubble",
-    "direction" => "ltr",
-    "header" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "text",
-          "text" => "เลือกประเภทสินค้า",
-          "align" => "center",
-          "weight" => "bold"
-        ]
-      ]
-    ],
-    "body" => [
-      "type" => "box",
-      "layout" => "vertical",
-      "contents" => [
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "สายเดี่ยว/แขนกุด",
-            "text" => "เสื้อสายเดี่ยว/แขนกุด"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เสื้อมีแขน",
-            "text" => "เสื้อมีแขน"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "เดรส",
-            "text" => "เดรส"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขาสั้น",
-            "text" => "กางเกงขาสั้น"
-          ]
-        ],
-        [
-          "type" => "button",
-          "action" => [
-            "type" => "message",
-            "label" => "กางเกงขายาว",
-            "text" => "กางเกงขายาว"
-          ]
-        ]
-      ]
-    ]
-  ]
-];
-   return $data;
-  }  
 
-*/
 function button_pay_track()
 {
 	$data = [];
