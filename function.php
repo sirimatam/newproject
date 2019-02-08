@@ -51,7 +51,7 @@ function show_promotion_product($db)
 	$run++;
    }
    $running = 0;
-   $carousel = array();
+   
    
       for ($i=0; $i<=$promo_num;$i++)
      {
@@ -71,8 +71,8 @@ function show_promotion_product($db)
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
         $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$promo_list[$i][0];
      }
-     $carousel[$i] = $datas;
-     return $carousel;
+     
+     return $datas;
    
 }   
 	   
