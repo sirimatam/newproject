@@ -4,7 +4,6 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
-
 	
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
@@ -37,6 +36,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		
 		$data = format_message($reply_token,button_all_type($db));
+		file_put_contents("php://stderr", "POST RESULT =====>.json_encode($data)");
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
@@ -49,8 +49,7 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 	
-        /*
-	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
+	/*elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$array_carousel = carousel_product_type($db,$text);
 		//$post = format_message($reply_token,$array_carousel);	
@@ -73,8 +72,7 @@ if ( sizeof($request_array['events']) > 0 )
 			send_reply_message($API_URL, $POST_HEADER, $post);
 			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 		}
-	}
-	*/
+	} */
        elseif ($text=='ตะกร้าสินค้า')
 	{
 	 	
@@ -172,29 +170,37 @@ if ( sizeof($request_array['events']) > 0 )
 		
 	}
 	else {
-	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
-	
-	$array_carousel = carousel_product_type($db,$text);
-		//$post = format_message($reply_token,$array_carousel);	
-	        //$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
-		//file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		//file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
-		
-		if(sizeof($array_carousel) > 1)
+	$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
+	$run = 0;	
+	$pdtype = [];
+	while($each = pg_fetch_row($query_pd)[0])
+	   {
+		   $pdtype[$run] = $each;
+		   $run++;
+	   }   
+ 	foreach($pdtype as $type)
+	{
+		if($text == $type)
 		{
-			for($i=0;$i<sizeof($array_carousel);$i++)
+			$array_carousel = carousel_product_type($db,$text);
+			
+			if(sizeof($array_carousel) > 1)
 			{
-				$post = format_message($reply_token,$array_carousel);	 
-				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
+				for($i=0;$i<sizeof($array_carousel);$i++)
+				{
+					$post = format_message($reply_token,$array_carousel);	 
+					$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
+					file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+				}
+			}
+			else
+			{
+				$post = format_message($reply_token,$array_carousel[0]);	
+				send_reply_message($API_URL, $POST_HEADER, $post);
 				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
 		}
-		else
-		{
-			$post = format_message($reply_token,$array_carousel[0]);	
-			send_reply_message($API_URL, $POST_HEADER, $post);
-			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		}
+	}
 	}
    } /*
    elseif( $event['message']['type'] == 'image' )
@@ -334,15 +340,11 @@ if ( sizeof($request_array['events']) > 0 )
   }
  }
 }
-
-
 function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
 	return $data;
 }
-
-
 function format_message_v2($userid,$message)
 {
 	$data = ['replyToken' => $userid,'messages' =>  $message ];
@@ -353,9 +355,6 @@ function format_message_push($reply_token,$message)
 	$data = ['to' => $reply_token,'messages' =>  $message ];
 	return $data;
 }
-
-
-
 function send_reply_message($url, $post_header, $post)
 {
  $ch = curl_init($url);
