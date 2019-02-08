@@ -32,16 +32,16 @@ function show_promotion_product($db)
    $promo = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price"); 
    $num = pg_num_rows($promo);
    
-   if($num>10)
-   {
-	$promo_top = pg_query($db,"SELECT TOP 10 * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC ");  
+   //if($num>10)
+   //{
+	$promo_top = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC LIMIT 10");  
    	$promo_num = pg_num_rows($promo_top);
-   }
+   /*}
    else
    {
    	$promo_top = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC ");  
    	$promo_num = pg_num_rows($promo_top);
-   }
+   } */
 	
    $promo_list = array();	
    $run = 0;
