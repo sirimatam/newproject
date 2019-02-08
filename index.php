@@ -49,30 +49,7 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 	
-	/*elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
-	{
-		$array_carousel = carousel_product_type($db,$text);
-		//$post = format_message($reply_token,$array_carousel);	
-	        //$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
-		//file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		//file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
-		
-		if(sizeof($array_carousel) > 1)
-		{
-			for($i=0;$i<sizeof($array_carousel);$i++)
-			{
-				$post = format_message($reply_token,$array_carousel);	 
-				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
-				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-			}
-		}
-		else
-		{
-			$post = format_message($reply_token,$array_carousel[0]);	
-			send_reply_message($API_URL, $POST_HEADER, $post);
-			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
-		}
-	} */
+	
        elseif ($text=='ตะกร้าสินค้า')
 	{
 	 	
