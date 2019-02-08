@@ -30,17 +30,7 @@ if ( sizeof($request_array['events']) > 0 )
    if( $event['message']['type'] == 'text' )
    {
 	   
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
-	{
-		if(explode(" ",$text)[0] == $sku_id[0])
-		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
-			send_reply_message($API_URL, $POST_HEADER, $data);
-			
-		}
-	}
+	
 	   
 	   
         $text = $event['message']['text']; 
@@ -52,7 +42,17 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
 	   
-	
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
 	if ($text=='ดูและสั่งซื้อสินค้า')
 	{
 		
