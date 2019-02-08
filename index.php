@@ -37,7 +37,6 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		
 		$data = format_message($reply_token,button_all_type($db));
-		file_put_contents("php://stderr", "POST RESULT =====>.json_encode($data)");
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
@@ -50,7 +49,7 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
 	
- 
+        /*
 	elseif ($text=='กางเกงขาสั้น' OR $text=='กางเกงขายาว' OR $text=='เดรส' OR $text=='เสื้อมีแขน' OR $text=='เสื้อสายเดี่ยว/แขนกุด')
 	{
 		$array_carousel = carousel_product_type($db,$text);
@@ -75,6 +74,7 @@ if ( sizeof($request_array['events']) > 0 )
 			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 		}
 	}
+	*/
        elseif ($text=='ตะกร้าสินค้า')
 	{
 	 	
@@ -174,18 +174,27 @@ if ( sizeof($request_array['events']) > 0 )
 	else {
 	$types =  pg_query($db,'SELECT prod_type FROM product GROUP BY prod_type ');
 	
-	while($type = pg_fetch_row($types))
-	{
-		if ($text == $type)
+	$array_carousel = carousel_product_type($db,$text);
+		//$post = format_message($reply_token,$array_carousel);	
+	        //$send_result = send_reply_message($API_URL, $POST_HEADER, $post);
+		//file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+		//file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		
+		if(sizeof($array_carousel) > 1)
 		{
-			$data = carousel_product_type($text);
-			$size = sizeof($data);
-			for($i=0;$i<$size;$i++)
+			for($i=0;$i<sizeof($array_carousel);$i++)
 			{
-				send_reply_message($API_URL, $POST_HEADER, $data[$i]);	
+				$post = format_message($reply_token,$array_carousel);	 
+				$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
+				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 			}
-		}	
-	}
+		}
+		else
+		{
+			$post = format_message($reply_token,$array_carousel[0]);	
+			send_reply_message($API_URL, $POST_HEADER, $post);
+			file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+		}
 	}
    } /*
    elseif( $event['message']['type'] == 'image' )
