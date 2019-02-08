@@ -81,7 +81,7 @@ function button_all_type($db)
   {
 	  $query = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 	  $run = 0;	
-	  $type = [];
+	  $type = Array();
 	   while($each = pg_fetch_row($query)[0])
 	   {
 		   $type[$run] = $each;
