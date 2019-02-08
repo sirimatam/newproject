@@ -77,9 +77,43 @@ function show_promotion_product($db)
 }   
 	   
   
+function button_all_type($db)
+  {
+	  $query = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
+	  $run = 0;	
+	  $type = [];
+	   while($each = pg_fetch_row($query)[0])
+	   {
+		   $type[$run] = $each;
+		   $run++;
+	   }
+	   
+	  $data = [];
+	  $data['type'] = 'flex';
+	  $data['altText'] = 'Flex Message';
+	  $data['contents']['type'] = 'bubble';
+	  $data['contents']['direction'] = 'ltr';
+	  $data['contents']['header']['type'] = 'box';
+	  $data['contents']['header']['layout'] = 'vertical';
+	  $data['contents']['header']['contents']['type'] = 'text';
+	  $data['contents']['header']['contents']['text'] = 'เลือกประเภทสินค้า';
+	  $data['contents']['header']['contents']['align'] = 'center';
+	  $data['contents']['header']['contents']['weight'] = 'bold';
+	  $data['contents']['body']['type'] = 'box';
+	  $data['contents']['body']['layout'] = 'vertical';
+	  
+	  for ($i=0;$i<$run;$i++)
+	  {
+	  $data['contents']['body']['contents'][$i]['type'] = 'button';
+	  $data['contents']['header']['contents'][$i]['action']['type'] = 'message';
+	  $data['contents']['header']['contents'][$i]['action']['label'] = $type[$i];
+	  $data['contents']['header']['contents'][$i]['action']['text'] = $type[$i];
+	  }
+	  
+   return $data;
+  }    
   
-  
-  
+/*  
 function button_all_type()
   {
     $data = [
@@ -151,7 +185,7 @@ function button_all_type()
    return $data;
   }  
 
-
+*/
 function button_pay_track()
 {
 	$data = [];
