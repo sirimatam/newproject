@@ -59,17 +59,17 @@ function show_promotion_product($db)
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][$prod_img]; 
-        $datas['template']['columns'][$i]['title'] = $promo_list[$i][$prod_name];
-        $datas['template']['columns'][$i]['text'] = $promo_list[$i][$prod_description];
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i]['prod_img']; 
+        $datas['template']['columns'][$i]['title'] = $promo_list[$i]['prod_name'];
+        $datas['template']['columns'][$i]['text'] = $promo_list[$i]['prod_description'];
 	$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$list[$i][0];
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$promo_list[$i]['prod_id'];
         $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$promo_list[$i][0];
+        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$promo_list[$i]['prod_id'];
      }
      
      return $datas;
