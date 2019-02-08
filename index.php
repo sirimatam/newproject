@@ -136,18 +136,18 @@ if ( sizeof($request_array['events']) > 0 )
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
-	/*$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
 		if(explode(" ",$text)[0] == $sku_id[0])
 		{
 			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			$data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
 			send_reply_message($API_URL, $POST_HEADER, $data);
 			
 		}
 	}
-	   
+	   /*
         elseif ($text=='เช็คสถานะ')
 	{
 		$reply_message = "6";
@@ -234,7 +234,6 @@ if ( sizeof($request_array['events']) > 0 )
 			if(explode(" ",$info)[0] == 'Delete')
 			{
 			  
-			   $cart_qtt = 1;
 			  delete_from_cart($db,$sku_id[0],$userid,$cart_qtt);
 			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id[0].' ออกจากตะกร้าเรียบร้อยแล้ว']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
