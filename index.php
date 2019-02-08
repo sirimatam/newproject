@@ -29,7 +29,20 @@ if ( sizeof($request_array['events']) > 0 )
   {
    if( $event['message']['type'] == 'text' )
    {
-	   $check = 0;
+	   
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
+	   
+	   
         $text = $event['message']['text']; 
 	$userid = $event['source']['userId'];
 	$findid = pg_query($db,"SELECT cus_id FROM customer WHERE cus_id = '$userid'");
@@ -136,17 +149,7 @@ if ( sizeof($request_array['events']) > 0 )
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
-	{
-		if(explode(" ",$text)[0] == $sku_id[0])
-		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = format_message($reply_token,add_to_cart($db,$sku_id[0],$userid,$cart_qtt));
-			send_reply_message($API_URL, $POST_HEADER, $data);
-			
-		}
-	}
+	
 	   /*
         elseif ($text=='เช็คสถานะ')
 	{
