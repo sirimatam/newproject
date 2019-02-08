@@ -230,8 +230,8 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 function carousel_view_more($db,$prod_id) 
 {
   
-  $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM Product WHERE prod_id = '$prod_id'"))[0];
-  $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM Product WHERE prod_id = '$prod_id'"))[0];
+  $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$prod_id'"))[0];
+  $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$prod_id'"))[0];
   $pd_sku = pg_query($db,"SELECT * FROM stock WHERE stock.prod_id = '$prod_id'");
   //$list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
@@ -261,12 +261,12 @@ function carousel_view_more($db,$prod_id)
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
         $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
-	$datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
+	/*$datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
-        $datas['template']['columns'][$i]['actions'][2]['type'] = 'message';
-        $datas['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
-        $datas['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';  
+        $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";*/
+        $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';  
      }
      //$carousel[0] = $datas;
      return $datas;
@@ -288,13 +288,13 @@ function carousel_view_more($db,$prod_id)
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งสินค้า 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$list[$i][$sku_color].' ลงตะกร้าเรียบร้อยแล้ว';
         $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$list[$i][$sku_id];
-	$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
-	$datas['template']['columns'][$i]['actions'][0]['data'] = 'สั่งสินค้ามากว่า 1 ชิ้น';
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ดูสินค้าอื่น';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'ดูและสั่งซื้อสินค้า';    
+	$datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
+	$datas['template']['columns'][$i]['actions'][1]['data'] = 'สั่งสินค้ามากว่า 1 ชิ้น';
+        $datas['template']['columns'][$i]['actions'][2]['type'] = 'message';
+        $datas['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
+        $datas['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';    
         $running++;
      }
      $carousel[ceil($running-10)/10] = $datas;
