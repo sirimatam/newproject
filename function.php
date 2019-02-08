@@ -105,13 +105,13 @@ function button_all_type($db)
 	  for ($i=0;$i<$run;$i++)
 	  {
 	  $data['contents']['body']['contents'][$i]['type'] = 'button';
-	  $data['contents']['header']['contents'][$i]['action']['type'] = 'message';
-	  $data['contents']['header']['contents'][$i]['action']['label'] = $type[$i];
-	  $data['contents']['header']['contents'][$i]['action']['text'] = $type[$i];
+	  $data['contents']['body']['contents'][$i]['action']['type'] = 'message';
+	  $data['contents']['body']['contents'][$i]['action']['label'] = $type[$i];
+	  $data['contents']['body']['contents'][$i]['action']['text'] = $type[$i];
 	  }
 	  
    return $data;
-  }    
+  }  
   
 /*  
 function button_all_type()
