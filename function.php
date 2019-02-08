@@ -34,12 +34,12 @@ function show_promotion_product($db)
    
    if($num>10)
    {
-	$promo_top = pg_query($db,"SELECT TOP 10 * FROM product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
+	$promo_top = pg_query($db,"SELECT TOP 10 * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC ");  
    	$promo_num = pg_num_rows($promo_top);
    }
    else
    {
-   	$promo_top = pg_query($db,"SELECT * FROM product ORDER BY (prod_price-prod_pro_price)/prod_price DESC WHERE prod_price>prod_pro_price");  
+   	$promo_top = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC ");  
    	$promo_num = pg_num_rows($promo_top);
    }
 	
