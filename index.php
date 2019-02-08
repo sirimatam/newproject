@@ -36,7 +36,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		
 		$data = format_message($reply_token,button_all_type($db));
-		file_put_contents("php://stderr", "POST RESULT =====>.$data");
+		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
