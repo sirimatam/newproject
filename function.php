@@ -365,7 +365,7 @@ function add_favorite($db,$cus_id,$prod_id)
   function delete_from_cart($db,$sku_id,$cus_id)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
-    $cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
+    $cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
     pg_query("DELETE FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'");
     $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
     $sku_qtt_new = $sku_qtt_now+$cart_qtt;
@@ -420,6 +420,8 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     $check = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id'");
     $count = pg_num_rows($check);
     $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
+    $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id");
+    
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
     elseif($sku_qtt_now < $cart_qtt)
@@ -429,8 +431,18 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     }
     else{
     $sku_qtt_new = $sku_qtt_now-$cart_qtt;
+    while($sku_now = pg_fetch_row($cart_sku)[0])
+    {
+	    if($sku_id==$sku_now)
+	    {
+		    $cart_qtt_now = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cartp_id'"))[0];
+		    $cart_qtt_new = $cart_qtt_now+$cart_qtt;
+		    pg_query($db,"UPDATE cart_product SET cart_prod_qtt = '$cart_qtt_new' WHERE sku_id = '$sku_id' AND cartp_id = '$cartp_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+
+	    }
+	    else{pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");}
+    }
     pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
-    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
   
@@ -439,7 +451,7 @@ function carousel_cart($db,$cus_id)
 {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
     $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
-    $cartqtts = pg_query($db,"SELECT cart_qtt FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
+    $cartqtts = pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
     $run = 0;
     $cart_qtt = array();
     $total = 0;
@@ -639,7 +651,7 @@ function clear_cart($db,$cart_avail)
 	$sku_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
 	while($sku_id = pg_fetch_row($sku_array)[0])
 	{
-		$cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
+		$cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
 		$sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
     		$sku_qtt_new = $sku_qtt_now+$cart_qtt;
    		pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
