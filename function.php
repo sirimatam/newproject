@@ -93,21 +93,21 @@ function button_all_type($db)
 	  $data['altText'] = 'Flex Message';
 	  $data['contents']['type'] = 'bubble';
 	  $data['contents']['direction'] = 'ltr';
-	  $data['contents']['header']['type'] = 'box';
-	  $data['contents']['header']['layout'] = 'vertical';
-	  $data['contents']['header']['contents']['type'] = 'text';
-	  $data['contents']['header']['contents']['text'] = 'เลือกประเภทสินค้า';
-	  $data['contents']['header']['contents']['align'] = 'center';
-	  $data['contents']['header']['contents']['weight'] = 'bold';
-	  $data['contents']['body']['type'] = 'box';
-	  $data['contents']['body']['layout'] = 'vertical';
+	  $data['contents']['header'][0]['type'] = 'box';
+	  $data['contents']['header'][0]['layout'] = 'vertical';
+	  $data['contents']['header'][0]['contents']['type'] = 'text';
+	  $data['contents']['header'][0]['contents']['text'] = 'เลือกประเภทสินค้า';
+	  $data['contents']['header'][0]['contents']['align'] = 'center';
+	  $data['contents']['header'][0]['contents']['weight'] = 'bold';
+	  $data['contents']['body'][0]['type'] = 'box';
+	  $data['contents']['body'][0]['layout'] = 'vertical';
 	  
 	  for ($i=0;$i<$run;$i++)
 	  {
-	  $data['contents']['body']['contents'][$i]['type'] = 'button';
-	  $data['contents']['body']['contents'][$i]['action']['type'] = 'message';
-	  $data['contents']['body']['contents'][$i]['action']['label'] = $type[$i];
-	  $data['contents']['body']['contents'][$i]['action']['text'] = $type[$i];
+	  $data['contents']['body'][0]['contents'][$i]['type'] = 'button';
+	  $data['contents']['body'][0]['contents'][$i]['action']['type'] = 'message';
+	  $data['contents']['body'][0]['contents'][$i]['action']['label'] = $type[$i];
+	  $data['contents']['body'][0]['contents'][$i]['action']['text'] = $type[$i];
 	  }
 	  
    return $data;
