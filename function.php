@@ -420,7 +420,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     $check = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id'");
     $count = pg_num_rows($check);
     $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
-    $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id");
+    $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
     
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
