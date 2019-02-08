@@ -48,7 +48,11 @@ if ( sizeof($request_array['events']) > 0 )
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data1);
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 	}
-	
+	elseif ($text=='โปรโมชัน')
+	{
+		$post = show_promotion_product($db);
+		send_reply_message($API_URL, $POST_HEADER, $post);
+	}
 	
        elseif ($text=='ตะกร้าสินค้า')
 	{
