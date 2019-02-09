@@ -166,7 +166,7 @@ if ( sizeof($request_array['events']) > 0 )
 		if($text == $type)
 		{
 			$array_carousel = carousel_product_type($db,$text);
-			
+			file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($array_carousel));
 			if(sizeof($array_carousel) > 1)
 			{
 				for($i=0;$i<sizeof($array_carousel);$i++)
