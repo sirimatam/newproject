@@ -50,10 +50,12 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='โปรโมชัน')
 	{
-		$post = show_promotion_product($db);
+		$show = show_promotion_product($db);
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
-		$data = format_message($reply_token,show_promotion_product($db));
+		
+		$post = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $post);
+
 	}
 	
        elseif ($text=='ตะกร้าสินค้า')
