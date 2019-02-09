@@ -59,7 +59,7 @@ function show_promotion_product($db)
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-       // $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][2]; 
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $promo_list[$i][1];
         $datas['template']['columns'][$i]['text'] = $promo_list[$i][4];
 	$datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
