@@ -446,7 +446,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 		    $have_sku_check=1;
 	    }
     	}
-	if($have_sku_check = 0)
+	if($have_sku_check == 0)
 	{
 		pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
 	        pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");	
