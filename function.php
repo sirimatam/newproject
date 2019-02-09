@@ -53,7 +53,7 @@ function show_promotion_product($db)
    $running = 0;
    
    
-      for ($i=0; $i<=$promo_num;$i++)
+      for ($i=0; $i<$promo_num;$i++)
      {
         $datas = [];
 	$datas['type'] = 'template';
