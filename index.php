@@ -51,7 +51,7 @@ if ( sizeof($request_array['events']) > 0 )
 	elseif ($text=='โปรโมชัน')
 	{
 		$show = show_promotion_product($db);
-		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($show, JSON_UNESCAPED_UNICODE));
 		$data = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $data);
 
