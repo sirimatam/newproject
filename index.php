@@ -180,7 +180,7 @@ if ( sizeof($request_array['events']) > 0 )
 			{
 				$post = format_message($reply_token,$array_carousel[0]);	
 				send_reply_message($API_URL, $POST_HEADER, $post);
-				file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+				file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));
 			}
 		}
 	}
