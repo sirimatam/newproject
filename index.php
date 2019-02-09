@@ -46,14 +46,13 @@ if ( sizeof($request_array['events']) > 0 )
 		$data1 = format_message($reply_token,$data);
 			   
 		send_reply_message($API_URL, $POST_HEADER, $data1);
-		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}
 	elseif ($text=='โปรโมชัน')
 	{
-		$show = show_promotion_product($db);
-		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($show, JSON_UNESCAPED_UNICODE));
-		$data = format_message($reply_token,$show);
+		$data = format_message($reply_token,show_promotion_product($db));
 		send_reply_message($API_URL, $POST_HEADER, $data);
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 
 	}
 	
