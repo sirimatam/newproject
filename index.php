@@ -209,9 +209,9 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	if(explode(" ",$info)[0] == 'Clear')
 	{
-		$cart_qtt = 1;
+		
 		$cartid = explode(" ",$info)[1];
-		$data = format_message($reply_token,clear_cart($db,$cart_qtt,$cartid));
+		$data = format_message($reply_token,clear_cart($db,$cartid));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}
 	if(explode(" ",$info)[0] == 'Order')
