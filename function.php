@@ -432,7 +432,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     }
     else{
     $sku_qtt_new = $sku_qtt_now-$cart_qtt;
-    if (pg_num_rows($cart_sku)>0
+    if (pg_num_rows($cart_sku)>0)
 	{
     while($sku_now = pg_fetch_row($cart_sku)[0])
     {
