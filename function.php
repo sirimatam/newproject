@@ -52,13 +52,13 @@ function show_promotion_product($db)
    }
    $running = 0;
    
-   
-      for ($i=0; $i<$run;$i++)
-     {
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
+      for ($i=0; $i<$run;$i++)
+     {
+        
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $promo_list[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $promo_list[$i][1];
         $datas['template']['columns'][$i]['text'] = $promo_list[$i][4];
