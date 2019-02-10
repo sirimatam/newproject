@@ -572,23 +572,28 @@ function carousel_cart($db,$cus_id)
 function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมาใช้บ้างนิ    
 {
 	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' ORDER BY cartp_id DESC LIMIT 1 "))[0];
-	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
-	while($cartp = pg_fetch_row($cartp_array)[0])
+	while($data = pg_fetch_row($cartp_array))
 	{
-		$skuid_array[$i] = $cartp;
+		$skuid_array[$i] = $data;
 		$i++;
 	}
 	$pdid_array = array();
 	$sku_color = array();
 	$run =0;
+	for($r=0;$r<pg_num_rows($cartp_array);$r++)
+	{
+		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
+		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
+	} /*
 	foreach( $skuid_array as $skuid)
 	{
 		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
 		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
 		$run++;
-	}
+	} */
 	$running = 0;
 	$pd = [];
 	$total = 0;
@@ -650,7 +655,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$data['contents']['footer']['layout'] = 'vertical';
 	$data['contents']['footer']['contents'][0]['type'] = 'button';
 	$data['contents']['footer']['contents'][0]['action']['type'] = 'postback';
-	$data['contents']['footer']['contents'][0]['action']['label'] = 'สั่งซื้อ';
+	$data['contents']['footer']['contents'][0]['action']['label'] = 'สั่งซื้อเลย';
 	$data['contents']['footer']['contents'][0]['action']['text'] = 'สั่งซื้อ';
 	$data['contents']['footer']['contents'][0]['action']['data'] = 'Order '.$cartp_id;
 	$data['contents']['footer']['contents'][0]['color'] = '#E5352E';
@@ -660,6 +665,8 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$data['contents']['footer']['contents'][1]['action']['label'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['action']['text'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['action']['data'] = 'Clear '.$cartp_id;
+	$data['contents']['footer']['contents'][1]['color'] = '#E4E0E0';
+	$data['contents']['footer']['contents'][1]['style'] = 'primary';
 	
 	return $data;
 	
