@@ -629,7 +629,7 @@ function carousel_flex_order($db,$userid)
 	$data['altText'] = 'Flex Message';
 	$data['contents']['type'] = 'carousel';
 	
-	for($j=0;$j<pg_num_rows($order);$j++)
+	for($j=0;$j<sizeof($order);$j++)
 	{
 	$data['contents']['contents'][$j]['type'] = 'bubble';
 	$data['contents']['contents'][$j]['header']['type'] = 'box';
