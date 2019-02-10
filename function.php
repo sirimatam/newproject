@@ -657,7 +657,7 @@ function carousel_flex_order($db,$userid)
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['align'] = 'end';
 	
-	for($i=0;$i<pg_num_rows($pd[$j]);$i++)
+	for($i=0;$i<sizeof($pd[$j]);$i++)
 	{
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['type'] = 'box';
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['layout'] = 'baseline';
