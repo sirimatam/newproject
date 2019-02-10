@@ -58,7 +58,7 @@ if ( sizeof($request_array['events']) > 0 )
 	
        elseif ($text=='ตะกร้าสินค้า')
 	{
-	 	$post = format_message_v2($reply_token,[carousel_cart($db,$userid),flex_cart_beforeorder($db,$userid)];);
+	 	$post = format_message_v2($reply_token,[carousel_cart($db,$userid),flex_cart_beforeorder($db,$userid)]);
 	        	        
 		send_reply_message($API_URL, $POST_HEADER, $post);
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
