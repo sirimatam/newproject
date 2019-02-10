@@ -571,7 +571,7 @@ function carousel_cart($db,$cus_id)
 	  
 function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมาใช้บ้างนิ    
 {
-	$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = 0 AND cus_id = '$userid' ORDER BY cartp_id DESC LIMIT 1 "))[0];
+	$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' ORDER BY cartp_id DESC LIMIT 1 "))[0];
 	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
