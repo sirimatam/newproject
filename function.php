@@ -571,15 +571,24 @@ function carousel_cart($db,$cus_id)
 
 function carousel_flex_order($db,$userid)
 {
-	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND orderlist.order_status != 'complete' AND createcart.cart_used = '1'");
+	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
+	$run1 = 0;
 	$order = array();
 	$sku_color = array();
 	$pd = [];
 	while($cartp_id = pg_fetch_row($cart_order_array)[0])
 	{
-	$order[$run2] = pg_fetch_row(pg_query($db,"SELECT (order_id,total_price) FROM orderlist WHERE cartp_id = '$cartp_id'"));
-	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+		$a = pg_query($db,"SELECT (order_id,cartp_id,total_price) FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		if(pg_num_rows($a)>0)
+		{
+			$order[$run1] = pg_fetch_row($a)[0];
+			$run1++;
+		}
+	}
+	for($k=0;$k<sizeof($order);$k++)
+	{
+	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k][1]'");
 	$skuid_array = array();
 	$i = 0;
 	while($cartp = pg_fetch_row($cartp_array)[0])
@@ -593,7 +602,7 @@ function carousel_flex_order($db,$userid)
 	foreach( $skuid_array as $skuid)
 	{
 		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
-		$sku_color[$run2][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
+		$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
 		$run++;
 	}
 	$running = 0;
@@ -605,14 +614,13 @@ function carousel_flex_order($db,$userid)
 		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
 		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
 		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
-		$pd[$run2][$running][0] = $x;
-		$pd[$run2][$running][1] = $y;
-		$pd[$run2][$running][2] = $z;
+		$pd[$k][$running][0] = $x;
+		$pd[$k][$running][1] = $y;
+		$pd[$k][$running][2] = $z;
 		$total += $z;
 		$running++;
 	}
 	
-	$run2++;
 	}
 	
 	$data = [];
