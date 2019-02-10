@@ -460,18 +460,6 @@ function add_favorite($db,$cus_id,$prod_id)
   
   
 
-  /*
-  
-  
- function create_cart($cus_id)
-  {
-    //check จ่ายตังก่อน ++ ยังแก้ไม่เสด
-    pg_query($db,'INSERT INTO Favorite VALUES ($fave_id,$prod_id,$cus_id)');
-  }
-  
-  
-  */
-  
   
   
   
@@ -581,8 +569,108 @@ function carousel_cart($db,$cus_id)
 	
   }
 	  
-function flex_cart_beforeorder($db,....) //ต้องดึงไรมาใช้บ้างนิ    
-    
+function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมาใช้บ้างนิ    
+{
+	$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = 0 AND cus_id = '$userid' LIMIT 1 ORDER BY cartp_id DESC"))[0];
+	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$skuid_array = array();
+	$i = 0;
+	while($cartp = pg_fetch_row($cartp_array)[0])
+	{
+		$skuid_array[$i] = $cartp;
+		$i++;
+	}
+	$pdid_array = array();
+	$sku_color = array();
+	$run =0;
+	foreach( $skuid_array as $skuid)
+	{
+		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
+		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
+		$run++;
+	}
+	$running = 0;
+	$pd = [];
+	$total = 0;
+	foreach ( $pdid_array as $pdid )
+	{
+		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
+		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
+		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
+		$pd[$running][0] = $x;
+		$pd[$running][1] = $y;
+		$pd[$running][2] = $z;
+		$total += $z;
+		$running++;
+	}
+	
+	
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'bubble';
+	$data['contents']['header']['type'] = 'box';
+	$data['contents']['header']['layout'] = 'vertical';
+	$data['contents']['header']['contents'][0]['type'] = 'text';
+	$data['contents']['header']['contents'][0]['text'] = 'สรุปรายการสั่งซื้อ';
+	$data['contents']['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['header']['contents'][0]['align'] = 'center';
+	$data['contents']['header']['contents'][0]['weight'] = 'bold';
+	$data['contents']['body']['type'] = 'box';
+	$data['contents']['body']['layout'] = 'vertical';
+	$data['contents']['body']['contents'][0]['type'] = 'box';
+	$data['contents']['body']['contents'][0]['layout'] = 'baseline';
+	$data['contents']['body']['contents'][0]['flex'] = 0;
+	$data['contents']['body']['contents'][0]['contents'][0]['type'] = 'text';
+	$data['contents']['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['body']['contents'][0]['contents'][0]['margin'] = 'sm';
+	$data['contents']['body']['contents'][0]['contents'][0]['weight'] = 'regular';
+	$data['contents']['body']['contents'][0]['contents'][1]['type'] = 'text';
+	$data['contents']['body']['contents'][0]['contents'][1]['text'] = $total.' บาท'; //prod_name
+	$data['contents']['body']['contents'][0]['contents'][1]['margin'] = 'sm';
+	$data['contents']['body']['contents'][0]['contents'][1]['weight'] = 'regular';
+	$data['contents']['body']['contents'][0]['contents'][1]['align'] = 'end';
+	
+	for($i=0;$i<pg_num_rows($cartp_array);$i++)
+	{
+		$data['contents']['header']['contents'][$i+1]['type'] = 'box';
+		$data['contents']['header']['contents'][$i+1]['layout'] = 'baseline';
+		$data['contents']['header']['contents'][$i+1]['flex'] = 0;
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['text'] = $pd[$i][2].' บาท'; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
+	}
+	///อันนี้เพิ่งเติม
+	$data['contents']['footer']['type'] = 'box';
+	$data['contents']['footer']['layout'] = 'vertical';
+	$data['contents']['footer']['contents'][0]['type'] = 'spacer';
+	$data['contents']['footer']['contents'][0]['layout'] = 'xxl';
+	$data['contents']['footer']['contents'][1]['type'] = 'button';
+	$data['contents']['footer']['contents'][1]['action'][0]['type'] = 'postback';
+	$data['contents']['footer']['contents'][1]['action'][0]['label'] = 'สั่งซื้อ';
+	$data['contents']['footer']['contents'][1]['action'][0]['text'] = 'สั่งซื้อ';
+	$data['contents']['footer']['contents'][1]['action'][0]['data'] = 'Order '.$cartid;
+	$data['contents']['footer']['contents'][1]['color'] = '#E5352E';
+	$data['contents']['footer']['contents'][1]['style'] = 'primary';
+	$data['contents']['footer']['contents'][2]['type'] = 'button';
+	$data['contents']['footer']['contents'][2]['action'][0]['type'] = 'postback';
+	$data['contents']['footer']['contents'][2]['action'][0]['label'] = 'ล้างตะกร้า';
+	$data['contents']['footer']['contents'][2]['action'][0]['text'] = 'ล้างตะกร้า';
+	$data['contents']['footer']['contents'][2]['action'][0]['data'] = 'Clear '.$cartid;
+	
+	return $data;
+	
+}
+
+
+
+
 function flex_order($db,$order_id,$cartp_id)
 {
 	
@@ -619,10 +707,7 @@ function flex_order($db,$order_id,$cartp_id)
 		$total += $z;
 		$running++;
 	}
-	//cart_used = 1 คือกลายเป็น order แล้ว
-	$check_cart_used = pg_fetch_row(pg_query($db,"SELECT cart_used FROM createcart WHERE cartp_id = '$cartp_id' "))[0];
-	if($check_cart_used =='0') {$msg = 'สรุปรายการสั่งซื้อ'}
-	elseif($check_cart_used == '1') {$msg = "'รหัสใบสั่งซื้อที่ '.$order_id"; }
+	
 	
 	$data = [];
 	$data['type'] = 'flex';
@@ -631,7 +716,7 @@ function flex_order($db,$order_id,$cartp_id)
 	$data['contents']['header']['type'] = 'box';
 	$data['contents']['header']['layout'] = 'vertical';
 	$data['contents']['header']['contents'][0]['type'] = 'text';
-	$data['contents']['header']['contents'][0]['text'] = $msg;
+	$data['contents']['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id;
 	$data['contents']['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['header']['contents'][0]['align'] = 'center';
 	$data['contents']['header']['contents'][0]['weight'] = 'bold';
