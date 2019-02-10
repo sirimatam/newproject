@@ -577,7 +577,7 @@ function carousel_flex_order($db,$userid)
 	$order = array();
 	$sku_color = array();
 	$pd = [];
-	while($cartp_id = pg_fetch_row($cart_order_array)[0])
+	while($cartp_id = pg_fetch_row($cart_id_array)[0])
 	{
 		$a = pg_query($db,"SELECT (order_id,cartp_id,total_price) FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
 		if(pg_num_rows($a)>0)
