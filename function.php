@@ -571,7 +571,7 @@ function carousel_cart($db,$cus_id)
 
 function carousel_flex_order($db,$userid)
 {
-	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND order.order_status != 'complete' AND createcart.cart_used = '1'");
+	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND orderlist.order_status != 'complete' AND createcart.cart_used = '1'");
 	$run2 = 0;
 	$order = array();
 	$sku_color = array();
