@@ -582,13 +582,13 @@ function carousel_flex_order($db,$userid)
 		$a = pg_query($db,"SELECT (order_id,cartp_id,total_price) FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
 		if(pg_num_rows($a)>0)
 		{
-			$order[$run1] = pg_fetch_row($a)[0];
+			$order[$run1] = pg_fetch_row($a);
 			$run1++;
 		}
 	}
 	for($k=0;$k<sizeof($order);$k++)
 	{
-	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = $order[$k][1]");
+	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k][1]'");
 	$skuid_array = array();
 	$i = 0;
 	while($cartp = pg_fetch_row($cartp_array)[0])
