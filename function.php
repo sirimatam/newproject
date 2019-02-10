@@ -787,7 +787,9 @@ function add_to_order($db,$cus_id,$cart_avail)
 	$q = 0;
 	while($q < pg_num_rows($query))
 	{
-		if ($order_id == $dup[$q]) { $order_id = substr(uniqid(),0,6); }
+		if ($order_id == $dup[$q])
+		{ $order_id = substr(uniqid(),0,6);
+		  $q=0;}
 		$q++;
 	}
 	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
