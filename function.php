@@ -554,23 +554,68 @@ function carousel_cart($db,$cus_id)
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
 	
-     
+	    /* ใบยืนยันการสั่งซื้อ */
 	$datas2 = [];
-	$datas2['type'] = 'template';
-        $datas2['altText'] = 'this is a confirm template';
-        $datas2['template']['type'] = 'confirm';
-        $datas2['template']['actions'][0]['type'] = 'postback';
-        $datas2['template']['actions'][0]['label'] = 'สั่งซื้อ';
-        $datas2['template']['actions'][0]['text'] = 'สั่งซื้อ';  
-        $datas2['template']['actions'][0]['data'] =  'Order '.$cartid;
-	$datas2['template']['actions'][1]['type'] = 'postback';
-        $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้า';
-        $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
-        $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
-	$datas2['template']['text'] = 'สินค้า'.$total.' ชิ้น';
+	$datas2['type'] = 'flex';
+	$datas2['altText'] = 'Flex Message';
+	$datas2['contents']['type'] = 'bubble';
+	$datas2['contents']['header']['type'] = 'box';
+	$datas2['contents']['header']['layout'] = 'vertical';
+	$datas2['contents']['header']['contents'][0]['type'] = 'text';
+	$datas2['contents']['header']['contents'][0]['text'] = 'สรุปการสั่งซื้อ'.$order_id;
+	$datas2['contents']['header']['contents'][0]['size'] = 'lg';
+	$datas2['contents']['header']['contents'][0]['align'] = 'center';
+	$datas2['contents']['header']['contents'][0]['weight'] = 'bold';
+	//$data['contents']['body']['type'] = 'box';
+	//$data['contents']['body']['layout'] = 'vertical';
+	//$data['contents']['body']['spacing'] = 'md';
+	$datas2['contents']['body'][0]['type'] = 'box';
+	$datas2['contents']['body'][0]['layout'] = 'vertical';
+	$datas2['contents']['body'][0]['contents'][0]['type'] = 'box';
+	$datas2['contents']['body'][0]['contents'][0]['layout'] = 'baseline';
+	$datas2['contents']['body'][0]['contents'][0]['flex'] = 0;
+	$datas2['contents']['body'][0]['contents'][0]['contents'][0]['type'] = 'text';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
+	$datas2['contents']['body'][0]['contents'][0]['contents'][0]['margin'] = 'sm';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][0]['weight'] = 'regular';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][1]['type'] = 'text';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][1]['text'] = $total.' บาท'; //prod_name
+	$datas2['contents']['body'][0]['contents'][0]['contents'][1]['margin'] = 'sm';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][1]['weight'] = 'regular';
+	$datas2['contents']['body'][0]['contents'][0]['contents'][1]['align'] = 'end';    
+	$datas2['contents']['body'][1]['type'] = 'box';
+	$datas2['contents']['body'][1]['layout'] = 'vertical';
+	$datas2['contents']['body'][1]['contents'][0]['type'] = 'box';
+	$datas2['contents']['body'][1]['contents'][0]['layout'] = 'baseline';
+	$datas2['contents']['body'][1]['contents'][0]['flex'] = 0;    
+	$datas2['contents']['footer']['type'] = 'box';
+	$datas2['contents']['footer']['layout'] = 'vertical';
+	$datas2['contents']['footer']['contents'][0]['type'] = 'box';
+	$datas2['contents']['footer']['contents'][0]['text'] = 'สินค้า'.$total.' ชิ้น';
+	$datas2['contents']['footer']['contents'][0]['weight'] = 'bold';
+	$datas2['contents']['footer']['contents'][0]['wrap'] = 'vertical';
      
+	    
+	/*    
+	    
+     
+	$datas3 = [];
+	$datas3['type'] = 'template';
+        $datas3['altText'] = 'this is a confirm template';
+        $datas3['template']['type'] = 'confirm';
+        $datas3['template']['actions'][0]['type'] = 'postback';
+        $datas3['template']['actions'][0]['label'] = 'สั่งซื้อ';
+        $datas3['template']['actions'][0]['text'] = 'สั่งซื้อ';  
+        $datas3['template']['actions'][0]['data'] =  'Order '.$cartid;
+	$datas3['template']['actions'][1]['type'] = 'postback';
+        $datas3['template']['actions'][1]['label'] = 'ล้างตะกร้า';
+        $datas3['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
+        $datas3['template']['actions'][1]['data'] =  'Clear '.$cartid;
+	$datas3['template']['text'] = 'สินค้า'.$total.' ชิ้น';
+        */
     $push_array[0] = $datas;
     $push_array[1] = $datas2;	
+   // $push_array[2] = $datas3;
     return $push_array;
     }
 	
