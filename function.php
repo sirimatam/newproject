@@ -648,20 +648,18 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	///อันนี้เพิ่งเติม
 	$data['contents']['footer']['type'] = 'box';
 	$data['contents']['footer']['layout'] = 'vertical';
-	$data['contents']['footer']['contents'][0]['type'] = 'spacer';
-	$data['contents']['footer']['contents'][0]['layout'] = 'xxl';
+	$data['contents']['footer']['contents'][0]['type'] = 'button';
+	$data['contents']['footer']['contents'][0]['action']['type'] = 'postback';
+	$data['contents']['footer']['contents'][0]['action']['label'] = 'สั่งซื้อ';
+	$data['contents']['footer']['contents'][0]['action']['text'] = 'สั่งซื้อ';
+	$data['contents']['footer']['contents'][0]['action']['data'] = 'Order '.$cartp_id;
+	$data['contents']['footer']['contents'][0]['color'] = '#E5352E';
+	$data['contents']['footer']['contents'][0]['style'] = 'primary';
 	$data['contents']['footer']['contents'][1]['type'] = 'button';
 	$data['contents']['footer']['contents'][1]['action']['type'] = 'postback';
-	$data['contents']['footer']['contents'][1]['action']['label'] = 'สั่งซื้อ';
-	$data['contents']['footer']['contents'][1]['action']['text'] = 'สั่งซื้อ';
-	$data['contents']['footer']['contents'][1]['action']['data'] = 'Order '.$cartid;
-	$data['contents']['footer']['contents'][1]['color'] = '#E5352E';
-	$data['contents']['footer']['contents'][1]['style'] = 'primary';
-	$data['contents']['footer']['contents'][2]['type'] = 'button';
-	$data['contents']['footer']['contents'][2]['action']['type'] = 'postback';
-	$data['contents']['footer']['contents'][2]['action']['label'] = 'ล้างตะกร้า';
-	$data['contents']['footer']['contents'][2]['action']['text'] = 'ล้างตะกร้า';
-	$data['contents']['footer']['contents'][2]['action']['data'] = 'Clear '.$cartid;
+	$data['contents']['footer']['contents'][1]['action']['label'] = 'ล้างตะกร้า';
+	$data['contents']['footer']['contents'][1]['action']['text'] = 'ล้างตะกร้า';
+	$data['contents']['footer']['contents'][1]['action']['data'] = 'Clear '.$cartp_id;
 	
 	return $data;
 	
@@ -749,24 +747,6 @@ function flex_order($db,$order_id,$cartp_id)
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
 	}
-	///อันนี้เพิ่งเติม
-	$data['contents']['footer']['type'] = 'box';
-	$data['contents']['footer']['layout'] = 'vertical';
-	$data['contents']['footer']['contents'][0]['type'] = 'spacer';
-	$data['contents']['footer']['contents'][0]['layout'] = 'xxl';
-	$data['contents']['footer']['contents'][1]['type'] = 'button';
-	$data['contents']['footer']['contents'][1]['action']['type'] = 'postback';
-	$data['contents']['footer']['contents'][1]['action']['label'] = 'สั่งซื้อ';
-	$data['contents']['footer']['contents'][1]['action']['text'] = 'สั่งซื้อ';
-	$data['contents']['footer']['contents'][1]['action']['data'] = 'Order '.$cartid;
-	$data['contents']['footer']['contents'][1]['color'] = '#E5352E';
-	$data['contents']['footer']['contents'][1]['style'] = 'primary';
-	$data['contents']['footer']['contents'][2]['type'] = 'button';
-	$data['contents']['footer']['contents'][2]['action']['type'] = 'postback';
-	$data['contents']['footer']['contents'][2]['action']['label'] = 'ล้างตะกร้า';
-	$data['contents']['footer']['contents'][2]['action']['text'] = 'ล้างตะกร้า';
-	$data['contents']['footer']['contents'][2]['action']['data'] = 'Clear '.$cartid;
-
 	
 	
 	
