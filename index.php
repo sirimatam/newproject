@@ -4,6 +4,7 @@ require 'function.php';
 //require 'showproduct.php';
 require 'RichMenu/setrichMenuDefault.php';
 
+out_of_time($db);
 //print_r( flex_order($db,$order_id,$cartp_id));
 
 //echo $db;
@@ -60,7 +61,15 @@ if ( sizeof($request_array['events']) > 0 )
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
-
+	
+	elseif ($text=='orderlist')
+	{
+	 	
+		$post = format_message($reply_token,carousel_flex_order($db,$userid));
+		send_reply_message($API_URL, $POST_HEADER, $post);
+	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+		
+	}
 	elseif ($text=='เช็คสถานะ')
 	{
 		$data = button_order_status($userid);
