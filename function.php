@@ -628,8 +628,8 @@ function flex_cart_beforeorder($db,$userid)
 		$data['contents']['body']['contents'][$a]['type'] = 'box';
 		$data['contents']['body']['contents'][$a]['layout'] = 'baseline';
 		$data['contents']['body']['contents'][$a]['contents'][0]['type'] = 'text';
-		//$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
-		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $pdid_array[0];
+		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
+		//$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $pdid_array[0];  test
 		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$a]['contents'][0]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$a]['contents'][1]['type'] = 'text';
