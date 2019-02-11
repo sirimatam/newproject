@@ -575,17 +575,20 @@ function carousel_flex_order($db,$userid)
 	$run2 = 0;
 	$run1 = 0;
 	$order = array();
+	$order_id = array();
 	$order_price = array();
 	$sku_color = array();
 	$pd = [];
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
 		$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
 		$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
 		if(pg_num_rows($a)>0)
 		{
 			$order[$run1] = pg_fetch_row($a)[0];
 			$order_price[$run1] = pg_fetch_row($b)[0];
+			$order_id[$run1] = pg_fetch_row($c)[0];
 			$run1++;
 		}
 	}
@@ -636,7 +639,7 @@ function carousel_flex_order($db,$userid)
 	$data['contents']['contents'][$j]['header']['type'] = 'box';
 	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
-	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order[$j][0];
+	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
@@ -685,6 +688,7 @@ function flex_order($db,$order_id,$cartp_id)
 	//$order_array = pg_fetch_row($db,"SELECT * FROM order WHERE order_id = '$order_id'");
 	//$cartp_id = $order_array[1];
 	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$total = pg_fetch_row(pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id'"))[0]; 
 	$skuid_array = array();
 	$i = 0;
 	while($cartp = pg_fetch_row($cartp_array)[0])
@@ -703,7 +707,6 @@ function flex_order($db,$order_id,$cartp_id)
 	}
 	$running = 0;
 	$pd = [];
-	$total = 0;
 	foreach ( $pdid_array as $pdid )
 	{
 		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -712,7 +715,7 @@ function flex_order($db,$order_id,$cartp_id)
 		$pd[$running][0] = $x;
 		$pd[$running][1] = $y;
 		$pd[$running][2] = $z;
-		$total += $z;
+
 		$running++;
 	}
 
