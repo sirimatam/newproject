@@ -588,7 +588,7 @@ function flex_cart_beforeorder($db,$userid)
 	
 	for($r=0; $r<$size ;$r++)
 	{
-		$skuid = $skuid_array[$r][0];
+		$skuid = $skuid_array[$r];
 		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
 		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
 	}
