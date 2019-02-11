@@ -575,14 +575,17 @@ function carousel_flex_order($db,$userid)
 	$run2 = 0;
 	$run1 = 0;
 	$order = array();
+	$order_price = array();
 	$sku_color = array();
 	$pd = [];
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
 		$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
 		if(pg_num_rows($a)>0)
 		{
 			$order[$run1] = pg_fetch_row($a)[0];
+			$order_price[$run1] = pg_fetch_row($b)[0];
 			$run1++;
 		}
 	}
@@ -609,7 +612,6 @@ function carousel_flex_order($db,$userid)
 	$running = 0;
 	
 	//$pd = [];
-	$total = 0;
 	foreach ( $pdid_array as $pdid )
 	{
 		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -618,7 +620,6 @@ function carousel_flex_order($db,$userid)
 		$pd[$k][$running][0] = $x;
 		$pd[$k][$running][1] = $y;
 		$pd[$k][$running][2] = $z;
-		$total += $z;
 		$running++;
 	}
 	
@@ -652,7 +653,7 @@ function carousel_flex_order($db,$userid)
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['margin'] = 'sm';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['type'] = 'text';
-	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['text'] = $order[$j][1].' บาท'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['margin'] = 'sm';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['align'] = 'end';
@@ -771,14 +772,15 @@ function add_to_order($db,$cus_id,$cart_avail)
 	
 	$order_id = uniqid();
 	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
-	$skuids = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cart_avail'");
+	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
 	$total_price = 0;
 	$i = 0;
-	while($skuid = pg_fetch_row($skuids))
+	while($skuid = pg_fetch_row($skuids)[0])
 	{
-		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid[0]'"))[0];
+		$qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id='$skuid' AND cartp_id = '$cart_avail'"))[0];
+		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
 		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
-		$total_price += ($prod_price*$skuid[1]); 
+		$total_price += ($prod_price*$qtt); 
 		$i++;
 	}
 	date_default_timezone_set("Asia/Bangkok");
