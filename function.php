@@ -653,11 +653,11 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$data['contents']['header']['contents'][$i+1]['layout'] = 'baseline';
 		$data['contents']['header']['contents'][$i+1]['flex'] = 0;
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $product[$i][1].' '.$sku_color[$i]; //prod_name
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['text'] = $pd[$i][2].' บาท'; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][1]['text'] = $product[$i][2].' บาท'; //prod_name
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
