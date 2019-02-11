@@ -617,7 +617,7 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['header']['contents'][0]['type'] = 'text';
 	$data['contents']['header']['contents'][0]['text'] = 'สรุปรายการสั่งซื้อ';
 	$data['contents']['header']['contents'][0]['size'] = 'lg';
-	$data['contents']['header']['contents'][0]['bold'] = 'bold';
+	$data['contents']['header']['contents'][0]['weight'] = 'bold';
 	$data['contents']['header']['contents'][0]['align'] = 'center';
 	$data['contents']['body']['type'] = 'box';
 	$data['contents']['body']['layout'] = 'vertical';
