@@ -595,8 +595,20 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$run++;
 	} */
 	$running = 0;
-	$pd = [];
-	$total = 0;
+	$product = [];
+	$totalprice = 0;
+	
+	for($t=0;$t<pg_num_rows($cartp_array);$t++)
+	{
+		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
+		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
+		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
+		$product[$t] = [$pdid,$pdname,$pdprice];
+		$totalprice += $pdprice;
+	}
+	
+	/*
+	
 	foreach ( $pdid_array as $pdid )
 	{
 		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -609,7 +621,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$running++;
 	}
 	
-	
+	*/
 	$data = [];
 	$data['type'] = 'flex';
 	$data['altText'] = 'Flex Message';
