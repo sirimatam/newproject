@@ -600,10 +600,10 @@ function flex_cart_beforeorder($db,$userid)
 	
 	for($t=0;$t<$size;$t++)
 	{
-		$id = $skuid_array[$t][0];
-		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$id'"))[0];
-		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$id'"))[0];
-		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$id'"))[0];
+		$pdid = $pdid_array[$t];
+		//$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$id'"))[0];
+		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
+		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
 		$product[$t] = [$pdid,$pdname,$pdprice];
 		$totalprice += $pdprice;
 	}
@@ -628,8 +628,8 @@ function flex_cart_beforeorder($db,$userid)
 		$data['contents']['body']['contents'][$a]['type'] = 'box';
 		$data['contents']['body']['contents'][$a]['layout'] = 'baseline';
 		$data['contents']['body']['contents'][$a]['contents'][0]['type'] = 'text';
-		//$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
-		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $skuid_array[0][0];
+		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
+		//$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $skuid_array[0][0];
 		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$a]['contents'][0]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$a]['contents'][1]['type'] = 'text';
