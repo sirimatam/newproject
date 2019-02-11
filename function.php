@@ -601,6 +601,7 @@ function carousel_flex_order($db,$userid)
 	while($cartp = pg_fetch_row($cartp_array)[0])
 	{
 		$skuid_array[$i] = $cartp;
+		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];
 		$i++;
 	}
 	$pdid_array = array();
@@ -667,7 +668,7 @@ function carousel_flex_order($db,$userid)
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['layout'] = 'baseline';
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['flex'] = 0;
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
-		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$j][$i][1].' '.$sku_color[$j][$i]; //prod_name
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$j][$i][1].' '.$sku_color[$j][$i].' '.$cartp_qtt.' ชิ้น'; //prod_name
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
 		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
@@ -690,10 +691,12 @@ function flex_order($db,$order_id,$cartp_id)
 	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$total = pg_fetch_row(pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id'"))[0]; 
 	$skuid_array = array();
+	$cart_sku_qtt = array();
 	$i = 0;
 	while($cartp = pg_fetch_row($cartp_array)[0])
 	{
 		$skuid_array[$i] = $cartp;
+		$cart_sku_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp_id' AND sku_id = '$cartp'"))[0]; 
 		$i++;
 	}
 	$pdid_array = array();
@@ -754,7 +757,7 @@ function flex_order($db,$order_id,$cartp_id)
 		$data['contents']['header']['contents'][$i+1]['layout'] = 'baseline';
 		$data['contents']['header']['contents'][$i+1]['flex'] = 0;
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i]; //prod_name
+		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$i][1].' '.$sku_color[$i].' '.$cart_sku_qtt.' ชิ้น'; //prod_name
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
 		$data['contents']['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
 		$data['contents']['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
