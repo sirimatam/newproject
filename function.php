@@ -574,22 +574,23 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' LIMIT 1 "))[0];
 	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
-	$i = 0;
+	$size = 0;
 	while($data = pg_fetch_row($cartp_array))
 	{
 		$skuid_array[$i] = $data;
-		$i++;
+		$size++;
 	}
 	$pdid_array = array();
 	$sku_color = array();
-	$run =0;
-	for($r=0;$r<sizeof($skuid_array);$r++)
+	//$run =0;
+	
+	for($r=0; $r<$size ;$r++)
 	{
-		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
-		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
+		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$r][0]'"))[0];
+		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$r][0]'"))[0];
 	}
 	
-	$size = sizeof($skuid_array);
+	
 	
 	/*
 	foreach( $skuid_array as $skuid)
@@ -604,9 +605,9 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	
 	for($t=0;$t<$size;$t++)
 	{
-		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
-		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
-		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
+		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
+		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
+		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
 		$product[$t] = [$pdid,$pdname,$pdprice];
 		$totalprice += $pdprice;
 	}
@@ -641,20 +642,20 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$data['contents']['body']['layout'] = 'vertical';
 	
 	
-	for($i=0;$i<$size;$i++)
+	for($a=0;$a<$size;$a++)
 	{
-		$data['contents']['body']['contents'][$i]['type'] = 'box';
-		$data['contents']['body']['contents'][$i]['layout'] = 'baseline';
-		$data['contents']['body']['contents'][$i]['flex'] = 0;
-		$data['contents']['body']['contents'][$i]['contents'][0]['type'] = 'text';
-		$data['contents']['body']['contents'][$i]['contents'][0]['text'] = $product[$i][1].' '.$sku_color[$i]; //prod_name
-		$data['contents']['body']['contents'][$i]['contents'][0]['margin'] = 'sm';
-		$data['contents']['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
-		$data['contents']['body']['contents'][$i]['contents'][1]['type'] = 'text';
-		$data['contents']['body']['contents'][$i]['contents'][1]['text'] = $product[$i][2].' บาท'; //prod_name
-		$data['contents']['body']['contents'][$i]['contents'][1]['margin'] = 'sm';
-		$data['contents']['body']['contents'][$i]['contents'][1]['weight'] = 'regular';
-		$data['contents']['body']['contents'][$i]['contents'][1]['align'] = 'end';
+		$data['contents']['body']['contents'][$a]['type'] = 'box';
+		$data['contents']['body']['contents'][$a]['layout'] = 'baseline';
+		$data['contents']['body']['contents'][$a]['flex'] = 0;
+		$data['contents']['body']['contents'][$a]['contents'][0]['type'] = 'text';
+		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
+		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
+		$data['contents']['body']['contents'][$a]['contents'][0]['weight'] = 'regular';
+		$data['contents']['body']['contents'][$a]['contents'][1]['type'] = 'text';
+		$data['contents']['body']['contents'][$a]['contents'][1]['text'] = $product[$a][2].' บาท'; //prod_name
+		$data['contents']['body']['contents'][$a]['contents'][1]['margin'] = 'sm';
+		$data['contents']['body']['contents'][$a]['contents'][1]['weight'] = 'regular';
+		$data['contents']['body']['contents'][$a]['contents'][1]['align'] = 'end';
 	}
 	$data['contents']['body']['contents'][$size+1]['type'] = 'box';
 	$data['contents']['body']['contents'][$size+1]['layout'] = 'baseline';
