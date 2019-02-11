@@ -580,7 +580,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$skuid_array[$i] = $data;
 		$i++;
 	}
-	$size = $sizeof($skuid_array);
+	$size = sizeof($skuid_array);
 	$pdid_array = array();
 	$sku_color = array();
 
