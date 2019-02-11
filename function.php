@@ -660,7 +660,6 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	
 	$data['contents']['body']['contents'][$size+1]['type'] = 'box';
 	$data['contents']['body']['contents'][$size+1]['layout'] = 'baseline';
-	$data['contents']['body']['contents'][$size+1]['flex'] = 0;
 	$data['contents']['body']['contents'][$size+1]['contents'][0]['type'] = 'text';
 	$data['contents']['body']['contents'][$size+1]['contents'][0]['text'] = 'รวม'; //prod_name
 	$data['contents']['body']['contents'][$size+1]['contents'][0]['margin'] = 'sm';
