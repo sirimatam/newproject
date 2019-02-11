@@ -657,6 +657,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$data['contents']['body']['contents'][$a]['contents'][1]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$a]['contents'][1]['align'] = 'end';
 	}
+	
 	$data['contents']['body']['contents'][$size+1]['type'] = 'box';
 	$data['contents']['body']['contents'][$size+1]['layout'] = 'baseline';
 	$data['contents']['body']['contents'][$size+1]['flex'] = 0;
@@ -665,7 +666,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$data['contents']['body']['contents'][$size+1]['contents'][0]['margin'] = 'sm';
 	$data['contents']['body']['contents'][$size+1]['contents'][0]['weight'] = 'regular';
 	$data['contents']['body']['contents'][$size+1]['contents'][1]['type'] = 'text';
-	$data['contents']['body']['contents'][$size+1]['contents'][1]['text'] = $total.' บาท'; //prod_name
+	$data['contents']['body']['contents'][$size+1]['contents'][1]['text'] = $totalprice.' บาท'; //prod_name
 	$data['contents']['body']['contents'][$size+1]['contents'][1]['margin'] = 'sm';
 	$data['contents']['body']['contents'][$size+1]['contents'][1]['weight'] = 'bold';
 	
