@@ -571,7 +571,7 @@ function carousel_cart($db,$cus_id)
 	  
 function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมาใช้บ้างนิ    
 {
-	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' ORDER BY cartp_id DESC LIMIT 1 "))[0];
+	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' LIMIT 1 "))[0];
 	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
@@ -583,7 +583,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$pdid_array = array();
 	$sku_color = array();
 	$run =0;
-	for($r=0;$r<pg_num_rows($cartp_array);$r++)
+	for($r=0;$r<sizeof($skuid_array);$r++)
 	{
 		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
 		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
@@ -598,7 +598,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$product = [];
 	$totalprice = 0;
 	
-	for($t=0;$t<pg_num_rows($cartp_array);$t++)
+	for($t=0;$t<sizeof($skuid_array);$t++)
 	{
 		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
 		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
