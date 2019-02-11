@@ -779,7 +779,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 	{
 		$qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id='$skuid' AND cartp_id = '$cart_avail'"))[0];
 		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
-		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
+		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id='$prod_id'"))[0];
 		$price = $prod_price*$qtt
 		$total_price += $price; 
 		$i++;
