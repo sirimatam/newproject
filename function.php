@@ -649,7 +649,7 @@ function carousel_flex_order($db,$userid)
 	$data['contents']['contents'][$j]['body']['contents'][0]['flex'] = 0;
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['type'] = 'text';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
-	$data['contents']['contents'][$j]['contents'][$j]['body']['contents'][0]['contents'][0]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['margin'] = 'sm';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['type'] = 'text';
 	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['text'] = $order[$j][1].' บาท'; //prod_name
