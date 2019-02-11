@@ -572,7 +572,7 @@ function carousel_cart($db,$cus_id)
 function flex_cart_beforeorder($db,$userid) 
 {
 	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' LIMIT 1 "))[0];
-	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$cartp_array = pg_query($db,"SELECT [sku_id,cart_prod_qtt] FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
 	while($data = pg_fetch_row($cartp_array))
@@ -629,7 +629,7 @@ function flex_cart_beforeorder($db,$userid)
 		$data['contents']['body']['contents'][$a]['layout'] = 'baseline';
 		$data['contents']['body']['contents'][$a]['contents'][0]['type'] = 'text';
 		//$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
-		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $pdid_array[0];
+		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $cartp_array[0][0];
 		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$a]['contents'][0]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$a]['contents'][1]['type'] = 'text';
