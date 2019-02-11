@@ -574,12 +574,13 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' LIMIT 1 "))[0];
 	$cartp_array = pg_query($db,"SELECT (sku_id,cart_prod_qtt) FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
-	$size = 0;
+	$i = 0;
 	while($data = pg_fetch_row($cartp_array))
 	{
 		$skuid_array[$i] = $data;
-		$size++;
+		$i++;
 	}
+	$size = $sizeof($skuid_array);
 	$pdid_array = array();
 	$sku_color = array();
 	//$run =0;
