@@ -587,18 +587,22 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	{
 		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
 		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$i][0]'"))[0];
-	} /*
+	}
+	
+	$size = sizeof($skuid_array);
+	
+	/*
 	foreach( $skuid_array as $skuid)
 	{
 		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
 		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
 		$run++;
-	} */
-	$running = 0;
+	} 
+	$running = 0; */
 	$product = [];
 	$totalprice = 0;
 	
-	for($t=0;$t<sizeof($skuid_array);$t++)
+	for($t=0;$t<$size;$t++)
 	{
 		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
 		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$i][0]'"))[0];
@@ -631,37 +635,39 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$data['contents']['header']['contents'][0]['type'] = 'text';
 	$data['contents']['header']['contents'][0]['text'] = 'สรุปรายการสั่งซื้อ';
 	$data['contents']['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['header']['contents'][0]['bold'] = 'bold';
 	$data['contents']['header']['contents'][0]['align'] = 'center';
 	$data['contents']['body']['type'] = 'box';
 	$data['contents']['body']['layout'] = 'vertical';
-	$data['contents']['body']['contents'][0]['type'] = 'box';
-	$data['contents']['body']['contents'][0]['layout'] = 'baseline';
-	$data['contents']['body']['contents'][0]['flex'] = 0;
-	$data['contents']['body']['contents'][0]['contents'][0]['type'] = 'text';
-	$data['contents']['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
-	$data['contents']['body']['contents'][0]['contents'][0]['margin'] = 'sm';
-	$data['contents']['body']['contents'][0]['contents'][0]['weight'] = 'regular';
-	$data['contents']['body']['contents'][0]['contents'][1]['type'] = 'text';
-	$data['contents']['body']['contents'][0]['contents'][1]['text'] = $total.' บาท'; //prod_name
-	$data['contents']['body']['contents'][0]['contents'][1]['margin'] = 'sm';
-	$data['contents']['body']['contents'][0]['contents'][1]['weight'] = 'bold';
-
 	
-	for($i=0;$i<pg_num_rows($cartp_array);$i++)
+	
+	for($i=0;$i<$size;$i++)
 	{
-		$data['contents']['header']['contents'][$i+1]['type'] = 'box';
-		$data['contents']['header']['contents'][$i+1]['layout'] = 'baseline';
-		$data['contents']['header']['contents'][$i+1]['flex'] = 0;
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['text'] = $product[$i][1].' '.$sku_color[$i]; //prod_name
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
-		$data['contents']['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['text'] = $product[$i][2].' บาท'; //prod_name
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
-		$data['contents']['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
+		$data['contents']['body']['contents'][$i]['type'] = 'box';
+		$data['contents']['body']['contents'][$i]['layout'] = 'baseline';
+		$data['contents']['body']['contents'][$i]['flex'] = 0;
+		$data['contents']['body']['contents'][$i]['contents'][0]['type'] = 'text';
+		$data['contents']['body']['contents'][$i]['contents'][0]['text'] = $product[$i][1].' '.$sku_color[$i]; //prod_name
+		$data['contents']['body']['contents'][$i]['contents'][0]['margin'] = 'sm';
+		$data['contents']['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
+		$data['contents']['body']['contents'][$i]['contents'][1]['type'] = 'text';
+		$data['contents']['body']['contents'][$i]['contents'][1]['text'] = $product[$i][2].' บาท'; //prod_name
+		$data['contents']['body']['contents'][$i]['contents'][1]['margin'] = 'sm';
+		$data['contents']['body']['contents'][$i]['contents'][1]['weight'] = 'regular';
+		$data['contents']['body']['contents'][$i]['contents'][1]['align'] = 'end';
 	}
+	$data['contents']['body']['contents'][$size+1]['type'] = 'box';
+	$data['contents']['body']['contents'][$size+1]['layout'] = 'baseline';
+	$data['contents']['body']['contents'][$size+1]['flex'] = 0;
+	$data['contents']['body']['contents'][$size+1]['contents'][0]['type'] = 'text';
+	$data['contents']['body']['contents'][$size+1]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['body']['contents'][$size+1]['contents'][0]['margin'] = 'sm';
+	$data['contents']['body']['contents'][$size+1]['contents'][0]['weight'] = 'regular';
+	$data['contents']['body']['contents'][$size+1]['contents'][1]['type'] = 'text';
+	$data['contents']['body']['contents'][$size+1]['contents'][1]['text'] = $total.' บาท'; //prod_name
+	$data['contents']['body']['contents'][$size+1]['contents'][1]['margin'] = 'sm';
+	$data['contents']['body']['contents'][$size+1]['contents'][1]['weight'] = 'bold';
+	
 	///อันนี้เพิ่งเติม
 	$data['contents']['footer']['type'] = 'box';
 	$data['contents']['footer']['layout'] = 'vertical';
