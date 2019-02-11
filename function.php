@@ -587,8 +587,9 @@ function flex_cart_beforeorder($db,$userid)
 	
 	for($r=0; $r<$size ;$r++)
 	{
-		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$r][0]'"))[0];
-		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$r][0]'"))[0];
+		$id = $skuid_array[$r][0];
+		$pdid_array[$r] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$id'"))[0];
+		$sku_color[$r] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$id'"))[0];
 	}
 	
 	
@@ -598,9 +599,10 @@ function flex_cart_beforeorder($db,$userid)
 	
 	for($t=0;$t<$size;$t++)
 	{
-		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
-		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
-		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$skuid_array[$t][0]'"))[0];
+		$id = $skuid_array[$t][0];
+		$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$id'"))[0];
+		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$id'"))[0];
+		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$id'"))[0];
 		$product[$t] = [$pdid,$pdname,$pdprice];
 		$totalprice += $pdprice;
 	}
