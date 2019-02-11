@@ -583,7 +583,7 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	$size = $sizeof($skuid_array);
 	$pdid_array = array();
 	$sku_color = array();
-	//$run =0;
+
 	
 	for($r=0; $r<$size ;$r++)
 	{
@@ -593,14 +593,6 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	
 	
 	
-	/*
-	foreach( $skuid_array as $skuid)
-	{
-		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
-		$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
-		$run++;
-	} 
-	$running = 0; */
 	$product = [];
 	$totalprice = 0;
 	
@@ -613,21 +605,6 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 		$totalprice += $pdprice;
 	}
 	
-	/*
-	
-	foreach ( $pdid_array as $pdid )
-	{
-		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
-		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
-		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
-		$pd[$running][0] = $x;
-		$pd[$running][1] = $y;
-		$pd[$running][2] = $z;
-		$total += $z;
-		$running++;
-	}
-	
-	*/
 	$data = [];
 	$data['type'] = 'flex';
 	$data['altText'] = 'Flex Message';
@@ -647,7 +624,6 @@ function flex_cart_beforeorder($db,$userid) //ต้องดึงไรมา�
 	{
 		$data['contents']['body']['contents'][$a]['type'] = 'box';
 		$data['contents']['body']['contents'][$a]['layout'] = 'baseline';
-		$data['contents']['body']['contents'][$a]['flex'] = 0;
 		$data['contents']['body']['contents'][$a]['contents'][0]['type'] = 'text';
 		$data['contents']['body']['contents'][$a]['contents'][0]['text'] = $product[$a][1].' '.$sku_color[$a]; //prod_name
 		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
