@@ -229,7 +229,7 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['body']['contents'][$size]['type'] = 'box';
 	$data['contents']['body']['contents'][$size]['layout'] = 'baseline';
 	$data['contents']['body']['contents'][$size]['contents'][0]['type'] = 'text';
-	$data['contents']['body']['contents'][$size]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['body']['contents'][$size]['contents'][0]['text'] = 'ยอดชำระสุทธิ'; //prod_name
 	$data['contents']['body']['contents'][$size]['contents'][0]['margin'] = 'sm';
 	$data['contents']['body']['contents'][$size]['contents'][0]['weight'] = 'regular';
 	$data['contents']['body']['contents'][$size]['contents'][1]['type'] = 'text';
