@@ -21,23 +21,6 @@ function get_user_content($msgid, $post_header)
 	   
 
 
-function button_pay_track()
-{
-	$data = [];
-	$data['type'] = 'template';
-	$data['altText'] = 'this is a buttons template';
-	$data['template']['type'] = 'buttons';
-	$data['template']['actions'][0]['type'] = 'message';
-	$data['template']['actions'][0]['label'] = "แจ้งโอนเงิน";
-	$data['template']['actions'][0]['text'] = "แจ้งโอนเงิน";
-	$data['template']['actions'][1]['type'] = 'message';
-	$data['template']['actions'][1]['label'] = "เช็คสถานะพัสดุ";
-	$data['template']['actions'][1]['text'] = "เช็คสถานะพัสดุ";
-	$data['template']['text'] = "กรุณาเลือกเมนู";
-	
-	return $data;
-		
-}
 
 function button_order_status($cus_id)
   {
@@ -46,15 +29,9 @@ function button_order_status($cus_id)
     $data['altText'] = 'this is a buttons template';
     $data['template']['type'] = 'buttons';
     $data['template']['action'][0]['type'] = 'message';
-    $data['template']['action'][0]['label'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][0]['text'] = 'เลขที่บัญชีของร้าน';
-    $data['template']['action'][1]['type'] = 'message';
-    $data['template']['action'][1]['label'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][1]['text'] = 'แจ้งโอนเงิน';
-    $data['template']['action'][2]['type'] = 'message';
-    $data['template']['action'][2]['label'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['action'][2]['text'] = 'เช็คสถานะการจัดส่ง';
-    $data['template']['text'] = 'กรุณาเลือกหัวข้อที่สนใจ';
+    $data['template']['action'][0]['label'] = 'แจ้งการชำระเงิน';
+    $data['template']['action'][0]['text'] = 'แจ้งการชำระเงิน';
+    $data['template']['text'] = 'โอนเงินมาที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678';
 	  
     return $data;
   }
