@@ -2,7 +2,7 @@
 require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
-require 'RichMenu/setrichMenuDefault.php';
+//require 'RichMenu/setrichMenuDefault.php';
 require 'track.class.php';
 	
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
