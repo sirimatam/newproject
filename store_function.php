@@ -260,9 +260,9 @@ function button_order_status()
     $data['type'] = 'template';
     $data['altText'] = 'this is a buttons template';
     $data['template']['type'] = 'buttons';
-    $data['template']['action'][0]['type'] = 'message';
-    $data['template']['action'][0]['label'] = 'แจ้งการชำระเงิน';
-    $data['template']['action'][0]['text'] = 'แจ้งการชำระเงิน';
+    $data['template']['actions'][0]['type'] = 'message';
+    $data['template']['actions'][0]['label'] = 'แจ้งการชำระเงิน';
+    $data['template']['actions'][0]['text'] = 'แจ้งการชำระเงิน';
     $data['template']['text'] = 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 และอัพโหลดสลิปได้เลยค่ะ';
 	  
     return $data;
