@@ -70,7 +70,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='ชำระเงิน')
 	{
-		$data = button_order_status($userid);
+		$data = button_order_status();
 		$data1 = format_message($reply_token,$data);
 			   
 		send_reply_message($API_URL, $POST_HEADER, $data1);
