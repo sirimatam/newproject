@@ -99,11 +99,13 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$data = format_message($reply_token,carousel_flex_order($db,$userid));
 		send_reply_message($API_URL, $POST_HEADER,$data);
+		file_put_contents("php://stderr", "POST รอชำระเงิน =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องจัดส่ง')
 	{
 		$data = format_message($reply_token,carousel_flex_order($db,$userid));
 		send_reply_message($API_URL, $POST_HEADER,$data);
+		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{
