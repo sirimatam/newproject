@@ -220,15 +220,16 @@ function flex_cart_beforeorder($db,$userid)
 		$data['contents']['body']['contents'][$a]['contents'][0]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$a]['contents'][0]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$a]['contents'][1]['type'] = 'text';
-		$data['contents']['body']['contents'][$a]['contents'][1]['text'] = $sku_qty[$a][1]; // qty ordered
+		$data['contents']['body']['contents'][$a]['contents'][1]['text'] = $sku_qty[$a][1].' ชิ้น'; // qty ordered
 		$data['contents']['body']['contents'][$a]['contents'][1]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$a]['contents'][1]['weight'] = 'regular';
-		$data['contents']['body']['contents'][$a]['contents'][2]['type'] = 'text';
-		$data['contents']['body']['contents'][$a]['contents'][2]['type'] = 'text';
-		$data['contents']['body']['contents'][$a]['contents'][2]['text'] = $product[$a][2].' บาท'; //total price
-		$data['contents']['body']['contents'][$a]['contents'][2]['margin'] = 'sm';
-		$data['contents']['body']['contents'][$a]['contents'][2]['weight'] = 'regular';
-		$data['contents']['body']['contents'][$a]['contents'][1]['align'] = 'end';
+		$data['contents']['body']['contents'][$a]['contents'][2]['type'] = 'spacer';
+		$data['contents']['body']['contents'][$a]['contents'][2]['size'] = 'md';
+		$data['contents']['body']['contents'][$a]['contents'][3]['type'] = 'text';
+		$data['contents']['body']['contents'][$a]['contents'][3]['text'] = $product[$a][2].' บาท'; //total price
+		$data['contents']['body']['contents'][$a]['contents'][3]['margin'] = 'sm';
+		$data['contents']['body']['contents'][$a]['contents'][3]['weight'] = 'regular';
+		$data['contents']['body']['contents'][$a]['contents'][3]['align'] = 'end';
 	}
 	
 	$data['contents']['body']['contents'][$size]['type'] = 'box';
