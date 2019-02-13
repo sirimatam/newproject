@@ -254,6 +254,21 @@ function flex_cart_beforeorder($db,$userid)
 
 
 
+function button_order_status()
+  {
+    $data = [];
+    $data['type'] = 'template';
+    $data['altText'] = 'this is a buttons template';
+    $data['template']['type'] = 'buttons';
+    $data['template']['action'][0]['type'] = 'message';
+    $data['template']['action'][0]['label'] = 'แจ้งการชำระเงิน';
+    $data['template']['action'][0]['text'] = 'แจ้งการชำระเงิน';
+    $data['template']['text'] = 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 และอัพโหลดสลิปได้เลยค่ะ';
+	  
+    return $data;
+  }
+
+
 
 
 function carousel_product_type($db,$type) // $type = Prod_type FROM Product
