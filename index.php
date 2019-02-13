@@ -70,10 +70,22 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='ชำระเงิน')
 	{
-		$ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
-	 	$data = format_message($reply_token,$ans);
-	        send_reply_message($API_URL, $POST_HEADER,$data);
-	}
+		$data = button_order_status($userid);
+		$data1 = format_message($reply_token,$data);
+			   
+		send_reply_message($API_URL, $POST_HEADER, $data1);
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
+	}      
+	   
+	   /* sub topic */
+	   elseif ($text=='แจ้งการชำระเงิน')
+		{
+		  $ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
+		  $data = format_message($reply_token,$ans);
+		  send_reply_message($API_URL, $POST_HEADER,$data);
+		}
+			
+	   
 	elseif ($text=='เกี่ยวกับร้านค้า')
 	{
 		//	        send_reply_message($API_URL, $POST_HEADER,$data);
@@ -136,14 +148,7 @@ if ( sizeof($request_array['events']) > 0 )
 		unlink_richmenu($userid,$ACCESS_TOKEN);
 		set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 	}   
-	elseif ($text=='เช็คสถานะ')
-	{
-		$data = button_order_status($userid);
-		$data1 = format_message($reply_token,$data);
-			   
-		send_reply_message($API_URL, $POST_HEADER, $data1);
-		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
-	}   
+	
 	
        elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
 	{
