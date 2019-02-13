@@ -525,7 +525,26 @@ function delete_from_cart($db,$sku_id,$cus_id)
     pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
   }
   
+
+function clear_cart($db,$cart_avail)
+{
+	$sku_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
+	while($sku_id = pg_fetch_row($sku_array)[0])
+	{
+		$cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
+		$sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
+    		$sku_qtt_new = $sku_qtt_now+$cart_qtt;
+   		pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
+	}
+	pg_query("DELETE FROM cart_product WHERE cartp_id = '$cart_avail'");
+	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว'];
+	return $data;
+}
   
+
+
+
+
 function out_of_time($db)
   {
      date_default_timezone_set("Asia/Bangkok");
