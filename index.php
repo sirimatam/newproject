@@ -329,35 +329,68 @@ if ( sizeof($request_array['events']) > 0 )
 
 */
 
-$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
-$rich_area1 = array(
-		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ค้นหาสินค้า')),
-		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'โปรโมชั่น')),
-		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ตะกร้าของฉัน')),
-		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ชำระเงิน')),
-      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'เกี่ยวกับร้านค้า')),
-		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'หน้าถัดไป'))
-		  );
-$rich_object1 = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> true ,
-			     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area1 );
+$richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad";  // page1
+$richMenuId2 = "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
 
-$data1 = send_reply_message($RICH_URL, $POST_HEADER, $rich_object1);
-file_put_contents("php://stderr", "ID 1 =====> ".$data1);
+$rich_img_url1 = 'https://api.line.me/v2/bot/richmenu/'.$richMenuId1.'/content';
 
-$rich_area2 = array(
-		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่รอชำระเงิน')),
-		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
-		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
-      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'กลับหน้าแรก'))
-		  );
-$rich_object2 = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> false ,
-			     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area2 );
 
-$data2 = send_reply_message($RICH_URL, $POST_HEADER, $rich_object2);
-file_put_contents("php://stderr", "ID 2 =====> ".$data2);
+$file1 = fopen('/image/firstpage.png', 'r');
+$size1 = filesize('/image/firstpage.png');
+
+
+$fildata1 = fread($file1,$size1);
+$upload_pic1 = upload_richmenu($richMenuId1,$ACCESS_TOKEN,$fildata1,$file1);
+file_put_contents("php://stderr", "POST JSON1 ===> ".$upload_pic1);
+
+
+
+$rich_img_url2 = 'https://api.line.me/v2/bot/richmenu/'.$richMenuId2.'/content';
+
+
+$file2 = fopen('/image/secondpage.png', 'r');
+$size2 = filesize('/image/secondpage.png');
+
+
+$fildata2 = fread($file2,$size2);
+$upload_pic2 = upload_richmenu($richMenuId2,$ACCESS_TOKEN,$fildata2,$file2);
+file_put_contents("php://stderr", "POST JSON2 ===> ".$upload_pic2);
 	
+
+
+function upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file)
+{
+$curl = curl_init();
+	curl_setopt_array($curl, array(
+	    CURLOPT_URL => "https://api.line.me/v2/bot/richmenu/".$richMenuId."/content",
+	    CURLOPT_RETURNTRANSFER => true,
+	    CURLOPT_BINARYTRANSFER => true,
+	    CURLOPT_ENCODING => "",
+	    CURLOPT_MAXREDIRS => 10,
+	    CURLOPT_TIMEOUT => 30,
+	    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	    CURLOPT_CUSTOMREQUEST => "POST",
+	    CURLOPT_POSTFIELDS => $fildata,
+	    CURLOPT_INFILE => $file,
+	    CURLOPT_HTTPHEADER => array(
+	       "authorization: Bearer ".$ACCESS_TOKEN,
+               "cache-control: no-cache",
+	       "Content-Type: image/png",
+	 	
+	    ),
+	));
+  
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+	curl_close($curl);
+  
+  
+	if ($err) {
+         return $err;
+    } else {
+    	return $response;
+    }
+}	 
 
 function format_message($reply_token,$message)
 {
