@@ -77,6 +77,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='หน้าถัดไป')
 	{
+		unlink_richmenu($userid,$ACCESS_TOKEN);
 		set_richmenu_default($richMenuId2,$ACCESS_TOKEN);
 	}   
 	elseif ($text=='ที่รอชำระเงิน')
@@ -129,6 +130,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}   
 	elseif ($text=='กลับหน้าแรก')
 	{
+		unlink_richmenu($userid,$ACCESS_TOKEN);
 		set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 	}   
 	elseif ($text=='เช็คสถานะ')
