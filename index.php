@@ -329,28 +329,11 @@ if ( sizeof($request_array['events']) > 0 )
 
 */
 
-$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
-$rich_area = array(
-		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่รอชำระเงิน')),
-		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 83 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
-		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
-      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'กลับหน้าแรก'))
-		  );
-$rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> false ,
-			     'name'=>'rich_menu','chatBarText'=>' Menu','areas'=>  $rich_area );
-           
-//$rich_obj_req = json_encode($rich_object, JSON_UNESCAPED_UNICODE);
 
 
-$data = send_reply_message($RICH_URL, $POST_HEADER, $rich_object);
-
-file_put_contents("php://stderr", "RICHMENU ID 2 ===> ".json_encode($data));
-/*
-$richMenuId = "";  // page1
-$file = fopen('image/firstpage.png', 'r');
-$size = filesize('image/firstpage.png');
+$richMenuId = "richmenu-e05a96a7dd92be7ab66c7370733c5d20";  // page2
+$file = fopen('image/secondpage.png', 'r');
+$size = filesize('image/secondpage.png');
 $fildata = fread($file,$size);
 $upload_pic = upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file);
 file_put_contents("php://stderr", "POST JSON ===> ".$upload_pic);
