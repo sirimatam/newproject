@@ -173,15 +173,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
        }
-       
-       
-       
-	elseif ($text=='เช็คสถานะะ')
-	{
-		$data = format_message($reply_token,button_pay_track());
-		send_reply_message($API_URL, $POST_HEADER, $data);
-	}
-	
+
         
 	else {
 	$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
