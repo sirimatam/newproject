@@ -164,7 +164,7 @@ function flex_cart_beforeorder($db,$userid)
 	$cartp_array = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id'");
 	$skuid_array = array();
 	$i = 0;
-	while($data = pg_fetch_row($cartp_array)[0])
+	while($data = pg_fetch_row($cartp_array))
 	{
 		$skuid_array[$i] = $data;
 		$i++;
