@@ -2,7 +2,7 @@
 require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
-//require 'RichMenu/setrichMenuDefault.php';
+require 'RichMenu/setrichMenu1Default.php';
 require 'track.class.php';
 	
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -347,8 +347,8 @@ $rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> t
 //$data = send_reply_message($RICH_URL, $POST_HEADER, $rich_object);
 
 //file_put_contents("php://stderr", "RICHMENU ID 1  ===> ".json_encode($data));
-
-$richMenuId = "richmenu-03bd2f91fb7c3f83ff305ea1812abfee";  // page1
+/*
+$richMenuId = "";  // page1
 $file = fopen('image/firstpage.png', 'r');
 $size = filesize('image/firstpage.png');
 $fildata = fread($file,$size);
@@ -390,7 +390,7 @@ $curl = curl_init();
 }	 
 
 
-
+*/
 function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
