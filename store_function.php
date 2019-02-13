@@ -152,24 +152,7 @@ function carousel_cart($db,$cus_id)
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
 	
-     
-	$datas2 = [];
-	$datas2['type'] = 'template';
-        $datas2['altText'] = 'this is a confirm template';
-        $datas2['template']['type'] = 'confirm';
-        $datas2['template']['actions'][0]['type'] = 'postback';
-        $datas2['template']['actions'][0]['label'] = 'สั่งซื้อ';
-        $datas2['template']['actions'][0]['text'] = 'สั่งซื้อ';  
-        $datas2['template']['actions'][0]['data'] =  'Order '.$cartid;
-	$datas2['template']['actions'][1]['type'] = 'postback';
-        $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้า';
-        $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
-        $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
-	$datas2['template']['text'] = 'สินค้า'.$total.' ชิ้น';
-     
-    $push_array[0] = $datas;
-    $push_array[1] = $datas2;	
-    return $push_array;
+    return $datas;
     }
 	
   }
