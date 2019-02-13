@@ -351,7 +351,6 @@ if ( sizeof($request_array['events']) > 0 )
 }
 
 
-*/
 
 function format_message($reply_token,$message)
 {
