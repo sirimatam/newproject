@@ -449,15 +449,36 @@ function add_favorite($db,$cus_id,$prod_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-  function delete_from_cart($db,$sku_id,$cus_id,$cart_qtt)
+
+  function delete_from_cart($db,$sku_id,$cus_id)
   {
     $cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
+    $cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
     pg_query("DELETE FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'");
     $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
     $sku_qtt_new = $sku_qtt_now+$cart_qtt;
     pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
   }
-  
+
+  function out_of_time($db)
+  {
+     date_default_timezone_set("Asia/Bangkok");
+     $time = date("H:i:s");
+     $date = date("Y-m-d");
+     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
+     $order_array=array();
+     while($order=pg_fetch_row($order_list))
+     {
+	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
+	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
+	     {
+		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     }
+	     
+     }
+	  
+  }
   
 
   
@@ -476,13 +497,46 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     $cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$cus_id'"))[0];
     $check = pg_query($db,"SELECT * FROM cart_product WHERE cartp_id = '$cartp_id'");
     $count = pg_num_rows($check);
+    $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
+    $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	
+    
     if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
     //end of function
+    elseif($sku_qtt_now < $cart_qtt)
+    {
+	$reply_msg = ['type' => 'text', 'text' => 'สินค้าในสต็อกไม่เพียงพอ'];
+	return $reply_msg;
+    }
     else{
-    $sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
     $sku_qtt_new = $sku_qtt_now-$cart_qtt;
-    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
-    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    $have_sku_check = 0;
+    if (pg_num_rows($cart_sku)>0)
+    {
+    	while($sku_now = pg_fetch_row($cart_sku)[0])
+    	{
+	    if($sku_now==$sku_id)
+	    {
+		    $cart_qtt_now = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cartp_id'"))[0];
+		    $cart_qtt_new = $cart_qtt_now+$cart_qtt;
+		    pg_query($db,"UPDATE cart_product SET cart_prod_qtt = '$cart_qtt_new' WHERE sku_id = '$sku_id' AND cartp_id = '$cartp_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    		    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+		    $have_sku_check=1;
+	    }
+    	}
+	if($have_sku_check == 0)
+	{
+		pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
+	        pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");	
+	}
+    
+    }
+    else
+    {
+	    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
+	    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    }
+    //pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     }
   }    
   
@@ -672,7 +726,118 @@ function flex_cart_beforeorder($db,$userid)
 	
 }
 
-
+function carousel_flex_order($db,$userid)
+{
+	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
+	$run2 = 0;
+	$run1 = 0;
+	$order = array();
+	$order_id = array();
+	$order_price = array();
+	$sku_color = array();
+	$pd = [];
+	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
+	{
+		$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'complete'");
+		if(pg_num_rows($a)>0)
+		{
+			$order[$run1] = pg_fetch_row($a)[0];
+			$order_price[$run1] = pg_fetch_row($b)[0];
+			$order_id[$run1] = pg_fetch_row($c)[0];
+			$run1++;
+		}
+	}
+	for($k=0;$k<sizeof($order);$k++)
+	{
+	//$x = $order[$k][1];
+	$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
+	$skuid_array = array();
+	$i = 0;
+	while($cartp = pg_fetch_row($cartp_array)[0])
+	{
+		$skuid_array[$i] = $cartp;
+		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];
+		$i++;
+	}
+	$pdid_array = array();
+	//$sku_color = array();
+	$run =0;
+	foreach( $skuid_array as $skuid)
+	{
+		$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
+		$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
+		$run++;
+	}
+	$running = 0;
+	
+	//$pd = [];
+	foreach ( $pdid_array as $pdid )
+	{
+		$x = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
+		$y = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
+		$z = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
+		$pd[$k][$running][0] = $x;
+		$pd[$k][$running][1] = $y;
+		$pd[$k][$running][2] = $z;
+		$running++;
+	}
+	
+	}
+	
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'carousel';
+	
+	for($j=0;$j<sizeof($order);$j++)
+	{
+	$data['contents']['contents'][$j]['type'] = 'bubble';
+	$data['contents']['contents'][$j]['header']['type'] = 'box';
+	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
+	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
+	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
+	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
+	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
+	//$data['contents']['body']['type'] = 'box';
+	//$data['contents']['body']['layout'] = 'vertical';
+	//$data['contents']['body']['spacing'] = 'md';
+	$data['contents']['contents'][$j]['body']['type'] = 'box';
+	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
+	$data['contents']['contents'][$j]['body']['contents'][0]['type'] = 'box';
+	$data['contents']['contents'][$j]['body']['contents'][0]['layout'] = 'baseline';
+	$data['contents']['contents'][$j]['body']['contents'][0]['flex'] = 0;
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['align'] = 'end';
+	
+	for($i=0;$i<sizeof($pd[$j]);$i++)
+	{
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['type'] = 'box';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['layout'] = 'baseline';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['flex'] = 0;
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$j][$i][1].' '.$sku_color[$j][$i].' '.$cartp_qtt.' ชิ้น'; //prod_name
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['text'] = $pd[$j][$i][2].' บาท'; //prod_name
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
+	}
+	}
+	return $data;
+			
+}
 
 
 function flex_order($db,$order_id,$cartp_id)
@@ -767,25 +932,19 @@ function flex_order($db,$order_id,$cartp_id)
 function add_to_order($db,$cus_id,$cart_avail)
 {
 	
-	$order_id = substr(uniqid(),0,6);
-	$query = pg_query($db,"SELECT order_id FROM orderlist");
-	$dup = pg_fetch_all($query);
-	$q = 0;
-	while($q < pg_num_rows($query))
-	{
-		if ($order_id == $dup[$q])
-		{ $order_id = substr(uniqid(),0,6);
-		  $q=0;}
-		$q++;
-	}
+	$order_id = uniqid();
 	//$cart_avail = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
 	$total_price = 0;
+	$i = 0;
 	while($skuid = pg_fetch_row($skuids)[0])
 	{
+		$qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id='$skuid' AND cartp_id = '$cart_avail'"))[0];
 		$prod_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id='$skuid'"))[0];
-		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE product.prod_id='$prod_id'"))[0];
-		$total_price += $prod_price; 
+		$prod_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id='$prod_id'"))[0];
+		$price = $prod_price*$qtt;
+		$total_price += $price; 
+		$i++;
 	}
 	date_default_timezone_set("Asia/Bangkok");
 	$time = date("H:i:s");
@@ -796,11 +955,12 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-function clear_cart($db,$cart_qtt,$cart_avail)
+function clear_cart($db,$cart_avail)
 {
 	$sku_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
 	while($sku_id = pg_fetch_row($sku_array)[0])
 	{
+		$cart_qtt = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE sku_id = '$sku_id' AND cartp_id = '$cart_avail'"))[0];
 		$sku_qtt_now = pg_fetch_row(pg_query($db,"SELECT sku_qtt FROM stock WHERE sku_id = '$sku_id'"))[0];
     		$sku_qtt_new = $sku_qtt_now+$cart_qtt;
    		pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
@@ -809,8 +969,6 @@ function clear_cart($db,$cart_qtt,$cart_avail)
 	$data = ['type' => 'text', 'text' => 'ล้างตะกร้าเรียบร้อยแล้ว'];
 	return $data;
 }
-  
-  
   
   
   
