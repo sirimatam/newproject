@@ -2,12 +2,12 @@
 require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
-require 'RichMenu/setrichMenuDefault.php';
+require 'RichMenu/uploadandsetrichMenuDefault.php';
 require 'track.class.php';
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
-//$richMenuId2= "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
+$richMenuId2= "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
@@ -15,7 +15,7 @@ $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4L
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
-/*
+
 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
@@ -40,7 +40,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
 	
-	if ($text=='ดูและสั่งซื้อสินค้า')
+	if ($text=='ค้นหาสินค้า')
 	{
 		
 		$data = format_message($reply_token,button_all_type($db));
@@ -48,15 +48,8 @@ if ( sizeof($request_array['events']) > 0 )
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
-	elseif ($text=='เช็คสถานะ')
-	{
-		$data = button_order_status($userid);
-		$data1 = format_message($reply_token,$data);
-			   
-		send_reply_message($API_URL, $POST_HEADER, $data1);
-		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
-	}
-	elseif ($text=='โปรโมชัน')
+	
+	elseif ($text=='โปรโมชั่น')
 	{
 		$data = format_message($reply_token,show_promotion_product($db));
 		send_reply_message($API_URL, $POST_HEADER, $data);
@@ -64,7 +57,7 @@ if ( sizeof($request_array['events']) > 0 )
 
 	}
 	
-       elseif ($text=='ตะกร้าสินค้า')
+       elseif ($text=='ตะกร้าของฉัน')
 	{
 	        $show = [carousel_cart($db,$userid),flex_cart_beforeorder($db,$userid)];
 	 	$post = format_message_v2($reply_token,$show);	        
@@ -72,7 +65,60 @@ if ( sizeof($request_array['events']) > 0 )
 	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
 		
 	}
-	   
+	elseif ($text=='ชำระเงิน')
+	{
+		$ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
+	 	$data = format_message($reply_token,$ans);
+	        send_reply_message($API_URL, $POST_HEADER,$data);
+	}
+	elseif ($text=='เกี่ยวกับร้านค้า')
+	{
+		//	        send_reply_message($API_URL, $POST_HEADER,$data);
+	}
+	elseif ($text=='หน้าถัดไป')
+	{
+		set_richmenu_default($richMenuId2,$ACCESS_TOKEN);
+	}   
+	elseif ($text=='ที่รอชำระเงิน')
+	{
+		//
+	}  
+	elseif ($text=='ที่ต้องจัดส่ง')
+	{
+		//
+	}  
+	elseif ($text=='ที่ต้องได้รับ')
+	{
+		// ต้องแก้ให้รองรับ carousel order
+
+		
+		
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
+		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
+		if(strlen($trackingNumber)==0)
+		{
+			if(strlen($payment) == 0)
+			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
+			else { $reply = 'กำลังจัดเตรียมสินค้า';}
+			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
+			send_reply_message($API_URL, $POST_HEADER, $data);
+		}
+		else
+		{
+			$track = new Trackingmore;
+			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
+			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+		}
+		
+		
+	}
+	elseif ($text=='สินค้าที่ถูกใจ')
+	{
+		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
+	        send_reply_message($API_URL, $POST_HEADER, $post);
+	       
+       } 
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
@@ -80,7 +126,24 @@ if ( sizeof($request_array['events']) > 0 )
 		$post = format_message($reply_token,$show);
 		send_reply_message($API_URL, $POST_HEADER, $post);
 		file_put_contents("php://stderr", "address  ===> ".json_encode($show));
-	}
+	}   
+	elseif ($text=='กลับหน้าแรก')
+	{
+		
+		$show = show_address($db,$userid);
+		$post = format_message($reply_token,$show);
+		send_reply_message($API_URL, $POST_HEADER, $post);
+		file_put_contents("php://stderr", "address  ===> ".json_encode($show));
+	}   
+	elseif ($text=='เช็คสถานะ')
+	{
+		$data = button_order_status($userid);
+		$data1 = format_message($reply_token,$data);
+			   
+		send_reply_message($API_URL, $POST_HEADER, $data1);
+		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
+	}   
+	
        elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
 	{
 	        $ans = ['type'=>'text','text' => 'พิมพ์ @@ตามด้วยชื่อ นามสกุล และ ที่อยู่จัดส่ง เช่น'."\n".'@@น.ส.เสื้อผ้า สวยงาม บ้านเลขที่ XX ซอย XX แขวง เขต จังหวัด 10111'];
@@ -111,55 +174,14 @@ if ( sizeof($request_array['events']) > 0 )
        }
        
        
-       elseif ($text=='สินค้าที่ชอบ')
-	{
-		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
-	        send_reply_message($API_URL, $POST_HEADER, $post);
-	       
-       }
-	elseif ($text=='เช็คสถานะ')
+       
+	elseif ($text=='เช็คสถานะะ')
 	{
 		$data = format_message($reply_token,button_pay_track());
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}
-	elseif ($text=='แจ้งโอนเงิน')
-	{
-		$ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
-	 	$data = format_message($reply_token,$ans);
-	        send_reply_message($API_URL, $POST_HEADER,$data);
-	}	
-        elseif ($text=='เช็คสถานะพัสดุ')
-	{
-		
-		//$trackingNumber = 'SHX306592865TH';
-		//$track = new Trackingmore;
-		//$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
-		
-		//$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
-		//send_reply_message($API_URL, $POST_HEADER, $data);
-		
-		
-		
-		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
-		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
-		if(strlen($trackingNumber)==0)
-		{
-			if(strlen($payment) == 0)
-			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
-			else { $reply = 'กำลังจัดเตรียมสินค้า';}
-			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
-			send_reply_message($API_URL, $POST_HEADER, $data);
-		}
-		else
-		{
-			$track = new Trackingmore;
-			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
-			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
-			send_reply_message($API_URL, $POST_HEADER, $data);
-		}
-		
-		
-	}
+	
+        
 	else {
 	$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 	$run = 0;	
