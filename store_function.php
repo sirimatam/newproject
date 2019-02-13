@@ -191,7 +191,7 @@ function flex_cart_beforeorder($db,$userid)
 		$qty = $sku_qty[$t][1];
 		//$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$id'"))[0];
 		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
-		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0]*$qty;
+		$pdprice = (pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0])*$qty;
 		$product[$t] = [$pdid,$pdname,$pdprice];
 		$totalprice += $pdprice;
 	}
