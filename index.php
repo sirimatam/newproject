@@ -349,8 +349,8 @@ $rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> t
 //file_put_contents("php://stderr", "RICHMENU ID 1  ===> ".json_encode($data));
 
 $richMenuId = "richmenu-03bd2f91fb7c3f83ff305ea1812abfee";  // page1
-$file = fopen('/image/firstpage.png', 'r');
-$size = filesize('/image/firstpage.png');
+$file = fopen('image/firstpage.png', 'r');
+$size = filesize('image/firstpage.png');
 $fildata = fread($file,$size);
 $upload_pic = upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file);
 file_put_contents("php://stderr", "POST JSON ===> ".$upload_pic);
