@@ -214,6 +214,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	}
    } 
+	  /*
    elseif( $event['message']['type'] == 'image' )
    {
 	   
@@ -253,7 +254,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
 	   
-   } 
+   } */
   else { }
   }
 	 
