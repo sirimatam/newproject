@@ -129,11 +129,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}   
 	elseif ($text=='กลับหน้าแรก')
 	{
-		
-		$show = show_address($db,$userid);
-		$post = format_message($reply_token,$show);
-		send_reply_message($API_URL, $POST_HEADER, $post);
-		file_put_contents("php://stderr", "address  ===> ".json_encode($show));
+		set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 	}   
 	elseif ($text=='เช็คสถานะ')
 	{
