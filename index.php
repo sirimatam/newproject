@@ -2,7 +2,7 @@
 require_once('connection.php');
 require 'function.php';
 //require 'showproduct.php';
-require 'RichMenu/setrichMenu1Default.php';
+require 'RichMenu/setrichMenu2Default.php';
 require 'track.class.php';
 	
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -329,48 +329,6 @@ if ( sizeof($request_array['events']) > 0 )
 
 */
 
-
-
-$richMenuId = "richmenu-e05a96a7dd92be7ab66c7370733c5d20";  // page2
-$file = fopen('image/secondpage.png', 'r');
-$size = filesize('image/secondpage.png');
-$fildata = fread($file,$size);
-$upload_pic = upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file);
-file_put_contents("php://stderr", "POST JSON ===> ".$upload_pic);
-	
-function upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file)
-{
-$curl = curl_init();
-	curl_setopt_array($curl, array(
-	    CURLOPT_URL => "https://api.line.me/v2/bot/richmenu/".$richMenuId."/content",
-	    CURLOPT_RETURNTRANSFER => true,
-	    CURLOPT_BINARYTRANSFER => true,
-	    CURLOPT_ENCODING => "",
-	    CURLOPT_MAXREDIRS => 10,
-	    CURLOPT_TIMEOUT => 30,
-	    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	    CURLOPT_CUSTOMREQUEST => "POST",
-	    CURLOPT_POSTFIELDS => $fildata,
-	    CURLOPT_INFILE => $file,
-	    CURLOPT_HTTPHEADER => array(
-	       "authorization: Bearer ".$ACCESS_TOKEN,
-               "cache-control: no-cache",
-	       "Content-Type: image/png",
-	 	
-	    ),
-	));
-  
-	$response = curl_exec($curl);
-	$err = curl_error($curl);
-	curl_close($curl);
-  
-  
-	if ($err) {
-         return $err;
-    } else {
-    	return $response;
-    }
-}	 
 
 
 
