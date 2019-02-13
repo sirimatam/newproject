@@ -1,6 +1,6 @@
 <?php
 
-$richMenuId = "richmenu-03bd2f91fb7c3f83ff305ea1812abfee"; //page1
+$richMenuId = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU=';
 
