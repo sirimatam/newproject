@@ -97,11 +97,13 @@ if ( sizeof($request_array['events']) > 0 )
 	}   
 	elseif ($text=='ที่รอชำระเงิน')
 	{
-		//
+		$data = format_message($reply_token,carousel_flex_order($db,$userid));
+		send_reply_message($API_URL, $POST_HEADER,$data);
 	}  
 	elseif ($text=='ที่ต้องจัดส่ง')
 	{
-		//
+		$data = format_message($reply_token,carousel_flex_order($db,$userid));
+		send_reply_message($API_URL, $POST_HEADER,$data);
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{
