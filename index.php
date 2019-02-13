@@ -9,6 +9,8 @@ $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
+/*
+
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 if ( sizeof($request_array['events']) > 0 )
@@ -122,15 +124,15 @@ if ( sizeof($request_array['events']) > 0 )
 	}	
         elseif ($text=='เช็คสถานะพัสดุ')
 	{
-		/* ทำได้ๆๆๆ 
-		$trackingNumber = 'SHX306592865TH';
-		$track = new Trackingmore;
-		$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
 		
-		$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
-		send_reply_message($API_URL, $POST_HEADER, $data);
+		//$trackingNumber = 'SHX306592865TH';
+		//$track = new Trackingmore;
+		//$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array());
 		
-		*/
+		//$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+		//send_reply_message($API_URL, $POST_HEADER, $data);
+		
+		
 		
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
@@ -185,7 +187,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 	}
 	}
-   } /*
+   } 
    elseif( $event['message']['type'] == 'image' )
    {
 	   
@@ -225,7 +227,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
 	   
-   } */
+   } 
   else { }
   }
 	 
@@ -323,6 +325,30 @@ if ( sizeof($request_array['events']) > 0 )
   }
  }
 }
+
+
+*/
+
+$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
+$rich_area = array(
+		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ค้นหาสินค้า')),
+		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'โปรโมชั่น')),
+		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 83 ), 'action' => array('type'=> 'message', 'text' =>'ตะกร้าของฉัน')),
+		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ชำระเงิน')),
+      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'เกี่ยวกับร้านค้า')),
+		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'หน้าถัดไป'))
+		  );
+$rich_object = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> true ,
+			     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area );
+           
+//$rich_obj_req = json_encode($rich_object, JSON_UNESCAPED_UNICODE);
+
+
+$data = send_reply_message($RICH_URL, $POST_HEADER, $rich_object);
+
+file_put_contents("php://stderr", "RICHMENU ID 1  ===> ".json_encode($data));
+
+
 function format_message($reply_token,$message)
 {
 	$data = ['replyToken' => $reply_token,'messages' =>  [$message] ];
