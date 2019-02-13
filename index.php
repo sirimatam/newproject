@@ -1,7 +1,9 @@
 <?php
 require_once('connection.php');
-require 'function.php';
-//require 'showproduct.php';
+out_of_time($db);
+
+require 'user_function.php';
+require 'store_function.php';
 require 'RichMenu/uploadandsetrichMenuDefault.php';
 require 'track.class.php';
 
