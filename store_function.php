@@ -92,9 +92,18 @@ function carousel_cart($db,$cus_id)
 {
     $cartid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$cus_id' AND cart_used = '0'"))[0];
     $skuid = pg_query($db,"SELECT sku_id FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
+    $cartqtts = pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cart_product.cartp_id = '$cartid'");
+    $run = 0;
+    $cart_qtt = array();
+    $total = 0;
+     while($ccc = pg_fetch_row($cartqtts)[0])
+    {
+	    $cart_qtt[$run] = $ccc;
+	    $run++;
+	    $total +=$ccc;
+    }
     $skuarray = array();
     $run1 = 0;
-    $total = pg_num_rows($skuid);
     while($aaa = pg_fetch_row($skuid)[0])
     {
 	    $sku_detail = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$aaa'"));
@@ -136,19 +145,35 @@ function carousel_cart($db,$cus_id)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
         $datas['template']['columns'][$i]['title'] = $namearray[$i][1];
-        $datas['template']['columns'][$i]['text'] = $namearray[$i][2]."\n".$skuarray[$i][3]." จำนวน 1 ชิ้น";
+        $datas['template']['columns'][$i]['text'] = $namearray[$i][2]."\n".$skuarray[$i][3]." จำนวน ".$cart_qtt[$i]." ชิ้น";
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'ลบออกจาก ตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'ลบสินค้ารหัส'.$skuarray[$i][0].'ออกจากตะกร้า';  
         $datas['template']['columns'][$i]['actions'][0]['data'] =  'Delete '.$skuarray[$i][0];
      }
 	
-	 
-
-    return $datas;
+     
+	$datas2 = [];
+	$datas2['type'] = 'template';
+        $datas2['altText'] = 'this is a confirm template';
+        $datas2['template']['type'] = 'confirm';
+        $datas2['template']['actions'][0]['type'] = 'postback';
+        $datas2['template']['actions'][0]['label'] = 'สั่งซื้อ';
+        $datas2['template']['actions'][0]['text'] = 'สั่งซื้อ';  
+        $datas2['template']['actions'][0]['data'] =  'Order '.$cartid;
+	$datas2['template']['actions'][1]['type'] = 'postback';
+        $datas2['template']['actions'][1]['label'] = 'ล้างตะกร้า';
+        $datas2['template']['actions'][1]['text'] = 'ล้างตะกร้า';  
+        $datas2['template']['actions'][1]['data'] =  'Clear '.$cartid;
+	$datas2['template']['text'] = 'สินค้า'.$total.' ชิ้น';
+     
+    $push_array[0] = $datas;
+    $push_array[1] = $datas2;	
+    return $push_array;
     }
 	
   }
+
 
 function flex_cart_beforeorder($db,$userid) 
 {
