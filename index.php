@@ -97,21 +97,19 @@ if ( sizeof($request_array['events']) > 0 )
 	}   
 	elseif ($text=='ที่รอชำระเงิน')
 	{
-		$data = format_message($reply_token,carousel_flex_order($db,$userid));
+		$data = format_message($reply_token,carousel_flex_order($db,$userid,'1'));
 		send_reply_message($API_URL, $POST_HEADER,$data);
 		file_put_contents("php://stderr", "POST รอชำระเงิน =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องจัดส่ง')
 	{
-		$data = format_message($reply_token,carousel_flex_order($db,$userid));
+		$data = format_message($reply_token,carousel_flex_order($db,$userid,'2'));
 		send_reply_message($API_URL, $POST_HEADER,$data);
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{
-		// ต้องแก้ให้รองรับ carousel order
-
-		
+				
 		
 		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
@@ -127,7 +125,8 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			$track = new Trackingmore;
 			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
-			$data = format_message($reply_token,['type'=>'text','text'=>$track['data']['items'][0]['lastEvent']]);
+			$check = $track['data']['items'][0]['lastEvent'];
+			$data = format_message($reply_token,carousel_flex_order($db,$userid,$check));
 			send_reply_message($API_URL, $POST_HEADER, $data);
 		}
 		
