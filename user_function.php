@@ -205,9 +205,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
-	//$data['contents']['body']['type'] = 'box';
-	//$data['contents']['body']['layout'] = 'vertical';
-	//$data['contents']['body']['spacing'] = 'md';
+
 	$data['contents']['contents'][$j]['body']['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
 		
@@ -244,14 +242,14 @@ function carousel_flex_order($db,$userid,$check)
 		    
 		    
 	if(strlen($check)>1)
-	{	    
-	$data['contents']['contents'][$j]['footer']['type'] = 'box';
-	$data['contents']['contents'][$j]['footer']['layout'] = 'vertical';
-	$data['contents']['contents'][$j]['footer']['flex'] = 0;	    
-	$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-	$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
-	$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '$FF0000';	    
-	}	
+		{	    
+		$data['contents']['contents'][$j]['footer']['type'] = 'box';
+		$data['contents']['contents'][$j]['footer']['layout'] = 'vertical';
+		$data['contents']['contents'][$j]['footer']['flex'] = 0;	    
+		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
+		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
+		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
+		}	
 	}
 	return $data;
 			
