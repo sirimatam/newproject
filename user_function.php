@@ -251,7 +251,12 @@ function carousel_flex_order($db,$userid,$check)
 		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
 		}	
 	}
-	return $data;
+	
+	if(pg_fetch_row($b)[0] == '')
+	{
+		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
+	}
+	else {	return $data; }
 			
 }
 
