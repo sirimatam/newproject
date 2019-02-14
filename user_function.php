@@ -205,7 +205,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
-
+/*
 	$data['contents']['contents'][$j]['body']['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
 		
@@ -240,7 +240,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';	
 		    
-		    
+	*/	    
 	if(strlen($check)>1)
 		{	    
 		$data['contents']['contents'][$j]['footer']['type'] = 'box';
