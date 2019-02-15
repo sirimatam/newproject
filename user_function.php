@@ -241,7 +241,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';	
 		    
-	    
+	   /* 
 	if(strlen($check)>1)
 		{	    
 		$data['contents']['contents'][$j]['footer']['type'] = 'box';
@@ -249,7 +249,7 @@ function carousel_flex_order($db,$userid,$check)
 		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
 		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
 		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
-		}	
+		}	*/
 	}
 	
 	if(sizeof($order) == 0)
