@@ -252,7 +252,7 @@ function carousel_flex_order($db,$userid,$check)
 		}	
 	}
 	
-	if(pg_fetch_row($b)[0] == '')
+	if(pg_num_rows($b)[0] == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
 	}
