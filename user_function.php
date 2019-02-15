@@ -125,7 +125,7 @@ function carousel_flex_order($db,$userid,$check)
 	$order_price = array();
 	$sku_color = array();
 	$pd = [];
-	if($check=='1') // ที่รอชำระเงิน
+	
 
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
@@ -252,7 +252,7 @@ function carousel_flex_order($db,$userid,$check)
 		}	
 	}
 	
-	if(pg_num_rows($b)[0] == 0)
+	if(sizeof($order) == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
 	}
