@@ -210,20 +210,6 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
 	
-	$n = sizeof($pd[0]);	
-		
-	$data['contents']['contents'][$j]['body']['contents'][$n]['type'] = 'box';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['layout'] = 'baseline';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['flex'] = 0;
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['type'] = 'text';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['text'] = 'รวม'; //prod_name
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['margin'] = 'sm';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['weight'] = 'regular';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['type'] = 'text';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['margin'] = 'sm';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';		
 		
 		for($i=0;$i<sizeof($pd[$j]);$i++) // i = วน sku ในแต่ละใบสั่งซื้อ
 		{
@@ -241,7 +227,20 @@ function carousel_flex_order($db,$userid,$check)
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['align'] = 'end';
 		}
 		
+	$n = sizeof($pd[0]);	
 		
+	$data['contents']['contents'][$j]['body']['contents'][$n]['type'] = 'box';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['layout'] = 'baseline';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['flex'] = 0;
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
 	   /*
 	if(strlen($check)>1)
