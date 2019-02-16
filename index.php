@@ -108,8 +108,7 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
-	{
-				
+	{	
 		
 		//$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
 		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
@@ -128,7 +127,7 @@ if ( sizeof($request_array['events']) > 0 )
 			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
 			$check = $track['data']['items'][0]['lastEvent'];
 			*/
-			$data = format_message($reply_token,carousel_flex_order($db,$userid,$trackingNumber));
+			$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 			send_reply_message($API_URL, $POST_HEADER, $data);
 	//	}
 		
