@@ -368,9 +368,10 @@ function add_to_order($db,$cus_id,$cart_avail)
 		if($order_id == $dup[$q]) 
 		{
 			$order_id = substr(uniqid(),0,6);
-			$q=0;
+			$q= -1;
 		}
-		if($q != 0) {	$q++; }
+		
+		$q++;
 	}
 	
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
