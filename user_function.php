@@ -276,8 +276,10 @@ function flex_order($db,$order_id,$cartp_id)
 	while($cartp = pg_fetch_row($cartp_array)[0])
 	{
 		$skuid_array[$i] = $cartp;
-		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];		$i++;
+		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp_id' AND sku_id = '$cartp'"))[0];
+		$i++;
 	}
+	
 	$pdid_array = array();
 	$sku_color = array();
 	$run =0;
@@ -368,7 +370,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 			$order_id = substr(uniqid(),0,6);
 			$q=0;
 		}
-		$q++;
+		if($q != 0) {	$q++; }
 	}
 	
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
