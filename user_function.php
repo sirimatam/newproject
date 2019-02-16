@@ -197,7 +197,7 @@ function carousel_flex_order($db,$userid,$check)
 		}
 	
 	}
-		
+	/*	
 	$data = [];
 	$data['type'] = 'flex';
 	$data['altText'] = 'Flex Message';
@@ -265,12 +265,22 @@ function carousel_flex_order($db,$userid,$check)
 		} 
 	}
 	
+	
 	if(sizeof($order) == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
 	} 
 	else {	return $data; } 
-			
+	*/
+	
+	if(sizeof($trackinglist)>0)
+		{
+		   $track = new Trackingmore;
+		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[0],Array());
+		   $trace = $track['data']['items'][0]['lastEvent'];
+		  return ['type'=>'text','text' => $trace ];
+	}
+	
 }
 
 
