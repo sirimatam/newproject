@@ -144,12 +144,12 @@ function carousel_flex_order($db,$userid,$check)
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for packing'");
 			
 		}
-		elseif(strlen($check)>1)//ที่ต้องได้รับ
+		elseif($check != '1' && $check != '2')//ที่ต้องได้รับ
 		{
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-		
+			$show = 1;
 		}
 				
 		if(pg_num_rows($a)>0)
@@ -248,7 +248,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
 	
-	if(strlen($check)>1)
+	if($show == 1)
 		{
 		
 		$track = new Trackingmore;
