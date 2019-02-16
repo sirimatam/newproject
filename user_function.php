@@ -1,5 +1,5 @@
 <?php
-
+require 'track.class.php';
 
 
 function get_user_content($msgid, $post_header)
@@ -278,7 +278,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[0],Array());
 		   $trace = $track['data']['items'][0]['lastEvent'];
-		  return ['type'=>'text','text' => 'abc' ];
+		  return ['type'=>'text','text' => $trace ];
 	}
 	
 }
