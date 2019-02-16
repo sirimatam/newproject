@@ -8,6 +8,11 @@ out_of_time($db);
 require 'RichMenu/uploadandsetrichMenuDefault.php';
 require 'track.class.php';
 
+$track = new Trackingmore;
+$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX117572063TH',Array());
+$check = $track['data']['items'][0];
+print_r($check);
+
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 $richMenuId2= "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
@@ -109,9 +114,25 @@ if ( sizeof($request_array['events']) > 0 )
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
+		$run = 0;
+		$cartpid_query = pg_query($db,"SELECT cartp_id from createcart WHERE cus_id = '$userid' AND orderlist.order_status != 'waiting for payment' AND orderlist.order_status != 'waiting for packing' ")
+		$cartpid_list = Array();
 		
-		//$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
-		//$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
+		while($list = $cartpid_query)
+		
+		
+		
+		$orderid_query = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id'");
+		
+		
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
+		
+		
+		$track_query = 
+				    
+		while ($list = pg_fetch_
+		
+		
 		/* if(strlen($trackingNumber)==0)
 		{
 			if(strlen($payment) == 0)
