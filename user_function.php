@@ -1,7 +1,4 @@
 <?php
-require 'track.class.php';
-
-
 function get_user_content($msgid, $post_header)
 {
 	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
@@ -19,9 +16,6 @@ function get_user_content($msgid, $post_header)
 	curl_close($ch);
 }
 	   
-
-
-
 function show_address($db,$cusid)
 {
 	$query = pg_query($db,"SELECT * FROM customer WHERE cus_id = '$cusid' ");
@@ -103,18 +97,11 @@ function show_address($db,$cusid)
 }
 	
   
-
   
-
-
 function delete_favorite($db,$fav_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-
-
-
-
 function carousel_flex_order($db,$userid,$check)
 {
 	// check can be 1,2,3
@@ -128,7 +115,6 @@ function carousel_flex_order($db,$userid,$check)
 	$sku_color = array();
 	$pd = array();
 	$trackinglist = array();
-
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
 		if($check=='1') // ที่รอชำระเงิน
@@ -164,7 +150,6 @@ function carousel_flex_order($db,$userid,$check)
 	}
 	for($k=0;$k<sizeof($order);$k++)
 	{
-
 		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
 		$skuid_array = array();
 		$i = 0;
@@ -174,7 +159,6 @@ function carousel_flex_order($db,$userid,$check)
 		{
 			$skuid_array[$i] = $cartp;
 			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];
-
 			$i++;
 		}
 		$pdid_array = array();
@@ -186,7 +170,6 @@ function carousel_flex_order($db,$userid,$check)
 			$run++;
 		}
 		$running = 0;
-
 		foreach ( $pdid_array as $pdid )
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -213,7 +196,6 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
-
 	$data['contents']['contents'][$j]['body']['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
 	
@@ -255,7 +237,6 @@ function carousel_flex_order($db,$userid,$check)
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$j],Array());
 		   $trace = $track['data']['items'][0]['lastEvent'];
-
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
@@ -278,12 +259,10 @@ function carousel_flex_order($db,$userid,$check)
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[0],Array());
 		   $trace = $track['data']['items'][0]['lastEvent'];
-		  return ['type'=>'text','text' => $trackinglist ];
+		  return ['type'=>'text','text' => $trackinglist[0] ];
 	}
 	
 }
-
-
 function flex_order($db,$order_id,$cartp_id)
 {
 	
@@ -410,10 +389,6 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-
-
-
-
   
   
   
