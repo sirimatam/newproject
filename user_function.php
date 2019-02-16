@@ -117,7 +117,7 @@ function delete_favorite($db,$fav_id)
 
 function carousel_flex_order($db,$userid,$check)
 {
-	// check can be 1,2,trackingnumber
+	// check can be 1,2,3
 	
 	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
@@ -164,7 +164,7 @@ function carousel_flex_order($db,$userid,$check)
 	}
 	for($k=0;$k<sizeof($order);$k++)
 	{
-		//$x = $order[$k][1];
+
 		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
 		$skuid_array = array();
 		$i = 0;
@@ -259,7 +259,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $trace; //prod_name
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = implode(' ', $trace); //prod_name
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
