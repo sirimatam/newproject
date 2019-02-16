@@ -111,7 +111,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{	
 		
 		//$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
-		$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
+		//$trackingNumber = pg_fetch_row(pg_query($db,"SELECT order_status FROM order WHERE order_id = '$orderid'"))[0];
 		/* if(strlen($trackingNumber)==0)
 		{
 			if(strlen($payment) == 0)
