@@ -123,10 +123,12 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		else
 		{ */
+		/*
 			$track = new Trackingmore;
 			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
 			$check = $track['data']['items'][0]['lastEvent'];
-			$data = format_message($reply_token,carousel_flex_order($db,$userid,$check));
+			*/
+			$data = format_message($reply_token,carousel_flex_order($db,$userid,$trackingNumber));
 			send_reply_message($API_URL, $POST_HEADER, $data);
 	//	}
 		
