@@ -126,8 +126,8 @@ function carousel_flex_order($db,$userid,$check)
 	$order_id = array();
 	$order_price = array();
 	$sku_color = array();
-	$pd = [];
-	
+	$pd = array();
+	$trackinglist = array();
 
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
@@ -149,7 +149,8 @@ function carousel_flex_order($db,$userid,$check)
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-			$show = 1;
+			$tracking = pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$c' ");
+			
 		}
 				
 		if(pg_num_rows($a)>0)
@@ -157,6 +158,7 @@ function carousel_flex_order($db,$userid,$check)
 				$order[$run1] = pg_fetch_row($a)[0];
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
+				$trackinglist[$run1] = pg_fetch_row($tracking)[0];
 				$run1++;
 			}
 	}
@@ -248,18 +250,18 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
 	
-	if($show == 1)
+	if(sizeof($trackinglist)>0)
 		{
-		
-		$track = new Trackingmore;
-		$track = $track->getRealtimeTrackingResults('kerry-logistics',$check,Array());
-		$trace = $track['data']['items'][0]['lastEvent'];
-		
-		$data['contents']['contents'][$j]['footer']['type'] = 'box';
-		$data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
-		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $trace; //prod_name
-		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
+		   $track = new Trackingmore;
+		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$j],Array());
+		   $trace = $track['data']['items'][0]['lastEvent'];
+
+		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $trace; //prod_name
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
+   
 		} 
 	}
 	
