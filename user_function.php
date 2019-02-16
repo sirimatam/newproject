@@ -141,8 +141,8 @@ function carousel_flex_order($db,$userid,$check)
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-			$order_id = pg_fetch_row($c)[0];
-			$tracking = pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$order_id' ");
+			$odid = pg_fetch_row($c)[0];
+			$tracking = pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$odid' ");
 			
 		}
 				
