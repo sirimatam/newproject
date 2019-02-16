@@ -6,7 +6,7 @@ require 'store_function.php';
 out_of_time($db);
 
 require 'RichMenu/uploadandsetrichMenuDefault.php';
-require 'track.class.php';
+
 
 
 
@@ -128,9 +128,7 @@ if ( sizeof($request_array['events']) > 0 )
 		
 		for($i=0;$i<sizeof($orderid_list);$i++)
 		{
-			$track = new Trackingmore;
-			$track = $track->getRealtimeTrackingResults('kerry-logistics',$tracking_list[$i],Array());
-			$check = $track['data']['items'][0]['lastEvent'];	
+			
 			$trace_list[$i] = $check;
 			
 		} */
