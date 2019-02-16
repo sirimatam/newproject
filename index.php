@@ -323,9 +323,9 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	if(explode(" ",$info)[0] == 'Order')
 	{
-		$cart_avail = explode(" ",$info)[1];
-		$order_id = add_to_order($db,$userid,$cart_avail);
-		$data = format_message($reply_token,flex_order($db,$order_id,$cart_avail));
+		$cartp = explode(" ",$info)[1];
+		$order_id = add_to_order($db,$userid,$cartp);
+		$data = format_message($reply_token,flex_order($db,$order_id,$cartp));
 		$send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 		file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 		file_put_contents("php://stderr", "POST RESULT2 =====> ".$send_result);
