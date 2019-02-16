@@ -11,7 +11,7 @@ function get_user_content($msgid, $post_header)
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //do not output directly, use variable
 	curl_setopt($ch, CURLOPT_ENCODING, "");
 	curl_setopt($ch, CURLOPT_MAXREDIRS, 10); 
-	curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60); 
 	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
 	
