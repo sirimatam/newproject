@@ -278,7 +278,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[0],Array());
 		   $trace = $track['data']['items'][0]['lastEvent'];
-		  return ['type'=>'text','text' => $trackinglist[0] ];
+		  return ['type'=>'text','text' => $trackinglist ];
 	}
 	
 }
