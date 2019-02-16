@@ -195,6 +195,56 @@ function carousel_flex_order($db,$userid,$check)
 	$data['altText'] = 'Flex Message';
 	$data['contents']['type'] = 'carousel';
 	
+	for($j=0;$j<sizeof($order);$j++)
+	{
+	$data['contents']['contents'][$j]['type'] = 'bubble';
+	$data['contents']['contents'][$j]['header']['type'] = 'box';
+	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
+	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
+	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
+	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
+	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
+
+	$data['contents']['contents'][$j]['body']['type'] = 'box';
+	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
+	$data['contents']['contents'][$j]['body']['contents'][0]['type'] = 'box';
+	$data['contents']['contents'][$j]['body']['contents'][0]['layout'] = 'baseline';
+	$data['contents']['contents'][$j]['body']['contents'][0]['flex'] = 0;
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][0]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['type'] = 'text';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['margin'] = 'sm';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][0]['contents'][1]['align'] = 'end';
+	
+	for($i=0;$i<sizeof($pd[$j]);$i++)
+	{
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['type'] = 'box';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['layout'] = 'baseline';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['flex'] = 0;
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['type'] = 'text';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['text'] = $pd[$j][$i][1].' '.$sku_color[$j][$i].' '.$cartp_qtt.' ชิ้น'; //prod_name
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['margin'] = 'sm';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][0]['weight'] = 'regular';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['type'] = 'text';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['text'] = $pd[$j][$i][2].' บาท'; //prod_name
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['margin'] = 'sm';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['weight'] = 'regular';
+		$data['contents']['contents'][$j]['header']['contents'][$i+1]['contents'][1]['align'] = 'end';
+	}
+	}
+	
+	
+	/*
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'carousel';
+	
 	for($j=0;$j<sizeof($order);$j++) // j = วนใบสั่งซื้อ
 	{
 	$data['contents']['contents'][$j]['type'] = 'bubble';
@@ -252,8 +302,10 @@ function carousel_flex_order($db,$userid,$check)
 		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
 		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
 		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
-		}	*/
+		}	
 	}
+	*/
+	
 	
 	if(sizeof($order) == 0)
 	{
