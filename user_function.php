@@ -267,7 +267,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
 		   $trace = $track['data']['items'][0]['lastEvent']; 
-		   file_put_contents("php://stderr", "trace =====> ".json_encode($trace));
+		   file_put_contents("php://stderr", "trace =====> ".$trace);
 		  return ['type'=>'text','text' => $trace ];
 	}
 	
