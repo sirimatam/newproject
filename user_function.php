@@ -324,7 +324,7 @@ function flex_order($db,$order_id,$cartp_id)
 		$data['contents']['body']['contents'][$i]['layout'] = 'baseline';
 		$data['contents']['body']['contents'][$i]['flex'] = 0;
 		$data['contents']['body']['contents'][$i]['contents'][0]['type'] = 'text';
-		$data['contents']['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$i].' '.$sku_color[$j][$i].' '.$cartp_qtt[$j].' ชิ้น';
+		$data['contents']['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$i].' '.$sku_color[$j][$i].' '.$cartp_qtt[$i].' ชิ้น';
 		$data['contents']['body']['contents'][$i]['contents'][0]['margin'] = 'sm';
 		$data['contents']['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
 		$data['contents']['body']['contents'][$i]['contents'][1]['type'] = 'text';
