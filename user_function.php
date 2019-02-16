@@ -257,11 +257,11 @@ function carousel_flex_order($db,$userid,$check)
 	}
 	
 	
-	if($test == '123') {return ['type'=>'text','text' => 'เข้าลูปแต่ query maidai'];}
-	/*if(sizeof($order) == 0)
+	//if($test == '123') {return ['type'=>'text','text' => 'เข้าลูปแต่ query maidai'];}
+	if(sizeof($order) == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
-	} */
+	} 
 	else {	return $data; } 
 			
 }
