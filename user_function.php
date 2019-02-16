@@ -163,10 +163,13 @@ function carousel_flex_order($db,$userid,$check)
 		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
 		$skuid_array = array();
 		$i = 0;
+		
+		
 		while($cartp = pg_fetch_row($cartp_array)[0])
 		{
 			$skuid_array[$i] = $cartp;
 			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];
+
 			$i++;
 		}
 		$pdid_array = array();
@@ -183,7 +186,7 @@ function carousel_flex_order($db,$userid,$check)
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
 			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
-			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0];
+			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0]*$cartp_qtt[$running];
 			$pd[$k][$running] = [$pd_id,$pd_name,$pd_price];
 			$running++;
 		}
@@ -217,8 +220,8 @@ function carousel_flex_order($db,$userid,$check)
 			$data['contents']['contents'][$j]['body']['contents'][$i]['layout'] = 'baseline';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['flex'] = 0;
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['type'] = 'text';
-			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$j][$i].' '.$sku_color[$j][$i].' '.$cartp_qtt[$j].' ชิ้น'; //prod_name
-			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['margin'] = 'sm';
+			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$j].' '.$sku_color[$j][$i].' '.$cartp_qtt[$j].' ชิ้น'; //prod_name
+			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['margin'] = 'xs';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['type'] = 'text';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['text'] = $pd[$j][$i][2].' บาท'; //prod_name
