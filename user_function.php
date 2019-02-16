@@ -1,4 +1,10 @@
 <?php
+
+require 'track.class.php';
+
+
+
+
 function get_user_content($msgid, $post_header)
 {
 	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
