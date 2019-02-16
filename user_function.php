@@ -275,8 +275,8 @@ function flex_order($db,$order_id,$cartp_id)
 	$i = 0;
 	while($cartp = pg_fetch_row($cartp_array)[0])
 	{
-		$skuid_array[$i] = $cartp;
-		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp_id' AND sku_id = '$cartp'"))[0];
+		$skuid_array[$i] = $skuid;
+		$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp_id' AND sku_id = '$skuid'"))[0];
 		$i++;
 	}
 	
@@ -298,7 +298,6 @@ function flex_order($db,$order_id,$cartp_id)
 		$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
 		$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0]*$cartp_qtt[$running];
 		$pd[$running] = [$pd_id,$pd_name,$pd_price];
-		$running++;
 		$total += $pd_price;
 		$running++;
 	}
