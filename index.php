@@ -111,7 +111,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'2'));
 		send_reply_message($API_URL, $POST_HEADER,$data);
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
-	}  
+	}  /*
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
 		$run = 0;
@@ -147,13 +147,13 @@ if ( sizeof($request_array['events']) > 0 )
 			$track = new Trackingmore;
 			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
 			$check = $track['data']['items'][0]['lastEvent'];
-			*/
+			
 			$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 			send_reply_message($API_URL, $POST_HEADER, $data);
 	//	}
 		
 		
-	}
+	} */
 	elseif ($text=='สินค้าที่ถูกใจ')
 	{
 		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
