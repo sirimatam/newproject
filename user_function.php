@@ -195,13 +195,14 @@ function carousel_flex_order($db,$userid,$check)
 	$data['altText'] = 'Flex Message';
 	$data['contents']['type'] = 'carousel';
 	
-	for($j=0;$j<sizeof($order);$j++)
+	for($j=0;$j<sizeof($order);$j++) // j = วนใบสั่งซื้อ
 	{
 	$data['contents']['contents'][$j]['type'] = 'bubble';
 	$data['contents']['contents'][$j]['header']['type'] = 'box';
 	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
-	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
+	//$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
+	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = $pd[0];
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
@@ -209,7 +210,8 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['layout'] = 'vertical';
 		
-		for($i=0;$i<sizeof($pd[$j]);$i++)
+		/*
+		for($i=0;$i<sizeof($pd[$j]);$i++) // i = วน sku ในแต่ละใบสั่งซื้อ
 		{
 			$data['contents']['contents'][$j]['body']['contents'][$i]['type'] = 'box';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['layout'] = 'baseline';
@@ -224,7 +226,7 @@ function carousel_flex_order($db,$userid,$check)
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['weight'] = 'regular';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['align'] = 'end';
 		}
-	
+		*/
 		//$n =0;
 	$n = sizeof($pd[$j]);	
 		
