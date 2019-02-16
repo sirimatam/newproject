@@ -205,7 +205,6 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
 	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
-	//$data['contents']['contents'][$j]['header']['contents'][0]['text'] = $pd[0];
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
@@ -245,7 +244,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
-	   /*
+	   
 	if(strlen($check)>1)
 		{	    
 		$data['contents']['contents'][$j]['footer']['type'] = 'box';
@@ -253,7 +252,7 @@ function carousel_flex_order($db,$userid,$check)
 		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
 		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
 		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
-		} */	
+		} 
 	}
 	
 	
