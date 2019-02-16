@@ -580,13 +580,25 @@ function out_of_time($db)
 	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
 	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
 	     {
+		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     }
+	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
+	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
+	     {
+		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
+		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
+
 		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
 		     
 	     }
-	     
      }
 	  
   }
+	
+
+
+
   
 function get_datetime()
 {
