@@ -11,7 +11,7 @@ require 'track.class.php';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX117572063TH',Array());
 $check = $track['data']['items'][0];
-print_r($check);
+print_r(getRealtimeTrackingResults('kerry-logistics','SHX117572063TH',Array()));
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
