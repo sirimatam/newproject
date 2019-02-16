@@ -107,49 +107,39 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'2'));
 		send_reply_message($API_URL, $POST_HEADER,$data);
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
-	}  /*
+	}  
 	elseif ($text=='ที่ต้องได้รับ')
-	{	
-		$run = 0;
+	{	/*
+		$i = 0;
 		$cartpid_query = pg_query($db,"SELECT cartp_id from createcart WHERE cus_id = '$userid' AND orderlist.order_status != 'waiting for payment' AND orderlist.order_status != 'waiting for packing' ")
 		$cartpid_list = Array();
-		
-		while($list = pg_fet)
-		
-		
-		
-		$orderid_query = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id'");
-		
-		
-		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
-		
-		
-		$track_query = 
-				    
-		while ($list = pg_fetch_
-		
-		
-		/* if(strlen($trackingNumber)==0)
+		$orderid_list = Array();
+		$tracking_list = Array();
+		while($list = pg_fetch_row($cartpid_query)[0])
 		{
-			if(strlen($payment) == 0)
-			{ $reply = 'ยังไม่ได้รับการชำระเงิน'; }
-			else { $reply = 'กำลังจัดเตรียมสินค้า';}
-			$data = ['replyToken' => $reply_token, 'messages' => [['type' => 'text', 'text' => $reply ]] ];
-			send_reply_message($API_URL, $POST_HEADER, $data);
+		  $cartpid_list[$i] = $list;
+		  $orderid_list[$i] = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$list'"))[0];
+		  $tracking_list[$i] = pg_fetch_row(pg_query($db,"SELECT order_status FROM orderlist WHERE cartp_id = '$list'"))[0]; 
+		  $i++;
 		}
-		else
-		{ */
-		/*
+
+		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
+		$trace_list = Array();
+		
+		for($i=0;$i<sizeof($orderid_list);$i++)
+		{
 			$track = new Trackingmore;
-			$track = $track->getRealtimeTrackingResults('kerry-logistics',$trackingNumber,Array());
-			$check = $track['data']['items'][0]['lastEvent'];
+			$track = $track->getRealtimeTrackingResults('kerry-logistics',$tracking_list[$i],Array());
+			$check = $track['data']['items'][0]['lastEvent'];	
+			$trace_list[$i] = $check;
 			
-			$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
-			send_reply_message($API_URL, $POST_HEADER, $data);
-	//	}
+		} */
+		
+		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
+		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 		
-	} */
+	} 
 	elseif ($text=='สินค้าที่ถูกใจ')
 	{
 		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
