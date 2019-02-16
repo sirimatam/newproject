@@ -117,6 +117,8 @@ function delete_favorite($db,$fav_id)
 
 function carousel_flex_order($db,$userid,$check)
 {
+	// check can be 1,2,trackingnumber
+	
 	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
 	$run1 = 0;
@@ -142,12 +144,12 @@ function carousel_flex_order($db,$userid,$check)
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for packing'");
 			
 		}
-		elseif($check != '1' && $check != '2' )//ที่ต้องได้รับ
+		elseif(strlen($check)>1)//ที่ต้องได้รับ
 		{
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-		        $test = '123';
+		
 		}
 				
 		if(pg_num_rows($a)>0)
@@ -245,19 +247,22 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
-	   
+	
 	if(strlen($check)>1)
-		{	    
+		{
+		
+		$track = new Trackingmore;
+		$track = $track->getRealtimeTrackingResults('kerry-logistics',$check,Array());
+		$trace = $track['data']['items'][0]['lastEvent'];
+		
 		$data['contents']['contents'][$j]['footer']['type'] = 'box';
 		$data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		$data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $check; //prod_name
+		$data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $trace; //prod_name
 		$data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';	    
 		} 
 	}
 	
-	
-	//if($test == '123') {return ['type'=>'text','text' => 'เข้าลูปแต่ query maidai'];}
 	if(sizeof($order) == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
