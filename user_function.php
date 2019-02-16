@@ -227,8 +227,9 @@ function carousel_flex_order($db,$userid,$check)
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['align'] = 'end';
 		}
 		*/
-		//$n =0;
-	$n = sizeof($pd[0]);	
+		$n =0;
+		
+	//$n = sizeof($pd[0]);	
 		
 	$data['contents']['contents'][$j]['body']['contents'][$n]['type'] = 'box';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['layout'] = 'baseline';
