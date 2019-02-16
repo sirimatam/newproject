@@ -142,7 +142,7 @@ function carousel_flex_order($db,$userid,$check)
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for packing'");
 			
 		}
-		elseif($check != '1' && $check != '2') )//ที่ต้องได้รับ
+		elseif($check != '1' && $check != '2' )//ที่ต้องได้รับ
 		{
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' && order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' && order_status != 'waiting for packing' ");
