@@ -277,9 +277,6 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#0C10E1';		
    
 		} 
-	
-	
-	
 	if($check=='1')
 		{
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
@@ -288,6 +285,14 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
 	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
+		}
+	if($loop=='2')
+		{
+		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = 'วันที่สั่งซื้อ: '.$datelist[$j]; 
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#0C10E1'; 	
 		}
 	
 	}
