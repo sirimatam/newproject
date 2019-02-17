@@ -153,7 +153,7 @@ function carousel_flex_order($db,$userid,$check)
 				$order[$run1] = pg_fetch_row($a)[0];
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
-				$trackinglist[$run1] = pg_fetch_row($tracking)[0];
+				if($check == '3')  {$trackinglist[$run1] = pg_fetch_row($tracking)[0]; }
 				$run1++;
 			}
 	}
