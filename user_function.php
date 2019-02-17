@@ -108,6 +108,8 @@ function delete_favorite($db,$fav_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
+
+
 function carousel_flex_order($db,$userid,$check)
 {
 	// check can be 1,2,3
@@ -252,23 +254,6 @@ function carousel_flex_order($db,$userid,$check)
    
 		} 
 	*/
-	
-	if($check=='1')
-		{
-		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
-		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
-	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
-		}
-	}
-	if(sizeof($order) == 0)
-	{
-		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
-	} 
-	else {	return $data; } 
-	
 	/*
 	if(sizeof($trackinglist)>0)
 		{
@@ -280,16 +265,24 @@ function carousel_flex_order($db,$userid,$check)
 		  return ['type'=>'text','text' => json_encode($trace) ];
 	} 
 	*/
-	
-	
-	
-	
-	
-	
-	
-	}
-	
+	if($check=='1')
+		{
+		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
+		}
+	if(sizeof($order) == 0)
+	{
+		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
+	} 
+	else {	return $data; } 	
+		
+		
 }
+
 function flex_order($db,$order_id,$cartp_id)
 {
 	
