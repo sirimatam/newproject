@@ -251,8 +251,17 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
+	*/	
 	}
-	
+	if($check=='1')
+	{
+		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
+	}
 	
 	if(sizeof($order) == 0)
 	{
@@ -260,7 +269,7 @@ function carousel_flex_order($db,$userid,$check)
 	} 
 	else {	return $data; } 
 	
-	*/
+	/*
 	if(sizeof($trackinglist)>0)
 		{
 		
@@ -270,7 +279,7 @@ function carousel_flex_order($db,$userid,$check)
 		   file_put_contents("php://stderr", "trace =====> ".json_encode($trace));
 		  return ['type'=>'text','text' => json_encode($trace) ];
 	} 
-	
+	*/
 }
 function flex_order($db,$order_id,$cartp_id)
 {
