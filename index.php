@@ -13,6 +13,14 @@ $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',A
 $trace = $track['data']['items'][0]['lastEvent']; 
 file_put_contents("php://stderr", "track =====> ".$track);
 print_r($track);
+echo '///////////<br><br>';
+echo 'this is json trace';
+print_r(json_encode($trace));
+echo '<br> this is type of trace'.$trace.'<br>';
+print_r($trace);
+
+
+
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 $richMenuId2= "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2
