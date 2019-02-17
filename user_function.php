@@ -143,9 +143,7 @@ function carousel_flex_order($db,$userid,$check)
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-			$odid = pg_fetch_row($c)[0];
-			$tracking = pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$odid' ");
-			
+			$loop = '1';
 		}
 				
 		if(pg_num_rows($a)>0)
@@ -153,9 +151,16 @@ function carousel_flex_order($db,$userid,$check)
 				$order[$run1] = pg_fetch_row($a)[0];
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
-				if($check == '3')  {$trackinglist[$run1] = pg_fetch_row($tracking)[0]; }
 				$run1++;
 			}
+		if($loop == '1')
+		{
+			for($i=0;$i<=$run1;$i++)
+			{
+				$trackinglist[$i] = pg_fetch_row(pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$order_id[$i]' "))[0];
+				
+			}
+		}
 	}
 	for($k=0;$k<sizeof($order);$k++)
 	{
