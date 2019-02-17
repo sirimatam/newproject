@@ -241,31 +241,23 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
-	/*
+	
 	if(sizeof($trackinglist)>0)
 		{
 		   $track = new Trackingmore;
 		   $track = $track->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$j],Array());
 		   $trace = $track['data']['items'][0]['lastEvent'];
+		   file_put_contents("php://stderr", "trace =====> ".json_encode($trace));
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = $trace; //prod_name
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = 'สถานะพัสดุปัจจุบัน<br>'.$trace; //prod_name
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
 	
 	
-	if(sizeof($trackinglist)>0)
-		{
-		
-		   $track = new Trackingmore;
-		   $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
-		   $trace = $track['data']['items'][0]['lastEvent']; 
-		   file_put_contents("php://stderr", "trace =====> ".json_encode($trace));
-		  return ['type'=>'text','text' => json_encode($trace) ];
-	} 
-	*/
+	
 	if($check=='1')
 		{
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
@@ -315,7 +307,6 @@ function flex_order($db,$order_id,$cartp_id)
 	{
 		$pdid = $pdid_array[$t];
 		$qty = $sku_qty[$t][1];
-		//$pdid = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$id'"))[0];
 		$pdname = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
 		$pdprice = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0]*$qty;
 		$product[$t] = [$pdid,$pdname,$pdprice];
@@ -411,7 +402,58 @@ function add_to_order($db,$cus_id,$cart_avail)
 	
 }
   
-  
+function out_of_time($db)
+  {
+     date_default_timezone_set("Asia/Bangkok");
+     $time = date("H:i:s");
+     $date = date("Y-m-d");
+     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
+     $order_array=array();
+     while($order=pg_fetch_row($order_list))
+     {
+	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
+	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
+	     {
+		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     } /*
+	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
+	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
+	     {
+		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
+		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
+		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     }*/
+     }
+     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE 
+             order_status != 'waiting for payment' AND order_status != 'waiting for packing'");
+     $ordertracklist = Array();
+     $i=0;
+     while($list = pg_fetch_row($tracking_query))
+     {
+	     $ordertracklist[$i] = $list;
+	     $i++;
+     }
+     for($t=0;$t<=$i;$t++)
+     {
+     $tracking = new Trackingmore;
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$t][5],Array()); 
+     $trace = $tracking['data']['items'][0]['lastEvent'];	
+     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     {
+	     
+	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
+	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]')");
+	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+     }
+     }
+	
+	
+	
+	  
+  }
+	  
   
   
   
