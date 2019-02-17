@@ -261,23 +261,6 @@ function flex_cart_beforeorder($db,$userid)
 
 
 
-/*
-function button_order_status()
-  {
-    $data = [];
-    $data['type'] = 'template';
-    $data['altText'] = 'this is a buttons template';
-    $data['template']['type'] = 'buttons';
-    $data['template']['actions'][0]['type'] = 'message';
-    $data['template']['actions'][0]['label'] = 'แจ้งการชำระเงิน';
-    $data['template']['actions'][0]['text'] = 'แจ้งการชำระเงิน';
-    $data['template']['text'] = 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 และอัพโหลดสลิปได้เลยค่ะ';
-	  
-    return $data;
-  }
-*/
-
-
 
 function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 { 
@@ -449,44 +432,7 @@ function add_favorite($db,$cus_id,$prod_id)
     }
   }  
   
-  function carousel_show_favorite($db,$cus_id)
-  {
-    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'"); 
-    //$list = pg_fetch_row($check);
-    $i = 0;
-    $prod_array = array();
-    $fav = array();
-    while ($list = pg_fetch_row($check))
-    {
-	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]'")); 
-	    $prod_array[$i] = $prod; 
-	    $fav[$i] = $list[0];
-	    $i++;
-    }
-    
-    
-    $datas = [];
-    $datas['type'] = 'template';
-    $datas['altText'] = 'this is a carousel template';
-    $datas['template']['type'] = 'carousel';    
-    for ($i=0; $i<pg_num_rows($check);$i++)
-     {
-        
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod_array[$i][1]; //check prod_name ว่าต้องมี [$i] มั้ย
-        $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
-        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod_array[$i][0];
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
-        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
-     }
-    return $datas;
-  }
-
+ 
 
 function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
   {
@@ -568,34 +514,6 @@ function clear_cart($db,$cart_avail)
 
 
 
-function out_of_time($db)
-  {
-     date_default_timezone_set("Asia/Bangkok");
-     $time = date("H:i:s");
-     $date = date("Y-m-d");
-     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
-     $order_array=array();
-     while($order=pg_fetch_row($order_list))
-     {
-	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
-	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
-	     {
-		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     }
-	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
-	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
-	     {
-		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
-		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
-
-		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     }
-     }
-	  
-  }
-	
 
 
 
