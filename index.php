@@ -77,7 +77,9 @@ if ( sizeof($request_array['events']) > 0 )
        elseif ($text=='ตะกร้าของฉัน')
 	{
 	        $first = carousel_cart($db,$userid);
-	       if( $first[1] == 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า' )
+	       $check_cartp = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' "))[0];
+	       $check = pg_fetch_row(pg_query($db,"SELECT * from cart_product WHERE cartp_id = '$check_cartp' "))[0];
+	       if( $check == '' )
 			  {	        
 			          send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$first));
 			  }
