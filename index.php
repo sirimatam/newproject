@@ -110,12 +110,6 @@ if ( sizeof($request_array['events']) > 0 )
 		unlink_richmenu($userid,$ACCESS_TOKEN);
 		set_richmenu_default($richMenuId2,$ACCESS_TOKEN);
 	}   
-	elseif ($text=='ที่รอชำระเงิน')
-	{
-		$data = format_message($reply_token,carousel_flex_order($db,$userid,'1'));
-		send_reply_message($API_URL, $POST_HEADER,$data);
-		file_put_contents("php://stderr", "POST รอชำระเงิน =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
-	}  
 	elseif ($text=='ที่ต้องจัดส่ง')
 	{
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'2'));
@@ -132,10 +126,16 @@ if ( sizeof($request_array['events']) > 0 )
 	} 
 	elseif ($text=='สินค้าที่ถูกใจ')
 	{
-		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
+		$post = format_message($reply_token,carousel_flex_order($db,$userid,'4'));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       
        } 
+	elseif ($text=='ประวัติการสั่งซื้อ')
+	{
+		//$post = format_message($reply_token,carousel_show_favorite($db,$userid));
+	        //send_reply_message($API_URL, $POST_HEADER, $post);
+	       
+       }    
 	elseif ($text=='ที่อยู่จัดส่ง')
 	{
 		
