@@ -260,7 +260,7 @@ function carousel_flex_order($db,$userid,$check)
 	} 
 	else {	return $data; } 
 	
-	
+	*/
 	if(sizeof($trackinglist)>0)
 		{
 		
@@ -269,7 +269,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $trace = $track['data']['items'][0]['lastEvent']; 
 		   file_put_contents("php://stderr", "trace =====> ".$trace);
 		  return ['type'=>'text','text' => $trace ];
-	} */
+	} 
 	
 }
 function flex_order($db,$order_id,$cartp_id)
