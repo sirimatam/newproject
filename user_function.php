@@ -251,8 +251,8 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
-	*/	
-	}
+	*/
+	
 	if($check=='1')
 		{
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
@@ -280,6 +280,15 @@ function carousel_flex_order($db,$userid,$check)
 		  return ['type'=>'text','text' => json_encode($trace) ];
 	} 
 	*/
+	
+	
+	
+	
+	
+	
+	
+	}
+	
 }
 function flex_order($db,$order_id,$cartp_id)
 {
