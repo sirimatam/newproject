@@ -42,16 +42,9 @@ function show_promotion_product($db)
    $promo = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price"); 
    $num = pg_num_rows($promo);
    
-   //if($num>10)
-   //{
 	$promo_top = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC LIMIT 10");  
    	$promo_num = pg_num_rows($promo_top);
-   /*}
-   else
-   {
-   	$promo_top = pg_query($db,"SELECT * FROM product WHERE prod_price>prod_pro_price ORDER BY ((prod_price-prod_pro_price)/prod_price) DESC ");  
-   	$promo_num = pg_num_rows($promo_top);
-   } */
+ 
 	
    $promo_list = array();	
    $run = 0;
@@ -111,7 +104,7 @@ function carousel_cart($db,$cus_id)
 	    $run1++;
     }
     
-	  //$pdid = pg_fetch_row(pg_query($db,"SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock"));
+	  
     $namearray = array();
     $run2 = 0;
     
@@ -236,7 +229,6 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['body']['contents'][$size]['contents'][1]['margin'] = 'sm';
 	$data['contents']['body']['contents'][$size]['contents'][1]['weight'] = 'bold';
 	
-	///อันนี้เพิ่งเติม
 	$data['contents']['footer']['type'] = 'box';
 	$data['contents']['footer']['layout'] = 'vertical';
 	$data['contents']['footer']['contents'][0]['type'] = 'button';
@@ -278,7 +270,6 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	//$datas['template']['actions'] = [];
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
@@ -310,7 +301,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	//$datas['template']['actions'] = [];
+	
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
@@ -476,9 +467,9 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     else
     {
 	    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
-	    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+	    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); 
     }
-    //pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
+    
     }
   }    
   
