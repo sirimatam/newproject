@@ -77,7 +77,7 @@ if ( sizeof($request_array['events']) > 0 )
        elseif ($text=='ตะกร้าของฉัน')
 	{
 	        $first = carousel_cart($db,$userid);
-	       if( $first['text'] == 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า' )
+	       if( $first[1] == 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า' )
 			  {	        
 			          send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$first););
 			  }
@@ -122,29 +122,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
-		/*$i = 0;
-		$cartpid_query = pg_query($db,"SELECT cartp_id from createcart WHERE cus_id = '$userid' AND orderlist.order_status != 'waiting for payment' AND orderlist.order_status != 'waiting for packing' ")
-		$cartpid_list = Array();
-		$orderid_list = Array();
-		$tracking_list = Array();
-		while($list = pg_fetch_row($cartpid_query)[0])
-		{
-		  $cartpid_list[$i] = $list;
-		  $orderid_list[$i] = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$list'"))[0];
-		  $tracking_list[$i] = pg_fetch_row(pg_query($db,"SELECT order_status FROM orderlist WHERE cartp_id = '$list'"))[0]; 
-		  $i++;
-		}
 
-		$payment = pg_fetch_row(pg_query($db,"SELECT check FROM payment WHERE payment.order_id = '$orderid'"))[0];
-		$trace_list = Array();
-		
-		for($i=0;$i<sizeof($orderid_list);$i++)
-		{
-			
-			$trace_list[$i] = $check;
-			
-		} 
-		*/
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
