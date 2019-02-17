@@ -75,21 +75,14 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='ชำระเงิน')
 	{
-		$data = button_order_status();
-		$data1 = format_message($reply_token,$data);
+		$post1 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
+		$post2 = carousel_flex_order($db,$userid,'1'); 
+		$data1 = format_message_v2($reply_token,[$post1,$post2]);
 			   
 		send_reply_message($API_URL, $POST_HEADER, $data1);
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}      
 	   
-	   /* sub topic */
-	   elseif ($text=='แจ้งการชำระเงิน')
-		{
-		  $ans = ['type'=>'text','text' => 'กรุณาอัพโหลดสลิป'];
-		  $data = format_message($reply_token,$ans);
-		  send_reply_message($API_URL, $POST_HEADER,$data);
-		}
-			
 	   
 	elseif ($text=='เกี่ยวกับร้านค้า')
 	{
