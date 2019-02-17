@@ -254,15 +254,15 @@ function carousel_flex_order($db,$userid,$check)
 	*/	
 	}
 	if($check=='1')
-	{
+		{
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
 	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
+		}
 	}
-	
 	if(sizeof($order) == 0)
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
