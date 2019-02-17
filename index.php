@@ -132,8 +132,9 @@ if ( sizeof($request_array['events']) > 0 )
        } 
 	elseif ($text=='ประวัติการสั่งซื้อ')
 	{
-		//$post = format_message($reply_token,carousel_show_favorite($db,$userid));
-	        //send_reply_message($API_URL, $POST_HEADER, $post);
+		$data = format_message($reply_token,carousel_flex_order($db,$userid,'4'));
+		send_reply_message($API_URL, $POST_HEADER,$data);
+		file_put_contents("php://stderr", "POST history =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	       
        }    
 	elseif ($text=='ที่อยู่จัดส่ง')
@@ -371,6 +372,7 @@ function format_message_push($reply_token,$message)
 	$data = ['to' => $reply_token,'messages' =>  $message ];
 	return $data;
 }
+
 function send_reply_message($url, $post_header, $post)
 {
  $ch = curl_init($url);
