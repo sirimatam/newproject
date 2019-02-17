@@ -261,7 +261,7 @@ function flex_cart_beforeorder($db,$userid)
 
 
 
-
+/*
 function button_order_status()
   {
     $data = [];
@@ -275,7 +275,7 @@ function button_order_status()
 	  
     return $data;
   }
-
+*/
 
 
 
