@@ -15,10 +15,9 @@ file_put_contents("php://stderr", "track =====> ".$track);
 print_r($track);
 */
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
-$richMenuId2= "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
+$richMenuId2= "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2
 
 
-$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
@@ -26,21 +25,47 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 
 //set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
+$file2 = fopen('image/secondpage2.png', 'r');
+$size2 = filesize('image/secondpage2.png');
 
 
-$rich_area2 = array(
-		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
-		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
-		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
-		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ประวัติการสั่งซื้อ')),
-      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'กลับหน้าแรก'))
-		  );
-$rich_object2 = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> false ,
-			     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area2 );
+$fildata2 = fread($file2,$size2);
+$upload_pic2 = upload_richmenu($richMenuId2,$ACCESS_TOKEN,$fildata2,$file2);
+file_put_contents("php://stderr", "POST JSON2 ===> ".$upload_pic2);
+function upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file)
+{
+$curl = curl_init();
+	curl_setopt_array($curl, array(
+	    CURLOPT_URL => "https://api.line.me/v2/bot/richmenu/".$richMenuId."/content",
+	    CURLOPT_RETURNTRANSFER => true,
+	    CURLOPT_BINARYTRANSFER => true,
+	    CURLOPT_ENCODING => "",
+	    CURLOPT_MAXREDIRS => 10,
+	    CURLOPT_TIMEOUT => 30,
+	    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	    CURLOPT_CUSTOMREQUEST => "POST",
+	    CURLOPT_POSTFIELDS => $fildata,
+	    CURLOPT_INFILE => $file,
+	    CURLOPT_HTTPHEADER => array(
+	       "authorization: Bearer ".$ACCESS_TOKEN,
+               "cache-control: no-cache",
+	       "Content-Type: image/png",
+	 	
+	    ),
+	));
+  
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+	curl_close($curl);
+  
+  
+	if ($err) {
+         return $err;
+    } else {
+    	return $response;
+    }
+}	 
 
-$data2 = send_reply_message($RICH_URL, $POST_HEADER, $rich_object2);
-file_put_contents("php://stderr", "ID 2 =====> ".$data2);
 /*
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
