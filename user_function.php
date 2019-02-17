@@ -179,6 +179,7 @@ function carousel_flex_order($db,$userid,$check)
 			$run++;
 		}
 		$running = 0;
+
 		foreach ( $pdid_array as $pdid )
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -203,6 +204,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
 	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
+		file_put_contents("php://stderr", "orderid =====> ".json_encode($order_id[$j]));
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
