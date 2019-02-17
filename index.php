@@ -76,10 +76,16 @@ if ( sizeof($request_array['events']) > 0 )
 	
        elseif ($text=='ตะกร้าของฉัน')
 	{
+	        $first = carousel_cart($db,$userid);
+	       if( $first['text'] == 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า' )
+			  {	        
+			          send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$first););
+			  }
+		else{
 	        $show = [carousel_cart($db,$userid),flex_cart_beforeorder($db,$userid)];
 	 	$post = format_message_v2($reply_token,$show);	        
 		send_reply_message($API_URL, $POST_HEADER, $post);
-	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE));
+	        file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode($post, JSON_UNESCAPED_UNICODE)); }
 		
 	}
 	elseif ($text=='ชำระเงิน')
