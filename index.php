@@ -79,7 +79,7 @@ if ( sizeof($request_array['events']) > 0 )
 	        $first = carousel_cart($db,$userid);
 	       if( $first[1] == 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า' )
 			  {	        
-			          send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$first););
+			          send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$first);
 			  }
 		else{
 	        $show = [carousel_cart($db,$userid),flex_cart_beforeorder($db,$userid)];
