@@ -413,7 +413,48 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-  /*
+
+function carousel_show_favorite($db,$cus_id)
+  {
+    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'"); 
+    //$list = pg_fetch_row($check);
+    $i = 0;
+    $prod_array = array();
+    $fav = array();
+    while ($list = pg_fetch_row($check))
+    {
+	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]'")); 
+	    $prod_array[$i] = $prod; 
+	    $fav[$i] = $list[0];
+	    $i++;
+    }
+    
+    
+    $datas = [];
+    $datas['type'] = 'template';
+    $datas['altText'] = 'this is a carousel template';
+    $datas['template']['type'] = 'carousel';    
+    for ($i=0; $i<pg_num_rows($check);$i++)
+     {
+        
+        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
+        $datas['template']['columns'][$i]['title'] = $prod_array[$i][1]; //check prod_name ว่าต้องมี [$i] มั้ย
+        $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
+        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod_array[$i][0];
+        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
+        $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
+        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
+     }
+    return $datas;
+  }
+
+
+
+  
 function out_of_time($db)
   {
      date_default_timezone_set("Asia/Bangkok");
@@ -466,7 +507,5 @@ function out_of_time($db)
 	  
   }
 	  
-  
-  */
-  
+   
 ?>
