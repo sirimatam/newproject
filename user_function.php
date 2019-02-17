@@ -117,12 +117,13 @@ function carousel_flex_order($db,$userid,$check)
 	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
 	$run1 = 0;
-	$order = array();
+	$cartp = array();
 	$order_id = array();
 	$order_price = array();
 	$sku_color = array();
 	$pd = array();
 	$trackinglist = array();
+	$datelist = array();
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
 	{
 		if($check=='1') // ที่รอชำระเงิน
@@ -145,12 +146,22 @@ function carousel_flex_order($db,$userid,$check)
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
 			$loop = '1';
 		}
+		elseif($check=='4')//history
+		{
+			$a = pg_query($db,"SELECT cartp_id FROM historyorder WHERE cartp_id = '$cartp_id' ORDER BY order_date DESC LIMIT 10 ");
+			$b = pg_query($db,"SELECT total_price FROM historyorder WHERE cartp_id = '$cartp_id' ORDER BY order_date DESC LIMIT 10");
+			$c = pg_query($db,"SELECT order_id FROM historyorder WHERE cartp_id = '$cartp_id' ORDER BY order_date DESC LIMIT 10");
+			$d = pg_query($db,"SELECT order_date FROM historyorder WHERE cartp_id = '$cartp_id' ORDER BY order_date DESC LIMIT 10");
+			$loop = '2';
+		}
+			
 				
 		if(pg_num_rows($a)>0)
 			{
-				$order[$run1] = pg_fetch_row($a)[0];
+				$cartp[$run1] = pg_fetch_row($a)[0];
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
+				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; }
 				$run1++;
 			}
 	}
@@ -165,18 +176,17 @@ function carousel_flex_order($db,$userid,$check)
 		}
 	
 	
-	
-	for($k=0;$k<sizeof($order);$k++)
+	for($k=0;$k<sizeof($cartp);$k++)
 	{
-		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
+		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
 		$skuid_array = array();
 		$i = 0;
 		
 		
 		while($cartp = pg_fetch_row($cartp_array)[0])
 		{
-			$skuid_array[$i] = $cartp;
-			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$order[$k]' AND sku_id = '$cartp'"))[0];
+			$skuid_array[$i] = $carttp;
+			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp[$k]' AND sku_id = '$carttp'"))[0];
 			$i++;
 		}
 		$pdid_array = array();
@@ -206,7 +216,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['altText'] = 'Flex Message';
 	$data['contents']['type'] = 'carousel';
 	
-	for($j=0;$j<sizeof($order);$j++) // j = วนใบสั่งซื้อ
+	for($j=0;$j<sizeof($cartp);$j++) // j = วนใบสั่งซื้อ
 	{
 	$data['contents']['contents'][$j]['type'] = 'bubble';
 	$data['contents']['contents'][$j]['header']['type'] = 'box';
