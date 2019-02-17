@@ -449,7 +449,8 @@ function carousel_show_favorite($db,$cus_id)
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
         $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
      }
-    return $datas;
+    if($check == '') { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
+    else    { return $datas; }
   }
 
 
