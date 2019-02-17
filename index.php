@@ -5,7 +5,7 @@ require 'user_function.php';
 require 'store_function.php';
 out_of_time($db);
 
-require 'RichMenu/uploadandsetrichMenuDefault.php';
+//require 'RichMenu/uploadandsetrichMenuDefault.php';
 /*
 require 'track.class.php';
 $track = new Trackingmore;
@@ -17,14 +17,31 @@ print_r($track);
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 $richMenuId2= "richmenu-717a8ebccd0d4a7e0ca2c85d77a50f10"; //page2
 
+
+$RICH_URL = 'https://api.line.me/v2/bot/richmenu';
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
+//set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
 
+
+$rich_area2 = array(
+		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
+		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
+		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
+		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ประวัติการสั่งซื้อ')),
+      		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
+		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'กลับหน้าแรก'))
+		  );
+$rich_object2 = array('size'=> array('width'=>2500,'height'=>1686),'selected'=> false ,
+			     'name'=>'rich_menu','chatBarText'=>'Menu','areas'=>  $rich_area2 );
+
+$data2 = send_reply_message($RICH_URL, $POST_HEADER, $rich_object2);
+file_put_contents("php://stderr", "ID 2 =====> ".$data2);
+/*
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 if ( sizeof($request_array['events']) > 0 )
@@ -106,7 +123,7 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
-	{	/*
+	{	
 		$i = 0;
 		$cartpid_query = pg_query($db,"SELECT cartp_id from createcart WHERE cus_id = '$userid' AND orderlist.order_status != 'waiting for payment' AND orderlist.order_status != 'waiting for packing' ")
 		$cartpid_list = Array();
@@ -128,7 +145,7 @@ if ( sizeof($request_array['events']) > 0 )
 			
 			$trace_list[$i] = $check;
 			
-		} */
+		} 
 		
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 		send_reply_message($API_URL, $POST_HEADER, $data);
@@ -261,6 +278,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
    } */
+/*
   else { }
   }
 	 
@@ -359,7 +377,7 @@ if ( sizeof($request_array['events']) > 0 )
  }
 }
 
-
+*/
 
 function format_message($reply_token,$message)
 {
