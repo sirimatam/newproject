@@ -251,7 +251,8 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'text';
-		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = 'สถานะพัสดุปัจจุบัน<br>'.$trace; //prod_name
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['text'] = 'สถานะพัสดุปัจจุบัน \n'.$trace;
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['wrap'] = 'true';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
