@@ -189,7 +189,8 @@ function carousel_flex_order($db,$userid,$check)
 		}
 	
 	}
-	/*	
+	
+		
 	$data = [];
 	$data['type'] = 'flex';
 	$data['altText'] = 'Flex Message';
@@ -240,7 +241,7 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
 		    
-	
+	/*
 	if(sizeof($trackinglist)>0)
 		{
 		   $track = new Trackingmore;
@@ -253,8 +254,8 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#FF0000';		
    
 		} 
-	*/
-	/*
+	
+	
 	if(sizeof($trackinglist)>0)
 		{
 		
