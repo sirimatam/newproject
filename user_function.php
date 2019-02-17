@@ -112,7 +112,7 @@ function delete_favorite($db,$fav_id)
 
 function carousel_flex_order($db,$userid,$check)
 {
-	// check can be 1,2,3
+	// check can be 1,2,3,4
 	
 	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
@@ -223,7 +223,6 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$data['contents']['contents'][$j]['header']['contents'][0]['type'] = 'text';
 	$data['contents']['contents'][$j]['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$order_id[$j];
-		file_put_contents("php://stderr", "orderid =====> ".json_encode($order_id[$j]));
 	$data['contents']['contents'][$j]['header']['contents'][0]['size'] = 'lg';
 	$data['contents']['contents'][$j]['header']['contents'][0]['align'] = 'center';
 	$data['contents']['contents'][$j]['header']['contents'][0]['weight'] = 'bold';
@@ -432,7 +431,6 @@ function add_to_order($db,$cus_id,$cart_avail)
 function carousel_show_favorite($db,$cus_id)
   {
     $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'"); 
-    //$list = pg_fetch_row($check);
     $i = 0;
     $prod_array = array();
     $fav = array();
@@ -485,7 +483,7 @@ function out_of_time($db)
 	     {
 		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
 		     
-	     } 
+	     } /*
 	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
 	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
 	     {
@@ -493,7 +491,7 @@ function out_of_time($db)
 		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
 		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
 		     
-	     }
+	     } */
      }
      $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE 
              order_status != 'waiting for payment' AND order_status != 'waiting for packing'");
