@@ -130,8 +130,7 @@ function carousel_cart($db,$cus_id)
     //$pd = pg_fetch_result(pg_query($db,'SELECT (prod_id,prod_name,prod_description) FROM Product WHERE Stock.prod_id = Product.prod_id AND Cart_product.cartp_id = $cartid AND '));
     if(pg_num_rows($skuid) == 0)
     {
-	 $data = [];
-	 $data[0] = ['type' => 'text', 'text' => 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า']; 
+	 $data = ['type' => 'text', 'text' => 'ไม่พบสินค้าในตะกร้า กรุณาเลือกสินค้าลงตะกร้า']; 
 	 return $data;
     }
     else{
@@ -377,12 +376,12 @@ function carousel_view_more($db,$prod_id)
         $datas['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
 	$datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A001 4";
+        $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
        $datas['template']['columns'][$i]['actions'][2]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
         $datas['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';  
      }
-     //$carousel[0] = $datas;
+    
      return $datas;
    }
    else
