@@ -1,6 +1,6 @@
 <?php
 
-//require 'track.class.php';
+require 'track.class.php';
 
 
 
@@ -401,7 +401,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-  
+  /*
 function out_of_time($db)
   {
      date_default_timezone_set("Asia/Bangkok");
@@ -416,7 +416,7 @@ function out_of_time($db)
 	     {
 		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
 		     
-	     } /*
+	     } 
 	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
 	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
 	     {
@@ -424,7 +424,7 @@ function out_of_time($db)
 		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
 		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
 		     
-	     }*/
+	     }
      }
      $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE 
              order_status != 'waiting for payment' AND order_status != 'waiting for packing'");
@@ -455,6 +455,6 @@ function out_of_time($db)
   }
 	  
   
-  
+  */
   
 ?>
