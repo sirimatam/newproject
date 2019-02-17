@@ -153,7 +153,9 @@ function carousel_flex_order($db,$userid,$check)
 				$order_id[$run1] = pg_fetch_row($c)[0];
 				$run1++;
 			}
-		if($loop == '1')
+	}
+	
+	if($loop == '1')
 		{
 			for($i=0;$i<=$run1;$i++)
 			{
@@ -161,7 +163,9 @@ function carousel_flex_order($db,$userid,$check)
 				
 			}
 		}
-	}
+	
+	
+	
 	for($k=0;$k<sizeof($order);$k++)
 	{
 		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$order[$k]'");
