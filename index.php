@@ -5,15 +5,15 @@ require 'user_function.php';
 require 'store_function.php';
 out_of_time($db);
 
-//require 'RichMenu/uploadandsetrichMenuDefault.php';
-/*
+require 'RichMenu/uploadandsetrichMenuDefault.php';
+
 require 'track.class.php';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
 $trace = $track['data']['items'][0]['lastEvent']; 
 file_put_contents("php://stderr", "track =====> ".$track);
 print_r($track);
-*/
+
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 $richMenuId2= "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2
 
@@ -23,50 +23,9 @@ $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-//set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
-
-$file2 = fopen('image/secondpage2.png', 'r');
-$size2 = filesize('image/secondpage2.png');
+set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
 
-$fildata2 = fread($file2,$size2);
-$upload_pic2 = upload_richmenu($richMenuId2,$ACCESS_TOKEN,$fildata2,$file2);
-file_put_contents("php://stderr", "POST JSON2 ===> ".$upload_pic2);
-function upload_richmenu($richMenuId,$ACCESS_TOKEN,$fildata,$file)
-{
-$curl = curl_init();
-	curl_setopt_array($curl, array(
-	    CURLOPT_URL => "https://api.line.me/v2/bot/richmenu/".$richMenuId."/content",
-	    CURLOPT_RETURNTRANSFER => true,
-	    CURLOPT_BINARYTRANSFER => true,
-	    CURLOPT_ENCODING => "",
-	    CURLOPT_MAXREDIRS => 10,
-	    CURLOPT_TIMEOUT => 30,
-	    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	    CURLOPT_CUSTOMREQUEST => "POST",
-	    CURLOPT_POSTFIELDS => $fildata,
-	    CURLOPT_INFILE => $file,
-	    CURLOPT_HTTPHEADER => array(
-	       "authorization: Bearer ".$ACCESS_TOKEN,
-               "cache-control: no-cache",
-	       "Content-Type: image/png",
-	 	
-	    ),
-	));
-  
-	$response = curl_exec($curl);
-	$err = curl_error($curl);
-	curl_close($curl);
-  
-  
-	if ($err) {
-         return $err;
-    } else {
-    	return $response;
-    }
-}	 
-
-/*
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 if ( sizeof($request_array['events']) > 0 )
@@ -149,7 +108,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
-		$i = 0;
+		/*$i = 0;
 		$cartpid_query = pg_query($db,"SELECT cartp_id from createcart WHERE cus_id = '$userid' AND orderlist.order_status != 'waiting for payment' AND orderlist.order_status != 'waiting for packing' ")
 		$cartpid_list = Array();
 		$orderid_list = Array();
@@ -171,7 +130,7 @@ if ( sizeof($request_array['events']) > 0 )
 			$trace_list[$i] = $check;
 			
 		} 
-		
+		*/
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
@@ -303,7 +262,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   
    } */
-/*
+
   else { }
   }
 	 
@@ -402,7 +361,6 @@ if ( sizeof($request_array['events']) > 0 )
  }
 }
 
-*/
 
 function format_message($reply_token,$message)
 {
