@@ -18,10 +18,10 @@ $data1 = send_reply_message($RICH_URL, $POST_HEADER, $rich_object1);
 file_put_contents("php://stderr", "ID 1 =====> ".$data1);
 
 $rich_area2 = array(
-		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่รอชำระเงิน')),
-		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
-		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
-		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
+		  array('bounds'=> array( 'x'=>'0','y'=>'10','width' => 833,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องจัดส่ง')),
+		  array('bounds'=> array( 'x'=>'843','y'=>'9','width' => 814,'height' => 824 ), 'action' => array('type'=> 'message', 'text' =>'ที่ต้องได้รับ')),
+		  array('bounds'=> array( 'x'=>'1677','y'=>'0','width' => 823,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'สินค้าที่ถูกใจ')),
+		  array('bounds'=> array( 'x'=>'0','y'=>'853','width' => 824,'height' => 833 ), 'action' => array('type'=> 'message', 'text' =>'ประวัติการสั่งซื้อ')),
       		  array('bounds'=> array( 'x'=>'843','y'=>'843','width' => 814,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'ที่อยู่จัดส่ง')),
 		  array('bounds'=> array( 'x'=>'1667','y'=>'843','width' => 833,'height' => 843 ), 'action' => array('type'=> 'message', 'text' =>'กลับหน้าแรก'))
 		  );
