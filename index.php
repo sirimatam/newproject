@@ -3,10 +3,10 @@ require_once('connection.php');
 
 require 'user_function.php';
 require 'store_function.php';
-out_of_time($db);
+//out_of_time($db);
 
 require 'RichMenu/uploadandsetrichMenuDefault.php';
-
+/*
 require 'track.class.php';
 $track = new Trackingmore;
 $track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
@@ -18,7 +18,7 @@ echo 'this is json trace';
 print_r(json_encode($trace));
 echo '<br> this is type of trace'.$trace.'<br>';
 print_r($trace);
-
+*/
 
 
 
