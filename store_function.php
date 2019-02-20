@@ -132,7 +132,8 @@ function carousel_cart($db,$cus_id)
         $datas = [];
 	$datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
-        $datas['template']['type'] = 'carousel';        
+        $datas['template']['type'] = 'carousel';  
+	$datas['template']['imageSize'] = 'contain';    
     for ($i=0; $i<pg_num_rows($skuid);$i++)
      {	
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $skuarray[$i][5]; 
@@ -302,7 +303,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	
+	$datas['template']['imageSize'] = 'contain';
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
@@ -351,6 +352,7 @@ function carousel_view_more($db,$prod_id)
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
+	$datas['template']['imageSize'] = 'contain';
 	while($list = pg_fetch_row($pd_sku))
 	{
 		$sku[$sku_num] = $list;
