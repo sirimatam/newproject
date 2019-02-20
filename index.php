@@ -201,7 +201,7 @@ if ( sizeof($request_array['events']) > 0 )
 			{
 				for($i=0;$i<sizeof($array_carousel);$i++)
 				{
-					$post = format_message($reply_token,$array_carousel);	 
+					$post = format_message_push($userid,$array_carousel);	 
 					$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
 					file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
 				}
