@@ -270,7 +270,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
-	$datas['template']['columns']['imageSize'] = 'contain'; 
+	$datas['template']['imageSize'] = 'contain'; 
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
