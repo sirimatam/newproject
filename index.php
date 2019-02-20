@@ -308,7 +308,7 @@ if ( sizeof($request_array['events']) > 0 )
 			  else
 			  {
 			  $data = format_message_push($userid,carousel_view_more($db,$prod_id[0]));
-			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
+			  $send_result = send_reply_message($API_URL_push, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);	  
 			  }
 			}
