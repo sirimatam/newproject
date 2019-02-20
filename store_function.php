@@ -403,19 +403,19 @@ function carousel_view_more($db,$prod_id)
 	
 	for ($i=0; $i<10;$i++)
      {
-        $datas[$j]['template']['columns'][($j*10)+$i]['thumbnailImageUrl'] = $sku[$i][5]; 
-        $datas[$j]['template']['columns'][($j*10)+$i]['title'] = 'รหัสสินค้า '.$sku[$i][0].' '.$pd_name;
-        $datas[$j]['template']['columns'][($j*10)+$i]['text'] = $pd_des."\n".$sku[$i][3]."  Stock : ".$sku[$i][2];
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['type'] = 'postback';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
-	$datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['type'] = 'message';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][2]['type'] = 'message';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';
+        $datas[$j]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($j*10)+$i][5]; 
+        $datas[$j]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[($j*10)+$i][0].' '.$pd_name;
+        $datas[$j]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($j*10)+$i][3]."  Stock : ".$sku[($j*10)+$i][2];
+        $datas[$j]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[($j*10)+$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[($j*10)+$i][0];
+	$datas[$j]['template']['columns'][$i]['actions'][1]['type'] = 'message';
+        $datas[$j]['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
+        $datas[$j]['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
+        $datas[$j]['template']['columns'][$i]['actions'][2]['type'] = 'message';
+        $datas[$j]['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
+        $datas[$j]['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';
      }
    }
 	$last_carousel = $num_carousel-($num_set*10);
@@ -424,13 +424,13 @@ function carousel_view_more($db,$prod_id)
         $datas[$num_set]['template']['type'] = 'carousel'; 
 	for ($i=0; $i<$last_carousel;$i++)
      {
-        $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
-        $datas[$num_set]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[$i][0].' '.$pd_name;
-        $datas[$num_set]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."  Stock : ".$sku[$i][2];
+        $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($num_set*10)+$i][5]; 
+        $datas[$num_set]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[($num_set*10)+$i][0].' '.$pd_name;
+        $datas[$num_set]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($num_set*10)+$i][3]."  Stock : ".$sku[($num_set*10)+$i][2];
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas[$num_set]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
-        $datas[$num_set]['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[$i][0];
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[($num_set*10)+$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[($num_set*10)+$i][0];
 	$datas[$num_set]['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas[$num_set]['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
         $datas[$num_set]['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
