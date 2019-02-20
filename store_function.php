@@ -277,7 +277,8 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	}
       for ($i=0; $i<$num_carousel;$i++)
      {
-  	
+	      
+  	$datas['template']['imageSize'][$i] = 'contain';
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $prod[$i][1];
         $datas['template']['columns'][$i]['text'] = $prod[$i][4];
@@ -377,7 +378,7 @@ function carousel_view_more($db,$prod_id)
    }
    else
    {
-   while( $running < $num_carousel)  
+   while( $running <= $num_carousel)  
    {
      for ($i=0; $i<10;$i++)
      {
