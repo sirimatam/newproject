@@ -270,6 +270,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas['type'] = 'template';
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
+	$datas['template']['columns']['imageSize'] = 'contain'; 
 	while($list = pg_fetch_row($pd_type))
 	{
 		$prod[$prod_num] = $list;
@@ -277,9 +278,8 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	}
       for ($i=0; $i<$num_carousel;$i++)
      {
-	      
+	     
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
-	$datas['template']['columns'][$i]['imageSize'] = 'contain';
         $datas['template']['columns'][$i]['title'] = $prod[$i][1];
         $datas['template']['columns'][$i]['text'] = $prod[$i][4];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
