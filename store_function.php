@@ -297,37 +297,49 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    }
    else
    {
-   while( $running < $num_carousel)  
+   $num_set = floor($num_carousel/10);
+   $datas = [];
+   for($j=0;$j<$num_set;$j++)
    {
-	   $datas = [];
-        $datas['type'] = 'template';
-        $datas['altText'] = 'this is a carousel template';
-        $datas['template']['type'] = 'carousel';
+        $datas[$j]['type'] = 'template';
+        $datas[$j]['altText'] = 'this is a carousel template';
+        $datas[$j]['template']['type'] = 'carousel';
 	$datas['template']['imageSize'] = 'contain';
-	while($list = pg_fetch_row($pd_type))
-	{
-		$prod[$prod_num] = $list;
-		$prod_num++;
-	}
-     for ($i=0;$i<10;$i++)
+	
+	for ($i=0; $i<10;$i++)
      {
-      
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod[$i][1];
-        $datas['template']['columns'][$i]['text'] = $prod[$i][4];
-        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึก '.$prod[$i][1].' เป็น Favorite';   
-        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
-        $running++;
+        $datas[$j]['template']['columns'][($j*10)+$i]['thumbnailImageUrl'] = $prod[($j*10)+$i][2]; 
+        $datas[$j]['template']['columns'][($j*10)+$i]['title'] = $prod[($j*10)+$i][1];
+        $datas[$j]['template']['columns'][($j*10)+$i]['text'] = $prod[($j*10)+$i][4];
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['type'] = 'postback';
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['text'] = 'view more';
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['data'] =  'View '.$prod[($j*10)+$i][0];
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['type'] = 'postback';
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['data'] = 'Favorite '.$prod[($j*10)+$i][0];
      }
-     $carousel[ceil($running-10)/10] = $datas;
    }
-    return $carousel;
+	$last_carousel = $num_carousel-($num_set*10);
+        $datas[$num_set]['type'] = 'template';
+        $datas[$num_set]['altText'] = 'this is a carousel template';
+        $datas[$num_set]['template']['type'] = 'carousel'; 
+	for ($i=0; $i<$last_carousel;$i++)
+     {
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['title'] = $prod[($num_set*10)+$i][1];
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['text'] = $prod[($num_set*10)+$i][4];
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['type'] = 'postback';
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['text'] = 'view more';
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['data'] =  'View '.$prod[($num_set*10)+$i][0];
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['type'] = 'postback';
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['data'] = 'Favorite '.$prod[($num_set*10)+$i][0];
+     }
+   return $datas;
    }
 }
 
@@ -386,7 +398,8 @@ function carousel_view_more($db,$prod_id)
    {
         $datas[$j]['type'] = 'template';
         $datas[$j]['altText'] = 'this is a carousel template';
-        $datas[$j]['template']['type'] = 'carousel';  
+        $datas[$j]['template']['type'] = 'carousel';
+	$datas['template']['imageSize'] = 'contain';
 	
 	for ($i=0; $i<10;$i++)
      {
