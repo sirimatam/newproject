@@ -446,7 +446,8 @@ function carousel_show_favorite($db,$cus_id)
     $datas = [];
     $datas['type'] = 'template';
     $datas['altText'] = 'this is a carousel template';
-    $datas['template']['type'] = 'carousel';    
+    $datas['template']['type'] = 'carousel';  
+    $datas['template']['imageSize'] = 'contain';
     for ($i=0; $i<pg_num_rows($check);$i++)
      {
         
