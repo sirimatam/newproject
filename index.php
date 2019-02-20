@@ -298,9 +298,19 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			if(explode(" ",$info)[0] == 'View')
 			{
+			  $num_sku = pg_num_rows(pg_query($db,"SELECT sku_id FROM stock WHERE prod_id = '$prod_id[0]'"));
+			  if ($num_sku<=10)
+			  {
 			  $data = format_message($reply_token,carousel_view_more($db,$prod_id[0]));
 			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
 			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+			  }
+			  else
+			  {
+			  $data = format_message_push($userid,carousel_view_more($db,$prod_id[0]));
+			  $send_result = send_reply_message($API_URL, $POST_HEADER, $data);
+			  file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);	  
+			  }
 			}
 			if(explode(" ",$info)[0] == 'Favorite')
 			{
