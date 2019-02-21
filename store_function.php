@@ -304,7 +304,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas[$j]['type'] = 'template';
         $datas[$j]['altText'] = 'this is a carousel template';
         $datas[$j]['template']['type'] = 'carousel';
-	$datas['template']['imageSize'] = 'contain';
+	$datas[$j]['template']['imageSize'] = 'contain';
 	
 	for ($i=0; $i<10;$i++)
      {
@@ -325,6 +325,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas[$num_set]['type'] = 'template';
         $datas[$num_set]['altText'] = 'this is a carousel template';
         $datas[$num_set]['template']['type'] = 'carousel'; 
+	$datas[$num_set]['template']['imageSize'] = 'contain';
 	for ($i=0; $i<$last_carousel;$i++)
      {
         $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
@@ -399,7 +400,7 @@ function carousel_view_more($db,$prod_id)
         $datas[$j]['type'] = 'template';
         $datas[$j]['altText'] = 'this is a carousel template';
         $datas[$j]['template']['type'] = 'carousel';
-	$datas['template']['imageSize'] = 'contain';
+	$datas[$j]['template']['imageSize'] = 'contain';
 	
 	for ($i=0; $i<10;$i++)
      {
@@ -422,6 +423,7 @@ function carousel_view_more($db,$prod_id)
         $datas[$num_set]['type'] = 'template';
         $datas[$num_set]['altText'] = 'this is a carousel template';
         $datas[$num_set]['template']['type'] = 'carousel'; 
+	$datas[$num_set]['template']['imageSize'] = 'contain';
 	for ($i=0; $i<$last_carousel;$i++)
      {
         $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($num_set*10)+$i][5]; 
