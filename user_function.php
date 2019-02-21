@@ -297,7 +297,7 @@ function carousel_flex_order($db,$userid,$check)
 		}
 	
 	}
-	if(sizeof($cartp) == 0)
+	if($cartp[0] == '')
 	{
 		return ['type'=>'text','text' => 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้'];
 	} 
