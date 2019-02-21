@@ -131,6 +131,7 @@ function carousel_flex_order($db,$userid,$check)
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
+			file_put_contents("php://stderr", " cartp_id ===> ".$a);
 		}
 		elseif($check=='2')//ที่ต้องจัดส่ง
 		{
