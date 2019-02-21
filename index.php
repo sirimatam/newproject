@@ -92,8 +92,8 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='ชำระเงิน')
 	{
-		$post1 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
-		$post2 = carousel_flex_order($db,$userid,'1'); 
+		$post1 = carousel_flex_order($db,$userid,'1');
+		$post2 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
 		$data1 = format_message_v2($reply_token,[$post1,$post2]);
 			   
 		send_reply_message($API_URL, $POST_HEADER, $data1);
