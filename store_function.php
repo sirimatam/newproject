@@ -308,17 +308,17 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	
 	for ($i=0; $i<10;$i++)
      {
-        $datas[$j]['template']['columns'][($j*10)+$i]['thumbnailImageUrl'] = $prod[($j*10)+$i][2]; 
-        $datas[$j]['template']['columns'][($j*10)+$i]['title'] = $prod[($j*10)+$i][1];
-        $datas[$j]['template']['columns'][($j*10)+$i]['text'] = $prod[($j*10)+$i][4];
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['type'] = 'postback';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['text'] = 'view more';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][0]['data'] =  'View '.$prod[($j*10)+$i][0];
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['type'] = 'postback';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas[$j]['template']['columns'][($j*10)+$i]['actions'][1]['data'] = 'Favorite '.$prod[($j*10)+$i][0];
+        $datas[$j]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($j*10)+$i][2]; 
+        $datas[$j]['template']['columns'][$i]['title'] = $prod[($j*10)+$i][1];
+        $datas[$j]['template']['columns'][$i]['text'] = $prod[($j*10)+$i][4];
+        $datas[$j]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas[$j]['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[($j*10)+$i][0];
+        $datas[$j]['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas[$j]['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas[$j]['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas[$j]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($j*10)+$i][0];
      }
    }
 	$last_carousel = $num_carousel-($num_set*10);
@@ -327,17 +327,17 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas[$num_set]['template']['type'] = 'carousel'; 
 	for ($i=0; $i<$last_carousel;$i++)
      {
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['title'] = $prod[($num_set*10)+$i][1];
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['text'] = $prod[($num_set*10)+$i][4];
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['type'] = 'postback';
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['text'] = 'view more';
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][0]['data'] =  'View '.$prod[($num_set*10)+$i][0];
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['type'] = 'postback';
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas[$num_set]['template']['columns'][($num_set*10)+$i]['actions'][1]['data'] = 'Favorite '.$prod[($num_set*10)+$i][0];
+        $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
+        $datas[$num_set]['template']['columns'][$i]['title'] = $prod[($num_set*10)+$i][1];
+        $datas[$num_set]['template']['columns'][$i]['text'] = $prod[($num_set*10)+$i][4];
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['text'] = 'view more';
+        $datas[$num_set]['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[($num_set*10)+$i][0];
+        $datas[$num_set]['template']['columns'][$i]['actions'][1]['type'] = 'postback';
+        $datas[$num_set]['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas[$num_set]['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas[$num_set]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($num_set*10)+$i][0];
      }
    return $datas;
    }
@@ -383,7 +383,7 @@ function carousel_view_more($db,$prod_id)
 	$datas['template']['columns'][$i]['actions'][1]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
         $datas['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
-       $datas['template']['columns'][$i]['actions'][2]['type'] = 'message';
+        $datas['template']['columns'][$i]['actions'][2]['type'] = 'message';
         $datas['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
         $datas['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า';  
      }
