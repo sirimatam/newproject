@@ -131,7 +131,7 @@ function carousel_flex_order($db,$userid,$check)
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
-			file_put_contents("php://stderr", " cartp_id ===> ".$a);
+			
 		}
 		elseif($check=='2')//ที่ต้องจัดส่ง
 		{
@@ -160,6 +160,7 @@ function carousel_flex_order($db,$userid,$check)
 		if(pg_num_rows($a)>0)
 			{
 				$cartp[$run1] = pg_fetch_row($a)[0];
+			        file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
 				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; }
