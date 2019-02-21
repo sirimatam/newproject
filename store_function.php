@@ -283,7 +283,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	     
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $prod[$i][1];
-        $datas['template']['columns'][$i]['text'] = $prod[$i][4].'ราคา '.$prod[($j*10)+$i][6].' บาท'; //ราคาโปร
+        $datas['template']['columns'][$i]['text'] = $prod[$i][4].'ราคา '.$prod[$i][6].' บาท'; //ราคาโปร
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
@@ -331,7 +331,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
      {
         $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
         $datas[$num_set]['template']['columns'][$i]['title'] = $prod[($num_set*10)+$i][1];
-        $datas[$num_set]['template']['columns'][$i]['text'] = $prod[($num_set*10)+$i][4].'ราคา '.$prod[($j*10)+$i][6].' บาท'; //ราคาโปร
+        $datas[$num_set]['template']['columns'][$i]['text'] = $prod[($num_set*10)+$i][4].'ราคา '.$prod[($num_set*10)+$i][6].' บาท'; //ราคาโปร
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['text'] = 'view more';
