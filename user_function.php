@@ -180,15 +180,15 @@ function carousel_flex_order($db,$userid,$check)
 	
 	for($k=0;$k<sizeof($cartp);$k++)
 	{
-		$cartp_array = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
+		$sku_query = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
 		$skuid_array = array();
 		$i = 0;
 		
 		
-		while($cartp = pg_fetch_row($cartp_array)[0])
+		while($list = pg_fetch_row($sku_query)[0])
 		{
-			$skuid_array[$i] = $carttp;
-			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp[$k]' AND sku_id = '$carttp'"))[0];
+			$skuid_array[$i] = $list;
+			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp[$k]' AND sku_id = '$list'"))[0];
 			$i++;
 		}
 		$pdid_array = array();
