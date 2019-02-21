@@ -359,6 +359,11 @@ function carousel_view_more($db,$prod_id)
   //$times = $num_carousel/10;
    $running = 0;
    $carousel = array();
+   while($list = pg_fetch_row($pd_sku))
+	{
+		$sku[$sku_num] = $list;
+		$sku_num++;
+	}
   if($num_carousel <=10)
    {
 	$datas = [];
@@ -366,11 +371,7 @@ function carousel_view_more($db,$prod_id)
         $datas['altText'] = 'this is a carousel template';
         $datas['template']['type'] = 'carousel';
 	$datas['template']['imageSize'] = 'contain';
-	while($list = pg_fetch_row($pd_sku))
-	{
-		$sku[$sku_num] = $list;
-		$sku_num++;
-	}
+
       for ($i=0; $i<$num_carousel;$i++)
      {
      
