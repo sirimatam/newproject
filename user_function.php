@@ -141,9 +141,9 @@ function carousel_flex_order($db,$userid,$check)
 		}
 		elseif($check == '3')//ที่ต้องได้รับ
 		{
-			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
-			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status != 'waiting for payment' AND order_status != 'waiting for packing' ");
+			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'shipping' ");
+			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'shipping' ");
+			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'shipping' ");
 			$loop = '1';
 		}
 		elseif($check=='4')//history
@@ -170,7 +170,7 @@ function carousel_flex_order($db,$userid,$check)
 		{
 			for($i=0;$i<=$run1;$i++)
 			{
-				$trackinglist[$i] = pg_fetch_row(pg_query($db,"SELECT order_status FROM orderlist WHERE order_id = '$order_id[$i]' "))[0];
+				$trackinglist[$i] = pg_fetch_row(pg_query($db,"SELECT tracking_number FROM orderlist WHERE order_id = '$order_id[$i]' "))[0];
 				
 			}
 		}
@@ -494,8 +494,7 @@ function out_of_time($db)
 		     
 	     } */
      }
-     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE 
-             order_status != 'waiting for payment' AND order_status != 'waiting for packing'");
+     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
      while($list = pg_fetch_row($tracking_query))
@@ -511,8 +510,8 @@ function out_of_time($db)
      if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
      {
 	     
-	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
-	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]')");
+	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
+	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]','$ordertracklist[5]')");
 	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
      }
      }
