@@ -377,7 +377,7 @@ function carousel_view_more($db,$prod_id)
      
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
         $datas['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[$i][0].' '.$pd_name;
-        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]."  Stock : ".$sku[$i][2];
+        $datas['template']['columns'][$i]['text'] = $pd_des."\n".$sku[$i][3]." size: ".$sku[$i][4]."  Stock : ".$sku[$i][2];
         $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
@@ -407,7 +407,7 @@ function carousel_view_more($db,$prod_id)
      {
         $datas[$j]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($j*10)+$i][5]; 
         $datas[$j]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[($j*10)+$i][0].' '.$pd_name;
-        $datas[$j]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($j*10)+$i][3]."  Stock : ".$sku[($j*10)+$i][2];
+        $datas[$j]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($j*10)+$i][3]." size: ".$sku[($j*10)+$i][4]."  Stock : ".$sku[($j*10)+$i][2];
         $datas[$j]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas[$j]['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas[$j]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[($j*10)+$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
@@ -429,7 +429,7 @@ function carousel_view_more($db,$prod_id)
      {
         $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($num_set*10)+$i][5]; 
         $datas[$num_set]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[($num_set*10)+$i][0].' '.$pd_name;
-        $datas[$num_set]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($num_set*10)+$i][3]."  Stock : ".$sku[($num_set*10)+$i][2];
+        $datas[$num_set]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($num_set*10)+$i][3]." size: ".$sku[($num_set*10)+$i][4]."  Stock : ".$sku[($num_set*10)+$i][2];
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
         $datas[$num_set]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[($num_set*10)+$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
