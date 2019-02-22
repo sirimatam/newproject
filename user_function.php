@@ -433,7 +433,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 function carousel_show_favorite($db,$cus_id)
   {
     $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'");
-    file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode(pg_fetch_row($check)[0], JSON_UNESCAPED_UNICODE)); }	
+    file_put_contents("php://stderr", "POST REQUEST =====> ".json_encode(pg_fetch_row($check)[0], JSON_UNESCAPED_UNICODE)); 	
     $i = 0;
     $prod_array = array();
     $fav = array();
