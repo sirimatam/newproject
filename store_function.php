@@ -244,7 +244,7 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['footer']['contents'][1]['action']['label'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['action']['text'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['action']['data'] = 'Clear '.$cartp_id;
-	$data['contents']['footer']['contents'][1]['color'] = '#E4E0E0';
+	$data['contents']['footer']['contents'][1]['color'] = '#D1D1D1';
 	$data['contents']['footer']['contents'][1]['style'] = 'primary';
 	
 	return $data;
