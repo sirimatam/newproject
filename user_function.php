@@ -447,13 +447,58 @@ function carousel_show_favorite($db,$cus_id)
     
     
     $datas = [];
-    $datas['type'] = 'template';
-    $datas['altText'] = 'this is a carousel template';
-    $datas['template']['type'] = 'carousel';  
-    $datas['template']['imageSize'] = 'contain';
-    for ($i=0; $i<pg_num_rows($check);$i++)
+        $datas['type'] = 'flex';
+        $datas['altText'] = 'Flex Message';
+        $datas['contents']['type'] = 'carousel';
+	$datas['contents']['contents'] = 'contain';
+    for ($j=0; $j<pg_num_rows($check);$j++)
      {
-        
+        $datas['contents']['contents'][$i]['type'] = 'bubble';
+	$datas['contents']['contents'][$j]['header']['type'] = 'box';
+	$datas['contents']['contents'][$j]['header']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['type'] = 'image';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['url'] = $prod_array[$j][2];     
+	$datas['contents']['contents'][$j]['header']['contents'][0]['size'] = 'xl';      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = 'text';      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['text'] = $prod_array[$j][1];;      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['weight'] = 'bold';
+	$datas['contents']['contents'][$j]['header']['contents'][1]['wrap'] = true;
+	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'box';
+	$datas['contents']['contents'][$j]['header']['contents'][2]['layout'] = 'baseline';     
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['type'] = 'text';       
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '"฿ ".$prod_array[$j][5]';      
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['type'] = 'text';       
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = '"!!! Now ฿".$prod_array[$j][6]';            
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold';    
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';      
+	$datas['contents']['contents'][$j]['body']['type'] = 'box';
+	$datas['contents']['contents'][$j]['body']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['body']['contents'][0]['type'] = 'text';
+	$datas['contents']['contents'][$j]['body']['contents'][0]['text'] = '$prod_array[$j][4]';     
+	$datas['contents']['contents'][$j]['body']['contents'][0]['size'] = 'sm';            
+	$datas['contents']['contents'][$j]['body']['contents'][0]['wrap'] = true;      
+	$datas['contents']['contents'][$j]['footer']['type'] = 'box';
+	$datas['contents']['contents'][$j]['footer']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'postback';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'เลือกสีและไซส์';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['text'] = 'view more';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['data'] = 'View '.$prod_array[$j][0];
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#E5352E';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['style'] = 'primary';	      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['type'] = 'postback';      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['label'] = 'ลบออกจาก Favorite';
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['text'] =  'Delete '.$fav[$j].'ออกจาก Favorite เรียบร้อย';  
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['data'] = 'Delete_fav '.$fav[$j];
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['color'] = '#D1D1D1';      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['style'] = 'primary';	          
+	    
+	    
+	/*    
+	    
+	    
+	    
+	    
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
         $datas['template']['columns'][$i]['title'] = $prod_array[$i][1]; //check prod_name ว่าต้องมี [$i] มั้ย
         $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
@@ -465,6 +510,9 @@ function carousel_show_favorite($db,$cus_id)
         $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
         $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
         $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
+	
+	
+	*/
      }
     if($i == 0) { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
     else    { return $datas; }
