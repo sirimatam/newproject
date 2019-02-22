@@ -126,7 +126,7 @@ if ( sizeof($request_array['events']) > 0 )
 	} 
 	elseif ($text=='สินค้าที่ถูกใจ')
 	{
-		$post = format_message($reply_token,carousel_show_favorite($db,$userid,'4'));
+		$post = format_message($reply_token,carousel_show_favorite($db,$userid));
 	        send_reply_message($API_URL, $POST_HEADER, $post);
 	       
        } 
