@@ -273,25 +273,68 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    if($num_carousel <=10)
    {
 	$datas = [];
-        $datas['type'] = 'template';
-        $datas['altText'] = 'this is a carousel template';
-        $datas['template']['type'] = 'carousel';
-	$datas['template']['imageSize'] = 'contain'; 
+        $datas['type'] = 'flex';
+        $datas['altText'] = 'Flex Message';
+        $datas['contents']['type'] = 'carousel';
+	$datas['contents']['contents'] = 'contain'; 
 	
       for ($i=0; $i<$num_carousel;$i++)
      {
-	     
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod[$i][1];
-        $datas['template']['columns'][$i]['text'] = $prod[$i][4].'ราคา '.$prod[$i][6].' บาท'; //ราคาโปร
-        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
+	$datas['contents']['contents'][$i]['type'] = 'bubble';
+	$datas['contents']['contents'][$j]['header']['type'] = 'box';
+	$datas['contents']['contents'][$j]['header']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['type'] = 'image';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['url'] = $prod[$i][2];     
+	$datas['contents']['contents'][$j]['header']['contents'][0]['size'] = 'xl';      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = 'text';      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = '$prod[$i][1];';      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['weight'] = 'bold';
+	$datas['contents']['contents'][$j]['header']['contents'][1]['wrap'] = true;
+	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'box';
+	$datas['contents']['contents'][$j]['header']['contents'][2]['layout'] = 'baseline';     
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['type'] = 'text';       
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '"฿ ".$prod[$i][5]';      
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['type'] = 'text';       
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = '"!!! Now ฿".$prod[$i][6]';            
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold';    
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';    
+	$datas['contents']['contents'][$j]['body']['type'] = 'box';
+	$datas['contents']['contents'][$j]['body']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['body']['contents'][0]['type'] = 'text';
+	$datas['contents']['contents'][$j]['body']['contents'][0]['text'] = '$prod[$i][4]';     
+	$datas['contents']['contents'][$j]['body']['contents'][0]['size'] = 'sm';            
+	$datas['contents']['contents'][$j]['body']['contents'][0]['wrap'] = true;      
+	$datas['contents']['contents'][$j]['footer']['type'] = 'box';
+	$datas['contents']['contents'][$j]['footer']['layout'] = 'vertical';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'postback';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'เลือกสีและไซส์';
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['text'] = 'view more';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['data'] = 'View '.$prod[$i][0];
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#E5352E';      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['style'] = 'primary';	      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['type'] = 'postback';      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['label'] = 'Favorite';
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['text'] = 'บันทึกเป็น Favorite';      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['data'] = 'Favorite '.$prod[$i][0];
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['color'] = '#D1D1D1';      
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['style'] = 'primary';	      
+	      
+	/*
+	      
+        $datas['contents']['contents'][$i]['thumbnailImageUrl'] = $prod[$i][2]; 
+        $datas['contents']['contents'][$i]['title'] = $prod[$i][1];
+        $datas['contents']['contents'][$i]['text'] = $prod[$i][4].'ราคา '.$prod[$i][6].' บาท'; //ราคาโปร
+        $datas['contents']['contents'][$i]['actions'][0]['type'] = 'postback';
+        $datas['contents']['contents'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
+        $datas['contents']['contents'][$i]['actions'][0]['text'] = 'view more';
+        $datas['contents']['contents'][$i]['actions'][0]['data'] =  'View '.$prod[$i][0];
+        $datas['contents']['contents'][$i]['actions'][1]['type'] = 'postback';
+        $datas['contents']['contents'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
+        $datas['contents']['contents'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
+        $datas['contents']['contents'][$i]['actions'][1]['data'] = 'Favorite '.$prod[$i][0];
+	
+	*/
      }
      $carousel[0] = $datas;
      return $carousel;
