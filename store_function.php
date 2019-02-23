@@ -384,7 +384,8 @@ function carousel_view_more($db,$prod_id)
   
   $pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$prod_id'"))[0];
   $pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$prod_id'"))[0];
-  $pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$prod_id'"))[0];
+  $pd_pro_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$prod_id'"))[0];
+  $pd_price = pg_fetch_row(pg_query($db,"SELECT prod_price FROM product WHERE prod_id = '$prod_id'"))[0];
   $pd_sku = pg_query($db,"SELECT * FROM stock WHERE stock.prod_id = '$prod_id'");
   //$list = pg_fetch_row($pd_sku);
   $num_carousel = pg_num_rows($pd_sku);
@@ -429,16 +430,16 @@ function carousel_view_more($db,$prod_id)
 	$datas['contents']['contents'][$i]['header']['contents'][2]['type'] = 'box';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['layout'] = 'baseline';     
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['type'] = 'text';       
-	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod[$i][5];      
+	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$pd_price;      
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['type'] = 'text';       
-	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod[$i][6].' !!!';               
+	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$pd_pro_price.' !!!';               
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'vertical';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['type'] = 'text';
-	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['text'] = $prod[$i][4];     
+	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['text'] = $pd_des;     
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['wrap'] = true;   
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][1]['type'] = 'text';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][1]['text'] = 'size: '.$sku[$i][4];     
