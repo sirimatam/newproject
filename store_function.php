@@ -608,11 +608,11 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 	    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); 
 	 
     }
-    
-    }
-	$reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
+        $reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
 	file_put_contents("php://stderr", "reply_msg  ===> ".json_encode($reply_msg));
 	return $reply_msg;
+    }
+	
   }    
   
   
