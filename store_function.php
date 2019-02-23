@@ -436,7 +436,7 @@ function carousel_view_more($db,$prod_id)
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
-	$datas['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'baseline';
+	$datas['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'vertical';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['type'] = 'text';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['text'] = $prod[$i][4];     
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['wrap'] = true;   
