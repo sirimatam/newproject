@@ -466,7 +466,7 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = 'spacer';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'text';      
 	$datas['contents']['contents'][$j]['header']['contents'][2]['text'] = $prod_array[$j][1];      
-	$datas['contents']['contents'][$j]['header']['contents'][2]['size'] = 'lg';
+	$datas['contents']['contents'][$j]['header']['contents'][2]['size'] = 'xl';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['weight'] = 'bold';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['wrap'] = true;
 	$datas['contents']['contents'][$j]['header']['contents'][3]['type'] = 'box';
