@@ -496,7 +496,7 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['color'] = '#D1D1D1';      
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['style'] = 'primary';	          
 	    
-	    
+	file_put_contents("php://stderr", "json =====> ".json_encode($datas[$i], JSON_UNESCAPED_UNICODE));     
 	/*    
 	    
 	    
@@ -517,8 +517,9 @@ function carousel_show_favorite($db,$cus_id)
 	
 	*/
      }
+	
     if($i == 0) { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
-    else    { return json_encode($datas); }
+    else    { return $datas; }
   }
 
 
