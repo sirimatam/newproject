@@ -1,10 +1,5 @@
 <?php
-
 require 'track.class.php';
-
-
-
-
 function get_user_content($msgid, $post_header)
 {
 	$get_url = 'https://api.line.me/v2/bot/message/'.$msgid.'/content';	
@@ -108,8 +103,6 @@ function delete_favorite($db,$fav_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
-
-
 function carousel_flex_order($db,$userid,$check)
 {
 	// check can be 1,2,3,4
@@ -200,7 +193,6 @@ function carousel_flex_order($db,$userid,$check)
 			$run++;
 		}
 		$running = 0;
-
 		foreach ( $pdid_array as $pdid )
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
@@ -303,7 +295,6 @@ function carousel_flex_order($db,$userid,$check)
 	} 
 	else {	return $data; } 
 }
-
 function flex_order($db,$order_id,$cartp_id)
 {
 	
@@ -429,7 +420,6 @@ function add_to_order($db,$cus_id,$cart_avail)
 	return $order_id;
 	
 }
-
 function carousel_show_favorite($db,$cus_id)
   {
     $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id' LIMIT 10");	
@@ -462,22 +452,21 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['header']['contents'][0]['url'] = $prod_array[$j][2];
 	$datas['contents']['contents'][$j]['header']['contents'][0]['size'] = 'full';
 	$datas['contents']['contents'][$j]['header']['contents'][0]['aspectRatio'] = '1.51:1';
-	$datas['contents']['contents'][$j]['header']['contents'][0]['aspectMode'] = 'fit';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['aspectMode'] = 'fit';             
 	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = 'text';      
 	$datas['contents']['contents'][$j]['header']['contents'][1]['text'] = $prod_array[$j][1];      
 	$datas['contents']['contents'][$j]['header']['contents'][1]['size'] = 'xl';
 	$datas['contents']['contents'][$j]['header']['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$j]['header']['contents'][1]['wrap'] = true;
 	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'box';
-	$datas['contents']['contents'][$j]['header']['contents'][2]['layout'] = 'baseline';
-	$datas['contents']['contents'][$j]['header']['contents'][2]['spacing'] = 'none';
+	$datas['contents']['contents'][$j]['header']['contents'][2]['layout'] = 'baseline';     
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['type'] = 'text';       
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod_array[$j][5];
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['type'] = 'text';       
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod_array[$j][6].' !!!';            
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['size'] = 'lg';
-	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold'; 
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';      
 	$datas['contents']['contents'][$j]['body']['type'] = 'box';
 	$datas['contents']['contents'][$j]['body']['layout'] = 'baseline';
@@ -527,9 +516,6 @@ function carousel_show_favorite($db,$cus_id)
     if($i == 0) { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
     else    { return $datas; }
   }
-
-
-
   
 function out_of_time($db)
   {
