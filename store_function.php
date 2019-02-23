@@ -570,7 +570,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
 	
     
-    if($count>=10){ return $reply_msg = 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น';}  
+    if($count>=10){ return $reply_msg = ['type' => 'text', 'text' => 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น'];}  
     //end of function
     elseif($sku_qtt_now < $cart_qtt)
     {
@@ -611,6 +611,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     
     }
 	$reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
+	file_put_contents("php://stderr", "reply_msg  ===> ".json_encode($reply_msg));
 	return $reply_msg;
   }    
   
