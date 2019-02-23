@@ -432,13 +432,13 @@ function add_to_order($db,$cus_id,$cart_avail)
 
 function carousel_show_favorite($db,$cus_id)
   {
-    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id'");	
+    $check = pg_query($db,"SELECT * FROM favorite WHERE favorite.cus_id = '$cus_id' LIMIT 10");	
     $i = 0;
     $prod_array = array();
     $fav = array();
     while ($list = pg_fetch_row($check))
     {
-	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]' LIMIT 10"))[0]; 
+	    $prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$list[2]'")); 
 	    $prod_array[$i] = $prod; 
 	    $fav[$i] = $list[0];
 	    $i++;
@@ -452,7 +452,7 @@ function carousel_show_favorite($db,$cus_id)
     $datas['contents']['type'] = 'carousel';
     
 	
-    for ($j=0; $j< $i; $j++)
+    for ($j=0; $j< pg_num_rows($check); $j++)
      {
 	$datas['contents']['contents'][$j]['type'] = 'bubble';
     	$datas['contents']['contents'][$j]['direction'] = 'ltr';
@@ -489,7 +489,8 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['text'] = 'view more';      
 	$datas['contents']['contents'][$j]['footer']['contents'][0]['action']['data'] = 'View '.$prod_array[$j][0];
 	$datas['contents']['contents'][$j]['footer']['contents'][0]['color'] = '#E5352E';      
-	$datas['contents']['contents'][$j]['footer']['contents'][0]['style'] = 'primary';	      
+	$datas['contents']['contents'][$j]['footer']['contents'][0]['style'] = 'primary';
+	$datas['contents']['contents'][$j]['footer']['contents'][1]['type'] = 'button';    
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['type'] = 'postback';      
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['label'] = 'ลบออกจาก Favorite';
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['action']['text'] =  'Delete '.$fav[$j].'ออกจาก Favorite เรียบร้อย';  
