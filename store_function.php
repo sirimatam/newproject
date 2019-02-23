@@ -291,6 +291,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
 	$datas['contents']['contents'][$i]['header']['contents'][1]['type'] = 'text';      
 	$datas['contents']['contents'][$i]['header']['contents'][1]['text'] = $prod[$i][1];      
         $datas['contents']['contents'][$i]['header']['contents'][1]['weight'] = 'bold';
+	$datas['contents']['contents'][$i]['header']['contents'][1]['size'] = 'xl';
 	$datas['contents']['contents'][$i]['header']['contents'][1]['wrap'] = true;
 	$datas['contents']['contents'][$i]['header']['contents'][2]['type'] = 'box';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['layout'] = 'baseline';     
