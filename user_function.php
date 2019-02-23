@@ -446,12 +446,12 @@ function carousel_show_favorite($db,$cus_id)
     }
     
     
-        $datas = [];
-        $datas['type'] = 'flex';
-        $datas['altText'] = 'Flex Message';
-        $datas['contents']['type'] = 'carousel';
+    $datas = [];
+    $datas['type'] = 'flex';
+    $datas['altText'] = 'Flex Message';
+    $datas['contents']['type'] = 'carousel';
 	
-    for ($j=0; $j<pg_num_rows($check); $j++)
+    for ($j=0; $j< $i; $j++)
      {
         $datas['contents']['contents'][$j]['type'] = 'bubble';
 	$datas['contents']['contents'][$j]['direction'] = 'ltr';
