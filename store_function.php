@@ -591,12 +591,16 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 		    pg_query($db,"UPDATE cart_product SET cart_prod_qtt = '$cart_qtt_new' WHERE sku_id = '$sku_id' AND cartp_id = '$cartp_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
     		    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); //ยังไม่ได้ใส่กรณีซื้อSKUเดียวกันสองตัว
 		    $have_sku_check=1;
+		    $reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
+	    	    return $reply_msg;
 	    }
     	}
 	if($have_sku_check == 0)
 	{
 		pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
-	        pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");	
+	        pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'");
+		$reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
+	    return $reply_msg;
 	}
     
     }
@@ -604,6 +608,8 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     {
 	    pg_query($db,"INSERT INTO cart_product (cartp_id,sku_id,cart_prod_qtt) VALUES ('$cartp_id','$sku_id','$cart_qtt')");
 	    pg_query($db,"UPDATE stock SET sku_qtt = '$sku_qtt_new' WHERE sku_id = '$sku_id'"); 
+	    $reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
+	    return $reply_msg;
     }
     
     }
