@@ -458,10 +458,12 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['header']['type'] = 'box';
 	$datas['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$datas['contents']['contents'][$j]['header']['contents'][0]['type'] = 'image';
-	$datas['contents']['contents'][$j]['header']['contents'][0]['url'] = $prod_array[$j][2];     
-	$datas['contents']['contents'][$j]['header']['contents'][0]['size'] = 'xl';      
+	$datas['contents']['contents'][$j]['header']['contents'][0]['url'] = $prod_array[$j][2];
+	$datas['contents']['contents'][$j]['header']['contents'][0]['size'] = 'full';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['aspectRatio'] = '1.51:1';
+	$datas['contents']['contents'][$j]['header']['contents'][0]['aspectMode'] = 'fit';             
 	$datas['contents']['contents'][$j]['header']['contents'][1]['type'] = 'text';      
-	$datas['contents']['contents'][$j]['header']['contents'][1]['text'] = $prod_array[$j][1];;      
+	$datas['contents']['contents'][$j]['header']['contents'][1]['text'] = $prod_array[$j][1];      
 	$datas['contents']['contents'][$j]['header']['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$j]['header']['contents'][1]['wrap'] = true;
 	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'box';
