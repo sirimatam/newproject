@@ -518,7 +518,7 @@ function carousel_show_favorite($db,$cus_id)
 	*/
      }
     if($i == 0) { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
-    else    { return $datas; }
+    else    { return json_encode($datas); }
   }
 
 
