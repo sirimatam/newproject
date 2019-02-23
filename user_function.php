@@ -454,7 +454,7 @@ function carousel_show_favorite($db,$cus_id)
 	
     for ($j=0; $j<pg_num_rows($check);$j++)
      {
-        $datas['contents']['contents'][$i]['type'] = 'bubble';
+        $datas['contents']['contents'][$j]['type'] = 'bubble';
 	$datas['contents']['contents'][$j]['header']['type'] = 'box';
 	$datas['contents']['contents'][$j]['header']['layout'] = 'vertical';
 	$datas['contents']['contents'][$j]['header']['contents'][0]['type'] = 'image';
