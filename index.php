@@ -190,10 +190,7 @@ if ( sizeof($request_array['events']) > 0 )
 		{
 			$cart_qtt = explode(" ",$order)[1];
 			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
-			if(strlen($data) = 0 )
-			{ $data = 'บันทึกสินค้ารหัส '.$sku_id[0].'จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'; }
 			send_reply_message($API_URL, $POST_HEADER, $data);
-			
 		}
 	}
 	}  
