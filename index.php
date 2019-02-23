@@ -180,8 +180,34 @@ if ( sizeof($request_array['events']) > 0 )
 		$data = format_message($reply_token,$show);
 	       send_reply_message($API_URL, $POST_HEADER,$data);
        }
-
-        
+       elseif()
+       {
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
+       }
+        $sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			if(strlen($data) = 0 )
+			{ $data = 'บันทึกสินค้ารหัส '.$sku_id[0].'จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'; }
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
+	  
 	else {
 	$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 	$run = 0;	
@@ -215,28 +241,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 	}
 	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
-	{
-		if(explode(" ",$text)[0] == $sku_id[0])
-		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
-			send_reply_message($API_URL, $POST_HEADER, $data);
-			
-		}
-	}
-	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
-	while($sku_id = pg_fetch_row($sku_ids))
-	{
-		if(explode(" ",$text)[0] == $sku_id[0])
-		{
-			$cart_qtt = explode(" ",$text)[1];
-			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
-			send_reply_message($API_URL, $POST_HEADER, $data);
-			
-		}
-	}   
+	
    } 
 	  
 	  
