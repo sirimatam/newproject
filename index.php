@@ -191,6 +191,7 @@ if ( sizeof($request_array['events']) > 0 )
 			$cart_qtt = explode(" ",$order)[1];
 			$data = add_to_cart($db,$sku_id[0],$userid,$cart_qtt);
 			send_reply_message($API_URL, $POST_HEADER, $data);
+			file_put_contents("php://stderr", "cart_qtt =====> ".json_encode($cart_qtt, JSON_UNESCAPED_UNICODE));
 		}
 	}
 	}  
