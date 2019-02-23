@@ -189,7 +189,7 @@ if ( sizeof($request_array['events']) > 0 )
 		if(explode(" ",$order)[0] == $sku_id[0])
 		{
 			$cart_qtt = explode(" ",$order)[1];
-			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			$data = add_to_cart($db,$sku_id[0],$userid,$cart_qtt);
 			send_reply_message($API_URL, $POST_HEADER, $data);
 		}
 	}
