@@ -394,13 +394,13 @@ function carousel_view_more($db,$prod_id)
    $running = 0;
    $carousel = array();
    while($list = pg_fetch_row($pd_sku))
-	{
+	{/*
 	   	if($list[2] == 0)
 		{
 			$msg = 'out of stock'; 
 			$sku[$sku_num] = [$list[0],$list[1],$msg,$list[3],$list[4],$list[5]];
 		}
-	   	else { $sku[$sku_num] = $list; }
+	   	else { */ $sku[$sku_num] = $list; //}
 		$sku_num++;
 	}
   if($num_carousel <=10)
