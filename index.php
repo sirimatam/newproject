@@ -215,7 +215,34 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 	}
 	}
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}
+	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
+	while($sku_id = pg_fetch_row($sku_ids))
+	{
+		if(explode(" ",$text)[0] == $sku_id[0])
+		{
+			$cart_qtt = explode(" ",$text)[1];
+			$data = add_to_cart($sku_id[0],$userid,$cart_qtt);
+			send_reply_message($API_URL, $POST_HEADER, $data);
+			
+		}
+	}   
    } 
+	  
+	  
+	  
+	  
+	  
 	  /*
    elseif( $event['message']['type'] == 'image' )
    {
