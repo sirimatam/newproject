@@ -452,7 +452,7 @@ function carousel_show_favorite($db,$cus_id)
         $datas['contents']['type'] = 'carousel';
 	$datas['contents']['contents'] = 'contain';
 	
-    for ($j=0; $j<pg_num_rows($check);$j++)
+    for ($j=0; $j<pg_num_rows($check); $j++)
      {
         $datas['contents']['contents'][$j]['type'] = 'bubble';
 	$datas['contents']['contents'][$j]['header']['type'] = 'box';
@@ -467,15 +467,15 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['header']['contents'][2]['type'] = 'box';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['layout'] = 'baseline';     
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['type'] = 'text';       
-	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '"฿ ".$prod_array[$j][5]';      
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod_array[$j][5];      
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['type'] = 'text';       
-	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = '"!!! Now ฿".$prod_array[$j][6]';            
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = '!!! Now ฿'.$prod_array[$j][6];            
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold';    
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';      
 	$datas['contents']['contents'][$j]['body']['type'] = 'box';
 	$datas['contents']['contents'][$j]['body']['layout'] = 'vertical';
 	$datas['contents']['contents'][$j]['body']['contents'][0]['type'] = 'text';
-	$datas['contents']['contents'][$j]['body']['contents'][0]['text'] = '$prod_array[$j][4]';     
+	$datas['contents']['contents'][$j]['body']['contents'][0]['text'] = $prod_array[$j][4];     
 	$datas['contents']['contents'][$j]['body']['contents'][0]['size'] = 'sm';            
 	$datas['contents']['contents'][$j]['body']['contents'][0]['wrap'] = true;      
 	$datas['contents']['contents'][$j]['footer']['type'] = 'box';
