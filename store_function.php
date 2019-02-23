@@ -570,11 +570,19 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
     $cart_sku = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
 	
     
-    if($count>=10){ return $reply_msg = ['type' => 'text', 'text' => 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น'];}  
-    //end of function
+    if($count>=10)
+    { 
+	$reply_msg = ['type' => 'text', 'text' => 'คุณสามารถเพิ่มสินค้าลงตะกร้า ได้ 10 รายการเท่านั้น'];    
+	file_put_contents("php://stderr", "สั่งเกิน  ===> ".json_encode($reply_msg));    
+	    
+      return $reply_msg;
+      //end of function 	    
+    }  
+    
     elseif($sku_qtt_now < $cart_qtt)
     {
-	$reply_msg = ['type' => 'text', 'text' => 'สินค้าในสต็อกไม่เพียงพอ'];
+	$reply_msg = ['type' => 'text', 'text' => 'สินค้าในสต็อกมีจำนวน '.$sku_qtt_now.' ชิ้น กรุณาสั่งใหม่' ];
+	file_put_contents("php://stderr", "ของไม่พอ  ===> ".json_encode($reply_msg));
 	return $reply_msg;
     }
     else{
@@ -609,7 +617,7 @@ function add_to_cart($db,$sku_id,$cus_id,$cart_qtt)
 	 
     }
         $reply_msg = ['type' => 'text', 'text' => 'เพิ่มสินค้ารหัส '.$sku_id.' จำนวน '.$cart_qtt.' ชิ้น ลงตะกร้า'];
-	file_put_contents("php://stderr", "reply_msg  ===> ".json_encode($reply_msg));
+	file_put_contents("php://stderr", "สั่งของสำเร็จ  ===> ".json_encode($reply_msg));
 	return $reply_msg;
     }
 	
