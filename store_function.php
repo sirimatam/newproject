@@ -398,7 +398,7 @@ function carousel_view_more($db,$prod_id)
 	   	if($list[2] == 0)
 		{
 			$msg = 'out of stock';
-			$sku[$sku_num] = [$list[0],$list[1],$msg,$list[3]$list[4],$list[5]];
+			$sku[$sku_num] = [$list[0],$list[1],$msg,$list[3],$list[4],$list[5]];
 		}
 	   	else { $sku[$sku_num] = $list; }
 		$sku_num++;
