@@ -462,13 +462,13 @@ function carousel_view_more($db,$prod_id)
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['type'] = 'button';      
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['type'] = 'message';
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['label'] = 'สั่งเกิน 1 ชิ้น';      
-	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['text'] = 'กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น B01 4';            
+	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['text'] = 'กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น A1 4';            
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['color'] = '#E5352E';    
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['type'] = 'button';      
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['action']['type'] = 'message';
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['action']['label'] = 'ดูสินค้าอื่น';      
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['action']['text'] = 'ดูและสั่งซื้อสินค้า';           
-	//$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['color'] = '#D1D1D1';      
+	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['color'] = '#4B4848';      
 	 
 	      /*
         $datas['template']['columns'][$i]['thumbnailImageUrl'] = $sku[$i][5]; 
