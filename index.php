@@ -375,7 +375,7 @@ if ( sizeof($request_array['events']) > 0 )
 			  
 			   $cart_qtt = 1;
 			  delete_from_cart($db,$sku_id[0],$userid,$cart_qtt);
-			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id[0].' ออกจากตะกร้าเรียบร้อยแล้ว']]];
+			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id[0].' ออกจากตะกร้าเรียบร้อยแล้ว กรุณากดเมนูตะกร้าของฉันเพื่อตรวจสอบอีกครั้ง']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
 			}
 		}
