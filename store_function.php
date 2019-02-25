@@ -78,10 +78,10 @@ function show_promotion_product($db)
 	$datas['contents']['contents'][$i]['header']['contents'][2]['type'] = 'box';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['layout'] = 'baseline';     
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['type'] = 'text';       
-	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$pddata[$i][5];      
+	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$promo_list[$i][5];      
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['type'] = 'text';       
-	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$pddata[$i][6].' !!!';               
+	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$promo_list[$i][6].' !!!';               
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; 
 	$datas['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
