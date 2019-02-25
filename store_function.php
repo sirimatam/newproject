@@ -780,7 +780,7 @@ function carousel_view_more($db,$prod_id)
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['type'] = 'button';      
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['type'] = 'message';
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['label'] = 'สั่งเกิน 1 ชิ้น';      
-	$datas[$num_set$j]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['text'] = 'กรุณาพิมพ์ "=รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ" เช่น =A1 4';            
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['text'] = 'กรุณาพิมพ์ "=รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ" เช่น =A1 4';            
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['color'] = '#E5352E';    
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['type'] = 'button';      
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['action']['type'] = 'message';
