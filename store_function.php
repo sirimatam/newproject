@@ -158,11 +158,11 @@ function carousel_cart($db,$cus_id)
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['type'] = 'text';       
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$pddata[$i][5];      
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
-	    if($pddata[$i][6] < $pddata[$i][5]) {
+	//    if($pddata[$i][6] < $pddata[$i][5]) {
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['type'] = 'text';       
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$pddata[$i][6].' !!!';               
 	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
-	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; }
+	$datas['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; //}
 	$datas['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'vertical';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['type'] = 'text';
