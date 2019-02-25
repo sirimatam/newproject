@@ -312,12 +312,12 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['label'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['text'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['text'] = 'Clear '.$cartp_id;
-	$data['contents']['footer']['contents'][1]['color'] = '#E5352E';
+	$data['contents']['footer']['contents'][1]['content'][0]['color'] = '#E5352E';
 	$data['contents']['footer']['contents'][1]['content'][1]['type'] = 'button';
 	$data['contents']['footer']['contents'][1]['content'][1]['action']['type'] = 'message';
 	$data['contents']['footer']['contents'][1]['content'][1]['action']['label'] = 'เลือกสินค้าเพิ่ม';
 	$data['contents']['footer']['contents'][1]['content'][1]['action']['text'] = 'ค้นหาสินค้า';
-	$data['contents']['footer']['contents'][1]['content'][1]['color']['text'] = '#4B4848';
+	$data['contents']['footer']['contents'][1]['content'][1]['color'] = '#4B4848';
 		
 	return $data;
 	
