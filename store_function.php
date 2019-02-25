@@ -311,7 +311,7 @@ function flex_cart_beforeorder($db,$userid)
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['type'] = 'postback';
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['label'] = 'ล้างตะกร้า';
 	$data['contents']['footer']['contents'][1]['content'][0]['action']['text'] = 'ล้างตะกร้า';
-	$data['contents']['footer']['contents'][1]['content'][0]['action']['text'] = 'Clear '.$cartp_id;
+	$data['contents']['footer']['contents'][1]['content'][0]['action']['data'] = 'Clear '.$cartp_id;
 	$data['contents']['footer']['contents'][1]['content'][0]['color'] = '#E5352E';
 	$data['contents']['footer']['contents'][1]['content'][1]['type'] = 'button';
 	$data['contents']['footer']['contents'][1]['content'][1]['action']['type'] = 'message';
