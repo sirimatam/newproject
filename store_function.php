@@ -173,7 +173,10 @@ function carousel_cart($db,$cus_id)
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][2]['type'] = 'text';
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][2]['text'] = $skuarray[$i][3]; //สี
 	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][3]['type'] = 'text';
-	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][3]['text'] = 'stock: '.$skuaray[$i][2];    
+	$datas['contents']['contents'][$i]['header']['contents'][3]['contents'][3]['text'] = 'stock: '.$skuaray[$i][2];
+	$datas['contents']['contents'][$i]['header']['contents'][4]['contents'][3]['type'] = 'text';
+	$datas['contents']['contents'][$i]['header']['contents'][4]['contents'][3]['text'] = 'จำนวนที่สั่ง: '.$cart_qtt[$i];
+	$datas['contents']['contents'][$i]['header']['contents'][4]['contents'][3]['weight'] = 'bold';
 	$datas['contents']['contents'][$i]['footer']['type'] = 'box';
 	$datas['contents']['contents'][$i]['footer']['layout'] = 'vertical';
 	$datas['contents']['contents'][$i]['footer']['contents'][0]['type'] = 'button';      
