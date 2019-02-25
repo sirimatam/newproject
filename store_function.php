@@ -407,13 +407,58 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
    $datas = [];
    for($j=0;$j<$num_set;$j++)
    {
-        $datas[$j]['type'] = 'template';
-        $datas[$j]['altText'] = 'this is a carousel template';
-        $datas[$j]['template']['type'] = 'carousel';
-	$datas[$j]['template']['imageSize'] = 'contain';
+    	$datas[$j]['type'] = 'flex';
+    	$datas[$j]['altText'] = 'Flex Message';
+    	$datas[$j]['contents']['type'] = 'carousel';
+	   
 	
 	for ($i=0; $i<10;$i++)
      {
+	$datas[$j]['contents']['contents'][$i]['type'] = 'bubble';
+    	$datas[$j]['contents']['contents'][$i]['direction'] = 'ltr';
+	$datas[$j]['contents']['contents'][$i]['header']['type'] = 'box';
+	$datas[$j]['contents']['contents'][$i]['header']['layout'] = 'vertical';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['type'] = 'image';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['url'] = $prod[($j*10)+$i][2];    
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['size'] = 'full';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['aspectMode'] = 'fit';            
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][1]['type'] = 'text';      
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][1]['text'] = $prod[($j*10)+$i][1];      
+        $datas[$j]['contents']['contents'][$i]['header']['contents'][1]['weight'] = 'bold';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][1]['size'] = 'xl';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][1]['wrap'] = true;
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['type'] = 'box';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['layout'] = 'baseline';     
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['type'] = 'text';       
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod[($j*10)+$i][5];      
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['type'] = 'text';       
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod[($j*10)+$i][6].' !!!';               
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; 	
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'vertical';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['type'] = 'text';
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['text'] = $prod[($j*10)+$i][4];    
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['wrap'] = true;
+	$datas[$j]['contents']['contents'][$i]['footer']['type'] = 'box';
+	$datas[$j]['contents']['contents'][$i]['footer']['layout'] = 'vertical';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['type'] = 'button';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['action']['type'] = 'postback';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['action']['label'] = 'เลือกสีและไซส์';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['action']['text'] = 'view more';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['action']['data'] = 'View '.$prod[($j*10)+$i][0];
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['color'] = '#E5352E';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['style'] = 'primary';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'button';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['action']['type'] = 'postback';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['action']['label'] = 'Favorite';
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['action']['text'] = 'บันทึกเป็น Favorite';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['action']['data'] = 'Favorite '.$prod[($j*10)+$i][0];
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['color'] = '#D1D1D1';      
+	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['style'] = 'primary';	
+	/*	
         $datas[$j]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($j*10)+$i][2]; 
         $datas[$j]['template']['columns'][$i]['title'] = $prod[($j*10)+$i][1];
         $datas[$j]['template']['columns'][$i]['text'] = $prod[($j*10)+$i][4].'ราคา '.$prod[($j*10)+$i][6].' บาท'; //ราคาโปร
@@ -424,16 +469,62 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas[$j]['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas[$j]['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas[$j]['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas[$j]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($j*10)+$i][0];
+        $datas[$j]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($j*10)+$i][0];   */
      }
    }
 	$last_carousel = $num_carousel-($num_set*10);
-        $datas[$num_set]['type'] = 'template';
-        $datas[$num_set]['altText'] = 'this is a carousel template';
-        $datas[$num_set]['template']['type'] = 'carousel'; 
-	$datas[$num_set]['template']['imageSize'] = 'contain';
+	   
+	$datas[$num_set]['type'] = 'flex';
+    	$datas[$num_set]['altText'] = 'Flex Message';
+    	$datas[$num_set]['contents']['type'] = 'carousel';   
+	   
 	for ($i=0; $i<$last_carousel;$i++)
      {
+	$datas[$num_set]['contents']['contents'][$i]['type'] = 'bubble';
+    	$datas[$num_set]['contents']['contents'][$i]['direction'] = 'ltr';
+	$datas[$num_set]['contents']['contents'][$i]['header']['type'] = 'box';
+	$datas[$num_set]['contents']['contents'][$i]['header']['layout'] = 'vertical';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['type'] = 'image';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['url'] = $prod[($num_set*10)+$i][2];    
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['size'] = 'full';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['aspectMode'] = 'fit';            
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][1]['type'] = 'text';      
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][1]['text'] = $prod[($num_set*10)+$i][1];      
+        $datas[$num_set]['contents']['contents'][$i]['header']['contents'][1]['weight'] = 'bold';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][1]['size'] = 'xl';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][1]['wrap'] = true;
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['type'] = 'box';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['layout'] = 'baseline';     
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['type'] = 'text';       
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod[($num_set*10)+$i][5];      
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['type'] = 'text';       
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod[($num_set*10)+$i][6].' !!!';               
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; 	
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][3]['type'] = 'box';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][3]['layout'] = 'vertical';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['type'] = 'text';
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['text'] = $prod[($num_set*10)+$i][4];    
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][3]['contents'][0]['wrap'] = true;
+	$datas[$num_set]['contents']['contents'][$i]['footer']['type'] = 'box';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['layout'] = 'vertical';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['type'] = 'button';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['action']['type'] = 'postback';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['action']['label'] = 'เลือกสีและไซส์';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['action']['text'] = 'view more';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['action']['data'] = 'View '.$prod[($num_set*10)+$i][0];
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['color'] = '#E5352E';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['style'] = 'primary';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'button';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['action']['type'] = 'postback';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['action']['label'] = 'Favorite';
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['action']['text'] = 'บันทึกเป็น Favorite';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['action']['data'] = 'Favorite '.$prod[($num_set*10)+$i][0];
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['color'] = '#D1D1D1';      
+	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['style'] = 'primary';		
+	/*	
         $datas[$num_set]['template']['columns'][$i]['thumbnailImageUrl'] = $prod[($num_set*10)+$i][2]; 
         $datas[$num_set]['template']['columns'][$i]['title'] = $prod[($num_set*10)+$i][1];
         $datas[$num_set]['template']['columns'][$i]['text'] = $prod[($num_set*10)+$i][4].'ราคา '.$prod[($num_set*10)+$i][6].' บาท'; //ราคาโปร
@@ -444,7 +535,7 @@ function carousel_product_type($db,$type) // $type = Prod_type FROM Product
         $datas[$num_set]['template']['columns'][$i]['actions'][1]['type'] = 'postback';
         $datas[$num_set]['template']['columns'][$i]['actions'][1]['label'] = 'บันทึกเป็น Favorite';
         $datas[$num_set]['template']['columns'][$i]['actions'][1]['text'] = 'บันทึกเป็น Favorite';   
-        $datas[$num_set]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($num_set*10)+$i][0];
+        $datas[$num_set]['template']['columns'][$i]['actions'][1]['data'] = 'Favorite '.$prod[($num_set*10)+$i][0]; */
      }
    return $datas;
    }
