@@ -620,9 +620,8 @@ function carousel_view_more($db,$prod_id)
 	$datas['contents']['contents'][$i]['footer']['contents'][0]['action']['data'] = 'Cart '.$sku[$i][0];
 	$datas['contents']['contents'][$i]['footer']['contents'][0]['color'] = '#E5352E';      
 	$datas['contents']['contents'][$i]['footer']['contents'][0]['style'] = 'primary';
-	$datas['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'button';
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'box';
-	$datas['contents']['contents'][$i]['footer']['contents'][1]['layout'] = 'horizontal';      
+	$datas['contents']['contents'][$i]['footer']['contents'][1]['layout'] = 'horizontal';  
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['type'] = 'button';      
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['type'] = 'message';
 	$datas['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['action']['label'] = 'สั่งเกิน 1 ชิ้น';      
@@ -657,7 +656,7 @@ function carousel_view_more($db,$prod_id)
 	$datas[$j]['contents']['contents'][$i]['header']['type'] = 'box';
 	$datas[$j]['contents']['contents'][$i]['header']['layout'] = 'vertical';
 	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['type'] = 'image';
-	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['url'] = $sku[($j*10)+$i][2];    
+	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['url'] = $sku[($j*10)+$i][5];    
 	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['size'] = 'full';
 	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
 	$datas[$j]['contents']['contents'][$i]['header']['contents'][0]['aspectMode'] = 'fit';            	
@@ -694,7 +693,6 @@ function carousel_view_more($db,$prod_id)
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['action']['data'] = 'Cart '.$sku[($j*10)+$i][0];
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['color'] = '#E5352E';      
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][0]['style'] = 'primary';
-	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'button';
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'box';
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['layout'] = 'horizontal';      
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['type'] = 'button';      
@@ -737,7 +735,7 @@ function carousel_view_more($db,$prod_id)
 	$datas[$num_set]['contents']['contents'][$i]['header']['type'] = 'box';
 	$datas[$num_set]['contents']['contents'][$i]['header']['layout'] = 'vertical';
 	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['type'] = 'image';
-	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['url'] = $sku[($num_set*10)+$i][2];    
+	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['url'] = $sku[($num_set*10)+$i][5];    
 	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['size'] = 'full';
 	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
 	$datas[$num_set]['contents']['contents'][$i]['header']['contents'][0]['aspectMode'] = 'fit';            
@@ -774,7 +772,6 @@ function carousel_view_more($db,$prod_id)
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['action']['data'] = 'Cart '.$sku[($num_set*10)+$i][0];
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['color'] = '#E5352E';      
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][0]['style'] = 'primary';
-	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'button';
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['type'] = 'box';
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['layout'] = 'horizontal';      
 	$datas[$num_set]['contents']['contents'][$i]['footer']['contents'][1]['contents'][0]['type'] = 'button';      
