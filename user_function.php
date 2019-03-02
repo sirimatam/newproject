@@ -277,7 +277,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
-	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://senior-project-bot.herokuapp.com/';	
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://cuie99project.herokuapp.com/upload_slip.php';	
 		}
 	if($loop=='2')
 		{
