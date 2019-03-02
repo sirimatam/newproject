@@ -4,7 +4,7 @@ require_once('connection.php');
 require 'user_function.php';
 require 'store_function.php';
 //out_of_time($db);
-
+show_test($db);
 require 'RichMenu/uploadandsetrichMenuDefault.php';
 /*
 require 'track.class.php';
