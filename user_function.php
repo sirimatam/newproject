@@ -576,8 +576,8 @@ function show_test($db)
      $order_list = pg_query($db,"SELECT * FROM orderlist"); 
      $order_array=array();
 
-	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = '$order[1]'"));
-	     if($date == '2019-03-03' and $time == '00:44:00')
+	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 62"));
+	     if($date == '2019-03-03' and $time == '00:45:00')
 	     {
 		
 		return ['to' => $cus_id,'messages' => [['type'=>'text','text' => 'ok']] ];  
