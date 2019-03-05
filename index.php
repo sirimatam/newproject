@@ -3,22 +3,10 @@ require_once('connection.php');
 
 require 'user_function.php';
 require 'store_function.php';
-//out_of_time($db);
+
 
 require 'RichMenu/uploadandsetrichMenuDefault.php';
-/*
-require 'track.class.php';
-$track = new Trackingmore;
-$track = $track->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array());
-$trace = $track['data']['items'][0]['lastEvent']; 
-file_put_contents("php://stderr", "track =====> ".$track);
-print_r($track);
-echo '///////////<br><br>';
-echo 'this is json trace';
-print_r(json_encode($trace));
-echo '<br> this is type of trace'.$trace.'<br>';
-print_r($trace);
-*/
+
 
 
 
@@ -61,16 +49,14 @@ if ( sizeof($request_array['events']) > 0 )
 	
 	if ($text=='ค้นหาสินค้า')
 	{
-	//	$data = format_message($reply_token,button_all_type($db));
-		$data = format_message($reply_token,timepost());
+	        $data = format_message($reply_token,button_all_type($db));
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
 	elseif ($text=='เวลา')
 	{
-		$post = ['type'=>'text','text' => get_datetime() ];
-		$data = format_message($reply_token,$post);
+		$data = format_message($reply_token,timepost());
 		
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
