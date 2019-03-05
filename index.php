@@ -31,7 +31,7 @@ $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-send_push_message($API_URL_push, $POST_HEADER, format_message_push('U4d994fb88c95746450218fa07134c6b4',show_test($db)));
+send_reply_message($API_URL_push, $POST_HEADER, format_message_push('U4d994fb88c95746450218fa07134c6b4',show_test($db)));
 
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
