@@ -565,7 +565,7 @@ function carousel_view_more($db,$prod_id)
 	$datas['contents']['contents'][$i]['header']['contents'][0]['type'] = 'image';
 	$datas['contents']['contents'][$i]['header']['contents'][0]['url'] = $sku[$i][5];     
 	$datas['contents']['contents'][$i]['header']['contents'][0]['size'] = 'full';
-//	$datas['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
+	$datas['contents']['contents'][$i]['header']['contents'][0]['aspectRatio'] = '1.51:1';
 	$datas['contents']['contents'][$i]['header']['contents'][0]['aspectMode'] = 'fit';             
 	$datas['contents']['contents'][$i]['header']['contents'][1]['type'] = 'text';      
 	$datas['contents']['contents'][$i]['header']['contents'][1]['text'] = 'รหัสสินค้า '.$sku[$i][0].' '.$pd_name;      
