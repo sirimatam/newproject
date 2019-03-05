@@ -573,21 +573,21 @@ function show_test($db)
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
-     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
-     $order_array=array();
+    // $order_list = pg_query($db,"SELECT * FROM orderlist"); 
+     //$order_array=array();
 
 	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103"))[0]; 
-	     if($date == '2019-03-05' and $time == '21:55:00')
+	     if($date == '2019-03-05' and $time == '22:05:00')
 	     {
 		
-		return ['to' => $userid,'messages' => ['type'=>'text','text' => 'ok'] ];  
+		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'ok'] ];  
 	     }
      
 }
 
 function timepost()
 {
-	date_default_timezone_set("Asia/Bangkok");
+     date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
 	return [$date,$time];
