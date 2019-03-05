@@ -563,7 +563,7 @@ function show_test($db)
 	     if($date == '2019-03-06' and $time == '00:36:00')
 	     {
 		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '5'");
-		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew'];  
+		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew']];  
 	     }
      
 }
