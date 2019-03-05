@@ -573,14 +573,14 @@ function show_test($db)
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
-     /*$order_list = pg_query($db,"SELECT * FROM orderlist"); 
+     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
      $order_array=array();
 
-	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 62")); */
-	     if($date == '2019-03-05' and $time == '10:52:00')
+	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103")); 
+	     if($date == '2019-03-05' and $time == '21:39:00')
 	     {
 		
-		return [['type'=>'text','text' => 'ok']];  
+		return ['to' => $userid,'messages' => ['type'=>'text','text' => 'ok'] ];  
 	     }
      
 }
