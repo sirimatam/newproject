@@ -571,9 +571,9 @@ function show_test($db)
 function timepost()
 {
      date_default_timezone_set("Asia/Bangkok");
-     $time = date("H:i:s");
-     $date = date("Y-m-d");
-	return ['type'=>'text','text' => [$date,$time]];
+     $timee = date("H:i:s");
+     $datee = date("Y-m-d");
+	return ['type'=>'text','text' => [$datee,$timee]];
 }
 
    
