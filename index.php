@@ -57,7 +57,7 @@ if ( sizeof($request_array['events']) > 0 )
 	elseif ($text=='เวลา')
 	{
 		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
-		
+		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'");
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}	
