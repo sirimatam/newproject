@@ -68,7 +68,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='เวลา')
 	{
-		$data = format_message_v2($reply_token,timepost());
+		$data = format_message($reply_token,timepost());
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}	
