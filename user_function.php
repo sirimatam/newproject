@@ -577,7 +577,7 @@ function show_test($db)
      $order_array=array();
 
 	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 62")); */
-	     if($date == '2019-03-05' and $time == '10:49:00')
+	     if($date == '2019-03-05' and $time == '10:52:00')
 	     {
 		
 		return [['type'=>'text','text' => 'ok']];  
