@@ -560,10 +560,10 @@ function show_test($db)
      //$order_array=array();
 		
 	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103"))[0]; 
-	     if($date == '2019-03-06' and $time == '00:33:00')
+	     if($date == '2019-03-06' and $time == '00:36:00')
 	     {
-		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '5'")
-		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew'] ];  
+		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '5'");
+		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew'];  
 	     }
      
 }
