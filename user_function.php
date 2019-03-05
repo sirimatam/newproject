@@ -573,7 +573,7 @@ function timepost()
      date_default_timezone_set("Asia/Bangkok");
      $timee = date("H:i:s");
      $datee = date("Y-m-d");
-	return ['type'=>'text','text' => [date_format($datee,"Y/m/d")] ];
+	return ['type'=>'text','text' => [$datee,$timee] ];
 }
 
    
