@@ -33,6 +33,7 @@ function button_all_type($db)
 	  $data['contents']['body']['contents'][$i]['action']['text'] = $type[$i];
 	  }
 	  
+	
    return $data;
   }  
   
