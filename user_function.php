@@ -463,11 +463,12 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['type'] = 'text';       
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod_array[$j][5];
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
+	    if($prod_array[$j][6] < $prod_array[$j][5]) {
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['type'] = 'text';       
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod_array[$j][6].' !!!';            
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['size'] = 'lg';
 	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
-	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';    
+	$datas['contents']['contents'][$j]['header']['contents'][2]['contents'][1]['color'] = '#FF0000';     }
 	$datas['contents']['contents'][$j]['header']['contents'][3]['type'] = 'text';
 	$datas['contents']['contents'][$j]['header']['contents'][3]['text'] = $prod_array[$j][4];     
 	$datas['contents']['contents'][$j]['header']['contents'][3]['size'] = 'sm';            
@@ -490,25 +491,7 @@ function carousel_show_favorite($db,$cus_id)
 	$datas['contents']['contents'][$j]['footer']['contents'][1]['style'] = 'primary';	          
 	    
 	file_put_contents("php://stderr", "json =====> ".json_encode($datas[$i], JSON_UNESCAPED_UNICODE));     
-	/*    
-	    
-	    
-	    
-	    
-        $datas['template']['columns'][$i]['thumbnailImageUrl'] = $prod_array[$i][2]; 
-        $datas['template']['columns'][$i]['title'] = $prod_array[$i][1]; //check prod_name ว่าต้องมี [$i] มั้ย
-        $datas['template']['columns'][$i]['text'] = $prod_array[$i][4];
-        $datas['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][0]['label'] = 'รายละเอียดเพิ่มเติม';
-        $datas['template']['columns'][$i]['actions'][0]['text'] = 'view more';
-        $datas['template']['columns'][$i]['actions'][0]['data'] =  'View '.$prod_array[$i][0];
-        $datas['template']['columns'][$i]['actions'][1]['type'] = 'postback';
-        $datas['template']['columns'][$i]['actions'][1]['label'] = 'ลบออกจาก Favorite';
-        $datas['template']['columns'][$i]['actions'][1]['text'] = 'Delete '.$fav[$i].'ออกจาก Favorite เรียบร้อย';  
-        $datas['template']['columns'][$i]['actions'][1]['data'] =  'Delete_fav '.$fav[$i];
-	
-	
-	*/
+
      }
 	
     if($i == 0) { return ['type'=>'text','text' => 'ยังไม่มีรายการที่บันทึกไว้'];   }
