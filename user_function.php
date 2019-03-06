@@ -603,7 +603,7 @@ function move_to_history($db)
      $time = date("H:i:s");
      $date = date("Y-m-d");
  
-     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
+     $ordertrack_query = pg_query($db,"SELECT * FROM orderlist WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
      while($list = pg_fetch_row($tracking_query))
