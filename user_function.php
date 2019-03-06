@@ -118,6 +118,7 @@ function carousel_flex_order($db,$userid,$check)
 	$trackinglist = array();
 	$datelist = array();
 	$timelist = array();
+	$exp = 0;
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
 		if($check=='1') // ที่รอชำระเงิน
@@ -155,6 +156,25 @@ function carousel_flex_order($db,$userid,$check)
 				
 		if(pg_num_rows($a)>0 )
 			{
+				if($check == '1')
+				{
+					$cc = pg_fetch_row($c)[0]; //order id
+					$dd = pg_fetch_row($d)[0]; // date
+					$ee = pg_fetch_row($e)[0]; // time
+					date_default_timezone_set("Asia/Bangkok");
+					$time = date("H:i:s");
+					$date = date("Y-m-d");
+					$exp_date = date("Y-m-d", strtotime("+2 days", strtotime($dd)));
+					if($date >= $exp_date )
+					{
+						if($time > $ee) {
+						pg_query($db,"DELETE FROM orderlist WHERE order_id = '$cc' ");
+						$exp = 1;
+						}
+					}
+				}
+				if($exp == 0)
+				{
 				$cartp[$run1] = pg_fetch_row($a)[0];
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = pg_fetch_row($b)[0];
@@ -164,6 +184,9 @@ function carousel_flex_order($db,$userid,$check)
 					$datelist[$run1] = pg_fetch_row($d)[0];
 					$timelist[$run1] = pg_fetch_row($e)[0]; }
 				$run1++;
+				}
+				
+				$exp =0;
 			}
 	}
 	
@@ -175,26 +198,6 @@ function carousel_flex_order($db,$userid,$check)
 				
 			}
 		}
-	/*
-	if(pg_num_rows($e)>0)
-		{
-			date_default_timezone_set("Asia/Bangkok");
-			$time = date("H:i:s");
-			$date = date("Y-m-d");
-			$exp_date = date("Y-m-d", strtotime("+2 days", strtotime($datelist[$k])));
-	    		if($date >= $exp_date )
-			{
-				if($time > $timelist[$k]) {
-				pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order_id[$k]' ");
-				$index = array_search("$order_id[$k]",$order_id);
-					
-				
-				}
-			}
-				
-				 	
-		}
-	*/
 	
 	for($k=0;$k<sizeof($cartp);$k++)
 	{
