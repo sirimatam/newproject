@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+require 'track.class.php';
 require 'user_function.php';
 require 'store_function.php';
 
@@ -8,6 +8,12 @@ require 'store_function.php';
 require 'RichMenu/uploadandsetrichMenuDefault.php';
 
 
+
+$track = new Trackingmore;
+$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4007911074',Array());
+$trace = $track['data']['items'][0]['lastEvent']; 
+file_put_contents("php://stderr", "track =====> ".$track);
+print_r($track);
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
@@ -19,8 +25,6 @@ $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-send_reply_message($API_URL_push, $POST_HEADER, show_test($db));
-file_put_contents("php://stderr", "show_test =====>".json_encode(show_test($db)));
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
 
@@ -59,6 +63,7 @@ if ( sizeof($request_array['events']) > 0 )
 		/*
 		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
 		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); */
+		
 		date_default_timezone_set("Asia/Bangkok");
 		$time = date("H:i:s");
 		$date = date("Y-m-d");
@@ -83,7 +88,7 @@ if ( sizeof($request_array['events']) > 0 )
 	
        elseif ($text=='ตะกร้าของฉัน')
 	{
-	        $first = carousel_cart($db,$userid);
+	       $first = carousel_cart($db,$userid);
 	       $check_cartp = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cart_used = '0' AND cus_id = '$userid' "))[0];
 	       $check = pg_fetch_row(pg_query($db,"SELECT * from cart_product WHERE cartp_id = '$check_cartp' "))[0];
 	       if( $check == '' )
