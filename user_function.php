@@ -153,7 +153,7 @@ function carousel_flex_order($db,$userid,$check)
 		}
 			
 				
-		if(pg_num_rows($a)>0)
+		if(pg_num_rows($a)>0 )
 			{
 				$cartp[$run1] = pg_fetch_row($a)[0];
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
@@ -175,24 +175,31 @@ function carousel_flex_order($db,$userid,$check)
 				
 			}
 		}
-	
-	
-	for($k=0;$k<sizeof($cartp);$k++)
-	{
-		/*
-		if($check=='1')
+	/*
+	if(pg_num_rows($e)>0)
 		{
 			date_default_timezone_set("Asia/Bangkok");
 			$time = date("H:i:s");
 			$date = date("Y-m-d");
-			$exp_date = date("Y-m-d", strtotime($datelist[$k]."+2 days"));
-	    		if($date >= $exp_date AND $time >= $timelist[$k])
+			$exp_date = date("Y-m-d", strtotime("+2 days", strtotime($datelist[$k])));
+	    		if($date >= $exp_date )
 			{
-				pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order_id[$k]'");
+				if($time > $timelist[$k]) {
+				pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order_id[$k]' ");
+				$index = array_search("$order_id[$k]",$order_id);
+					
+				
+				}
 			}
+				
 				 	
 		}
-		*/
+	*/
+	
+	for($k=0;$k<sizeof($cartp);$k++)
+	{
+
+		
 			
 		$sku_query = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
 		$skuid_array = array();
