@@ -274,13 +274,12 @@ function carousel_flex_order($db,$userid,$check)
 	$data['contents']['contents'][$j]['body']['contents'][$n]['flex'] = 0;
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['type'] = 'text';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['text'] = 'รวม'; //prod_name
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['margin'] = 'sm';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['weight'] = 'regular';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['margin'] = 'lg';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][0]['weight'] = 'bold';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['type'] = 'text';
 	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['text'] = $order_price[$j].' บาท'; //prod_name
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['margin'] = 'sm';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'regular';
-	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['align'] = 'end';			
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['margin'] = 'lg';
+	$data['contents']['contents'][$j]['body']['contents'][$n]['contents'][1]['weight'] = 'bold';			
 		    
 	
 	if(sizeof($trackinglist)>0)
