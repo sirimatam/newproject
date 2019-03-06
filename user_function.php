@@ -551,7 +551,7 @@ function out_of_time($db)
 		     
 	     } */
      }
-     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
+     $ordertrack_query = pg_query($db,"SELECT * FROM orderlist WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
      while($list = pg_fetch_row($tracking_query))
