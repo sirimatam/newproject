@@ -20,7 +20,7 @@ $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4L
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
 send_reply_message($API_URL_push, $POST_HEADER, show_test($db));
-//file_put_contents("php://stderr", "POST RESULT =====>".json_encode(show_test($db)));
+file_put_contents("php://stderr", "show_test =====>".json_encode(show_test($db)));
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
 
