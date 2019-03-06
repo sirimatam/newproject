@@ -118,6 +118,7 @@ function carousel_flex_order($db,$userid,$check)
 	$trackinglist = array();
 	$datelist = array();
 	$exp = 0;
+	$cc = '';
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
 		if($check=='1') // ที่รอชำระเงิน
@@ -177,7 +178,7 @@ function carousel_flex_order($db,$userid,$check)
 				$cartp[$run1] = pg_fetch_row($a)[0];
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = pg_fetch_row($b)[0];
-					if($check == '1') {$order_id[$run1] = $cc;}
+					if(strlen($cc) > 0) {$order_id[$run1] = $cc;}
 					else { $order_id[$run1] = pg_fetch_row($c)[0]; }
 				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; } 
 				$run1++;
