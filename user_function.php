@@ -305,7 +305,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
-	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://standardautocar.herokuapp.com/upload_slip.php?id=$order_id[$j]';	
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= "https://standardautocar.herokuapp.com/upload_slip.php?id='$order_id[$j]'";	
 		}
 	if($loop=='2')
 		{
