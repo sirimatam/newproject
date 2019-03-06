@@ -56,8 +56,18 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='เวลา')
 	{
+		/*
 		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
-		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'");
+		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); */
+		date_default_timezone_set("Asia/Bangkok");
+		$time = date("H:i:s");
+		$date = date("Y-m-d");
+		$exp_date = date("Y-m-d", strtotime("+2 days", strtotime("2019-02-21")));
+	    	if($date >= $exp_date )
+		{
+			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c6680'");
+		}
+		
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 	}	
