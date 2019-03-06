@@ -106,6 +106,9 @@ function delete_favorite($db,$fav_id)
 function carousel_flex_order($db,$userid,$check)
 {
 	// check can be 1,2,3,4
+	date_default_timezone_set("Asia/Bangkok");
+	$time = date("H:i:s");
+	$date = date("Y-m-d");
 	
 	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE createcart.cus_id = '$userid' AND createcart.cart_used = '1'");
 	$run2 = 0;
@@ -156,14 +159,13 @@ function carousel_flex_order($db,$userid,$check)
 				
 		if(pg_num_rows($a)>0 )
 			{
+				$aa = pg_fetch_row($a)[0]; //cartp
+				$bb = pg_fetch_row($b)[0]; // price
+				$cc = pg_fetch_row($c)[0]; //order id
+				$dd = pg_fetch_row($d)[0]; // date
+				$ee = pg_fetch_row($e)[0]; // time
 				if($check == '1')
 				{
-					$cc = pg_fetch_row($c)[0]; //order id
-					$dd = pg_fetch_row($d)[0]; // date
-					$ee = pg_fetch_row($e)[0]; // time
-					date_default_timezone_set("Asia/Bangkok");
-					$time = date("H:i:s");
-					$date = date("Y-m-d");
 					$exp_date = date("Y-m-d", strtotime("+2 days", strtotime($dd)));
 					if($date >= $exp_date )
 					{
@@ -175,12 +177,11 @@ function carousel_flex_order($db,$userid,$check)
 				}
 				if($exp == 0)
 				{
-				$cartp[$run1] = pg_fetch_row($a)[0];
+				$cartp[$run1] = $aa;
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
-				$order_price[$run1] = pg_fetch_row($b)[0];
-					if(strlen($cc) > 0) {$order_id[$run1] = $cc;}
-					else { $order_id[$run1] = pg_fetch_row($c)[0]; }
-				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; } 
+				$order_price[$run1] = $bb;
+				$order_id[$run1] = $cc;
+				if($loop == '2' ) { $datelist[$run1] = $dd; } 
 				$run1++;
 				}
 				
@@ -305,7 +306,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
-	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= "https://standardautocar.herokuapp.com/upload_slip.php?id='$order_id[$j]' ";	
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://standardautocar.herokuapp.com/upload_slip.php?id=$order_id[$j]';	
 		}
 	if($loop=='2')
 		{
@@ -526,7 +527,57 @@ function carousel_show_favorite($db,$cus_id)
     else    { return $datas; }
   }
   
-  
+function out_of_time($db)
+  {
+     date_default_timezone_set("Asia/Bangkok");
+     $time = date("H:i:s");
+     $date = date("Y-m-d");
+     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
+     $order_array=array();
+     while($order=pg_fetch_row($order_list))
+     {
+	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
+	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
+	     {
+		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     } /*
+	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
+	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
+	     {
+		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
+		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
+		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+		     
+	     } */
+     }
+     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
+     $ordertracklist = Array();
+     $i=0;
+     while($list = pg_fetch_row($tracking_query))
+     {
+	     $ordertracklist[$i] = $list;
+	     $i++;
+     }
+     for($t=0;$t<=$i;$t++)
+     {
+     $tracking = new Trackingmore;
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$t][5],Array()); 
+     $trace = $tracking['data']['items'][0]['lastEvent'];	
+     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     {
+	     
+	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
+	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]','$ordertracklist[5]')");
+	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+     }
+     }
+	
+	
+	
+	  
+  }
+	  
 
 
 function show_test($db)
@@ -543,6 +594,14 @@ function show_test($db)
 		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew']];  
 	     }
      
+}
+
+function timepost()
+{
+     date_default_timezone_set("Asia/Bangkok");
+     $timee = date("H:i:s");
+     $datee = date("Y-m-d");
+	return ['type'=>'text','text' => [$datee,$timee] ];
 }
 
    
