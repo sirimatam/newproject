@@ -305,7 +305,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'uri'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
-	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= "https://standardautocar.herokuapp.com/upload_slip.php?id='$order_id[$j]'";	
+	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['uri']= 'https://standardautocar.herokuapp.com/upload_slip.php?id=$order_id[$j]';	
 		}
 	if($loop=='2')
 		{
@@ -526,30 +526,12 @@ function carousel_show_favorite($db,$cus_id)
     else    { return $datas; }
   }
   
-function out_of_time($db)
+function move_to_history($db)
   {
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
-     $order_list = pg_query($db,"SELECT * FROM orderlist"); 
-     $order_array=array();
-     while($order=pg_fetch_row($order_list))
-     {
-	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
-	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
-	     {
-		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     } /*
-	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
-	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
-	     {
-		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
-		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
-		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     } */
-     }
+ 
      $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
@@ -561,20 +543,17 @@ function out_of_time($db)
      for($t=0;$t<=$i;$t++)
      {
      $tracking = new Trackingmore;
-     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$t][5],Array()); 
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$ordertracklist[$t][5],Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
      if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
      {
 	     
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
-	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]','$ordertracklist[5]')");
-	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+	       VALUES ('$ordertracklist[$t][0]','$ordertracklist[$t][1]','$ordertracklist[$t][2]','$ordertracklist[$t][3]','$ordertracklist[$t][4]','$ordertracklist[$t][5]')");
+	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '$ordertracklist[$t][0]'");
      }
      }
-	
-	
-	
-	  
+  
   }
 	  
 
@@ -593,14 +572,6 @@ function show_test($db)
 		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew']];  
 	     }
      
-}
-
-function timepost()
-{
-     date_default_timezone_set("Asia/Bangkok");
-     $timee = date("H:i:s");
-     $datee = date("Y-m-d");
-	return ['type'=>'text','text' => [$datee,$timee] ];
 }
 
    
