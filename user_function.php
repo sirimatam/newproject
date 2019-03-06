@@ -595,6 +595,38 @@ function show_test($db)
 	     }
      
 }
+  
+
+function move_to_history($db)
+  {
+     date_default_timezone_set("Asia/Bangkok");
+     $time = date("H:i:s");
+     $date = date("Y-m-d");
+ 
+     $ordertrack_query = pg_query($db,"SELECT * FROM order WHERE order_status = 'shipping' ");
+     $ordertracklist = Array();
+     $i=0;
+     while($list = pg_fetch_row($tracking_query))
+     {
+	     $ordertracklist[$i] = $list;
+	     $i++;
+     }
+     for($t=0;$t<=$i;$t++)
+     {
+     $tracking = new Trackingmore;
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$ordertracklist[$t][5],Array()); 
+     $trace = $tracking['data']['items'][0]['lastEvent'];	
+     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     {
+	     
+	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
+	       VALUES ('$ordertracklist[$t][0]','$ordertracklist[$t][1]','$ordertracklist[$t][2]','$ordertracklist[$t][3]','$ordertracklist[$t][4]','$ordertracklist[$t][5]')");
+	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '$ordertracklist[$t][0]'");
+     }
+     }
+  
+  }
+	
 
 function timepost()
 {
