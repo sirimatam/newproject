@@ -1,5 +1,5 @@
 <?php
-require 'track.class.php';
+
 
 function button_all_type($db)
   {
