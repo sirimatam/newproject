@@ -9,11 +9,11 @@ require 'RichMenu/uploadandsetrichMenuDefault.php';
 
 
 
-$track = new Trackingmore;
-$track = $track->getRealtimeTrackingResults('kerry-logistics','SHP4007911074',Array());
-$trace = $track['data']['items'][0]['lastEvent']; 
-file_put_contents("php://stderr", "track =====> ".$track);
-print_r($track);
+$trackk = new Trackingmore;
+$trackk = $trackk->getRealtimeTrackingResults('kerry-logistics','SHP4007911074',Array());
+$trace = $trackk['data']['items'][0]['lastEvent']; 
+file_put_contents("php://stderr", "trackk =====> ".$trackk);
+print_r($trackk);
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
