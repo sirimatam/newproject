@@ -117,7 +117,6 @@ function carousel_flex_order($db,$userid,$check)
 	$pd = array();
 	$trackinglist = array();
 	$datelist = array();
-	$timelist = array();
 	$exp = 0;
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
@@ -180,9 +179,6 @@ function carousel_flex_order($db,$userid,$check)
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
 				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; } 
-				if($check == '1' ) { 
-					$datelist[$run1] = pg_fetch_row($d)[0];
-					$timelist[$run1] = pg_fetch_row($e)[0]; }
 				$run1++;
 				}
 				
@@ -587,11 +583,10 @@ function show_test($db)
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
-     //$order_list = pg_query($db,"SELECT * FROM orderlist"); 
-     //$order_array=array();
 		
-	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103"))[0]; 
-	     if($date == '2019-03-06' and $time == '00:38:00')
+	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103"))[0];
+
+	     if($date == strtotime('2019-03-06') and $time == '14:27')
 	     {
 		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '5'");
 		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew']];  
