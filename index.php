@@ -65,7 +65,8 @@ if ( sizeof($request_array['events']) > 0 )
 		$exp_date = date("Y-m-d", strtotime("+2 days", strtotime("2019-02-21")));
 	    	if($date >= $exp_date )
 		{
-			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c6680'");
+			if($time > "10:00") {
+			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c6791'");}
 		}
 		
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
