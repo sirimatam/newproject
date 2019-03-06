@@ -8,14 +8,6 @@ require 'store_function.php';
 require 'RichMenu/uploadandsetrichMenuDefault.php';
 
 
-
-$trackk = new Trackingmore;
-$trackk = $trackk->getRealtimeTrackingResults('kerry-logistics','SHP4007911074',Array());
-$trace = $trackk['data']['items'][0]['lastEvent']; 
-file_put_contents("php://stderr", "trackk =====> ".$trackk);
-print_r($trackk);
-
-
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
 $richMenuId2= "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2
 
