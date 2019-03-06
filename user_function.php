@@ -117,13 +117,16 @@ function carousel_flex_order($db,$userid,$check)
 	$pd = array();
 	$trackinglist = array();
 	$datelist = array();
-	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
+	$timelist = array();
+	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
 		if($check=='1') // ที่รอชำระเงิน
 		{
 			$a = pg_query($db,"SELECT cartp_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$b = pg_query($db,"SELECT total_price FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			$c = pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
+			$d = pg_query($db,"SELECT order_date FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
+			$e = pg_query($db,"SELECT order_time FROM orderlist WHERE cartp_id = '$cartp_id' AND order_status = 'waiting for payment'");
 			
 		}
 		elseif($check=='2')//ที่ต้องจัดส่ง
@@ -153,10 +156,13 @@ function carousel_flex_order($db,$userid,$check)
 		if(pg_num_rows($a)>0)
 			{
 				$cartp[$run1] = pg_fetch_row($a)[0];
-			        file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
+				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = pg_fetch_row($b)[0];
 				$order_id[$run1] = pg_fetch_row($c)[0];
-				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; }
+				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; } 
+				if($check == '1' ) { 
+					$datelist[$run1] = pg_fetch_row($d)[0];
+					$timelist[$run1] = pg_fetch_row($e)[0]; }
 				$run1++;
 			}
 	}
@@ -173,6 +179,21 @@ function carousel_flex_order($db,$userid,$check)
 	
 	for($k=0;$k<sizeof($cartp);$k++)
 	{
+		/*
+		if($check=='1')
+		{
+			date_default_timezone_set("Asia/Bangkok");
+			$time = date("H:i:s");
+			$date = date("Y-m-d");
+			$exp_date = date("Y-m-d", strtotime($datelist[$k]."+2 days"));
+	    		if($date >= $exp_date AND $time >= $timelist[$k])
+			{
+				pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order_id[$k]'");
+			}
+				 	
+		}
+		*/
+			
 		$sku_query = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
 		$skuid_array = array();
 		$i = 0;
