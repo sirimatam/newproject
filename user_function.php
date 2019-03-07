@@ -570,7 +570,7 @@ function move_to_history($db)
      $tracking = new Trackingmore;
      $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
-     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     if(strtoupper(substr(explode(' ',$trace)[1],0,10))== 'SUCCESSFUL')
      {
 	     
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
