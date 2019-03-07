@@ -125,7 +125,7 @@ if ( sizeof($request_array['events']) > 0 )
 //		move_to_history($db);
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 		send_reply_message($API_URL, $POST_HEADER, $data);
-		
+		file_put_contents("php://stderr", "POST ที่ต้องได้รับ =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 		
 	} 
 	elseif ($text=='สินค้าที่ถูกใจ')
