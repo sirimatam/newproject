@@ -525,6 +525,7 @@ function out_of_time($db)
 	    {
 		if($time > $order[4] AND $order[5] == 'waiting for payment') {
 		pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]' ");
+		file_put_contents("php://stderr", "delete success ");
 		}
 	     }
 	     
