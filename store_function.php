@@ -23,15 +23,13 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][0]['text'] = 'เลือกประเภทสินค้า';
 	  $data['contents']['header']['contents'][0]['align'] = 'center';
 	  $data['contents']['header']['contents'][0]['weight'] = 'bold';
-	  $data['contents']['body']['type'] = 'box';
-	  $data['contents']['body']['layout'] = 'vertical';
 	  
 	  for ($i=0;$i<$run;$i++)
 	  {
-	  $data['contents']['body']['contents'][$i]['type'] = 'button';
-	  $data['contents']['body']['contents'][$i]['action']['type'] = 'message';
-	  $data['contents']['body']['contents'][$i]['action']['label'] = $type[$i];
-	  $data['contents']['body']['contents'][$i]['action']['text'] = $type[$i];
+	  $data['contents']['header']['contents'][$i+1]['type'] = 'button';
+	  $data['contents']['header']['contents'][$i+1]['action']['type'] = 'message';
+	  $data['contents']['header']['contents'][$i+1]['action']['label'] = $type[$i];
+	  $data['contents']['header']['contents'][$i+1]['action']['text'] = $type[$i];
 	  }
 	  
 	
