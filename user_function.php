@@ -577,6 +577,7 @@ function move_to_history($db)
 	       VALUES ('5c80c9','112','954','2019-03-07','14:32:25','SHX306592865TH')");
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c80c9' ");
 	     file_put_contents("php://stderr", "delete success ");
+	     return 'delete success';
      }
 	
 	
