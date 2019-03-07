@@ -533,50 +533,19 @@ function out_of_time($db)
      $time = date("H:i:s");
      $date = date("Y-m-d");
      $order_list = pg_query($db,"SELECT * FROM orderlist"); 
-     $order_array=array();
      while($order=pg_fetch_row($order_list))
      {
-	     $exp_date = date("Y-m-d", strtotime($order[3]."+2 days"));
-	     if($date >= $exp_date AND $time >= $order[4] AND $order[5] == 'waiting for payment')
-	     {
-		     pg_query($db,"DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     } /*
-	     $old_date = date("Y-m-d", strtotime($order[3]."+30 days"));
-	     if($date >= $old_date AND $time >= $order[4] AND $order[5] != 'waiting for payment' AND $order[5] != 'waiting for packing' )
-	     {
-		     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time) 
-		        VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]')");
-		     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
-		     
-	     } */
-     }
-     $ordertrack_query = pg_query($db,"SELECT * FROM orderlist WHERE order_status = 'shipping' ");
-     $ordertracklist = Array();
-     $i=0;
-     while($list = pg_fetch_row($tracking_query))
-     {
-	     $ordertracklist[$i] = $list;
-	     $i++;
-     }
-     for($t=0;$t<=$i;$t++)
-     {
-     $tracking = new Trackingmore;
-     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$trackinglist[$t][5],Array()); 
-     $trace = $tracking['data']['items'][0]['lastEvent'];	
-     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
-     {
+	     $exp_date = date("Y-m-d", strtotime("+2 days", strtotime($order[3])));
+	     if($date >= $exp_date )
+	    {
+		if($time > $order[4] AND $order[5] == 'waiting for payment') {
+		pg_query($db,"DELETE FROM orderlist WHERE order_id = '$cc' ");
+		}
+	     }
 	     
-	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
-	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]','$ordertracklist[5]')");
-	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
-	     file_put_contents("php://stderr", "delete success ");
      }
-     }
-	
-	
-	
-	  
+ 
+    	  
   }
 	  
 
