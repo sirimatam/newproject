@@ -168,8 +168,10 @@ function carousel_flex_order($db,$userid,$check)
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = $bb;
 				$order_id[$run1] = $cc;
-				if($loop == '2' ) { $datelist[$run1] = $dd; } 
+			
 				$run1++;
+				if($loop == '2' ) { $datelist[$run1] = $dd; } 
+				
 
 			}
 	}
