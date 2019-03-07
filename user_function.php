@@ -551,13 +551,13 @@ function move_to_history($db)
 	     $ordertracklist[$i] = $list;
 	     $i++;
      }
-/*    for($t=0;$t<=$i;$t++)
+    for($t=0;$t<=$i;$t++)
      {
-	     $order = $ordertracklist[$t];
-    $tracking = new Trackingmore;
+     $order = $ordertracklist[$t];
+     $tracking = new Trackingmore;
      $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$order[6],Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
-     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     if(strtoupper(substr(explode(' ',$trace)[1],0,10))== 'SUCCESSFUL')
      {
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
 	       VALUES ('$order[0]','$order[1]','$order[2]','$order[3]','$order[4]','$order[6]')");
@@ -565,8 +565,8 @@ function move_to_history($db)
 	     file_put_contents("php://stderr", "delete success ");
      }
      }
-*/
-	
+
+/*	
      $tracking = new Trackingmore;
      $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics','SHX306592865TH',Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
@@ -577,10 +577,10 @@ function move_to_history($db)
 	       VALUES ('5c80c9','112','954','2019-03-07','14:32:25','SHX306592865TH')");
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c80c9' ");
 	     file_put_contents("php://stderr", "delete success ");
-	     return 'delete success';
+	     
      }
 	
-	
+*/	
 	
 	
 	
