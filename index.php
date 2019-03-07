@@ -119,7 +119,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
-		move_to_history($db);
+//		move_to_history($db);
 		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
