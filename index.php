@@ -41,7 +41,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
 	   
-	out_of_time($db);
+	
 	   
 	if ($text=='ค้นหาสินค้า')
 	{
@@ -96,6 +96,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='ชำระเงิน')
 	{
+		out_of_time($db);
 		$post1 = carousel_flex_order($db,$userid,'1');
 		$post2 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
 		$data1 = format_message_v2($reply_token,[$post1,$post2]);
