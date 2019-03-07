@@ -164,28 +164,14 @@ function carousel_flex_order($db,$userid,$check)
 				$cc = pg_fetch_row($c)[0]; //order id
 				$dd = pg_fetch_row($d)[0]; // date
 				$ee = pg_fetch_row($e)[0]; // time
-				if($check == '1')
-				{
-					$exp_date = date("Y-m-d", strtotime("+2 days", strtotime($dd)));
-					if($date >= $exp_date )
-					{
-						if($time > $ee) {
-						pg_query($db,"DELETE FROM orderlist WHERE order_id = '$cc' ");
-						$exp = 1;
-						}
-					}
-				}
-				if($exp == 0)
-				{
+				
 				$cartp[$run1] = $aa;
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
 				$order_price[$run1] = $bb;
 				$order_id[$run1] = $cc;
 				if($loop == '2' ) { $datelist[$run1] = $dd; } 
 				$run1++;
-				}
-				
-				$exp =0;
+
 			}
 	}
 	
