@@ -551,10 +551,10 @@ function move_to_history($db)
 	     $ordertracklist[$i] = $list;
 	     $i++;
      }
-     for($t=0;$t<=$i;$t++)
+/*    for($t=0;$t<=$i;$t++)
      {
 	     $order = $ordertracklist[$t];
- /*    $tracking = new Trackingmore;
+    $tracking = new Trackingmore;
      $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$order[6],Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
      if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
