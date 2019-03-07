@@ -520,7 +520,7 @@ function out_of_time($db)
      $order_list = pg_query($db,"SELECT * FROM orderlist"); 
      while($order=pg_fetch_row($order_list))
      {
-	     $exp_date = date("Y-m-d", strtotime("+2 days", strtotime($order[3])));
+	     $exp_date = date("Y-m-d", strtotime("+2 days", strtotime("$order[3]")));
 	     if($date >= $exp_date )
 	    {
 		if($time > $order[4] AND $order[5] == 'waiting for payment') {
