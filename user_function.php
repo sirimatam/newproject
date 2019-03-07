@@ -196,18 +196,18 @@ function carousel_flex_order($db,$userid,$check)
 		}
 		$pdid_array = array();
 		$run =0;
-		foreach( $skuid_array as $skuid)
+		while($run <= sizeof($skuid_array))
 		{
-			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid'"))[0];
-			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid'"))[0];
+			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
+			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
 			$run++;
 		}
 		$running = 0;
-		foreach ( $pdid_array as $pdid )
+		while($running <= sizeof($pdid_array))
 		{
-			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid'"))[0];
-			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid'"))[0];
-			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid'"))[0]*$cartp_qtt[$running];
+			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
+			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
+			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid_array[$running]'"))[0]*$cartp_qtt[$running];
 			$pd[$k][$running] = [$pd_id,$pd_name,$pd_price];
 			$running++;
 		}
