@@ -580,29 +580,14 @@ function out_of_time($db)
 	  
 
 
-function show_test($db)
-  {
-     date_default_timezone_set("Asia/Bangkok");
-     $time = date("H:i:s");
-     $date = date("Y-m-d");
-		
-	     $cus_id = pg_fetch_row(pg_query($db,"SELECT cus_id FROM createcart WHERE cartp_id = 103"))[0];
 
-	     if($date == strtotime('2019-03-06') and $time == '14:27')
-	     {
-		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '5'");
-		return ['to' => $cus_id,'messages' => ['type'=>'text','text' => 'update laew']];  
-	     }
-     
-}
-  
 
 function move_to_history($db)
   {
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
- 
+ /*
      $ordertrack_query = pg_query($db,"SELECT * FROM orderlist WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
@@ -624,7 +609,23 @@ function move_to_history($db)
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '$ordertracklist[$t][0]'");
      }
      }
-  
+*/
+	
+     $tracking = new Trackingmore;
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array()); 
+     $trace = $tracking['data']['items'][0]['lastEvent'];	
+     if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
+     {
+	     
+	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
+	       VALUES ('5c67a4','98','30','2019-02-16','12:48:48','SHP4007911074')");
+	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c67a4' ");
+     }
+	
+	
+	
+	
+	
   }
 	
 
