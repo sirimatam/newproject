@@ -16,7 +16,7 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
-out_of_time($db);
+//out_of_time($db);
 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
