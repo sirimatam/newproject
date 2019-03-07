@@ -98,7 +98,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		out_of_time($db);
 		$post1 = carousel_flex_order($db,$userid,'1');
-		if($post1 == 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้')
+		if($post1['text'] == 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้')
 		{
 			$data1 = send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$post1)); 
 		}
