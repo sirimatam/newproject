@@ -400,17 +400,22 @@ function add_to_order($db,$cus_id,$cart_avail)
 	
 	$order_id = substr(uniqid(),0,6);
 	$query = pg_query($db,"SELECT order_id FROM orderlist");
-	$dup = pg_fetch_all($query);
+	$dup = array();
 	$q=0;
+	$j=0;
 	while($q < pg_num_rows($query))
 	{
-		if($order_id == $dup[$q]) 
+		$dup[$q] = pg_fetch_row($query)[0];
+		$q++;
+	}
+	while($j <= $q)
+	{ 
+		if($order_id == $dup[$j] ) 
 		{
 			$order_id = substr(uniqid(),0,6);
-			$q= -1;
+			$j=0;
 		}
-		
-		$q++;
+		$j++;
 	}
 	
 	$skuids = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cart_avail'");
