@@ -570,6 +570,7 @@ function out_of_time($db)
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
 	       VALUES ('$ordertracklist[0]','$ordertracklist[1]','$ordertracklist[2]','$ordertracklist[3]','$ordertracklist[4]','$ordertracklist[5]')");
 	     pg_query("DELETE FROM orderlist WHERE order_id = '$order[0]'");
+	     file_put_contents("php://stderr", "delete success ");
      }
      }
 	
