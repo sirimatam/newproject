@@ -41,7 +41,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
 	   
-	out_of_time($db);
+//	out_of_time($db);
 	   
 	if ($text=='ค้นหาสินค้า')
 	{
@@ -63,7 +63,7 @@ if ( sizeof($request_array['events']) > 0 )
 	    	if($date >= $exp_date )
 		{
 			if($time > "10:00") {
-			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c6791'");}
+			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c7f73'");}
 		}
 		
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
