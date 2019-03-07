@@ -542,7 +542,7 @@ function move_to_history($db)
      date_default_timezone_set("Asia/Bangkok");
      $time = date("H:i:s");
      $date = date("Y-m-d");
- /*
+ 
      $ordertrack_query = pg_query($db,"SELECT * FROM orderlist WHERE order_status = 'shipping' ");
      $ordertracklist = Array();
      $i=0;
@@ -554,17 +554,18 @@ function move_to_history($db)
      for($t=0;$t<=$i;$t++)
      {
      $tracking = new Trackingmore;
-     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array()); 
+     $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics',$ordertracklist[$t][6],Array()); 
      $trace = $tracking['data']['items'][0]['lastEvent'];	
      if(strtoupper(explode(' ',$trace)[1])== 'SUCCESSFUL')
      {
 	     
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
-	       VALUES ('$ordertracklist[$t][0]','$ordertracklist[$t][1]','$ordertracklist[$t][2]','$ordertracklist[$t][3]','$ordertracklist[$t][4]','$ordertracklist[$t][5]')");
+	       VALUES ('$ordertracklist[$t][0]','$ordertracklist[$t][1]','$ordertracklist[$t][2]','$ordertracklist[$t][3]','$ordertracklist[$t][4]','$ordertracklist[$t][6]')");
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '$ordertracklist[$t][0]'");
+	     file_put_contents("php://stderr", "delete success ");
      }
      }
-*/
+/*
 	
      $tracking = new Trackingmore;
      $tracking = $tracking->getRealtimeTrackingResults('kerry-logistics','SHP4003994671',Array()); 
@@ -577,7 +578,7 @@ function move_to_history($db)
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c67a4' ");
 	     file_put_contents("php://stderr", "delete success ");
      }
-	
+*/	
 	
 	
 	
