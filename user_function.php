@@ -196,14 +196,14 @@ function carousel_flex_order($db,$userid,$check)
 		}
 		$pdid_array = array();
 		$run =0;
-		while($run <= sizeof($skuid_array))
+		while($run < sizeof($skuid_array))
 		{
 			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
 			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
 			$run++;
 		}
 		$running = 0;
-		while($running <= sizeof($pdid_array))
+		while($running < sizeof($pdid_array))
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
 			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
