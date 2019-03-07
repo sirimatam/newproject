@@ -442,7 +442,7 @@ function add_to_order($db,$cus_id,$cart_avail)
 	}
 	date_default_timezone_set("Asia/Bangkok");
 	$time = date("H:i:s");
-	$date = date("Y-m-d") ;
+	$date = date("Y-m-d");
 	pg_query($db,"INSERT INTO orderlist (order_id,cartp_id,total_price,order_date,order_time,order_status) VALUES ('$order_id','$cart_avail','$total_price','$date','$time','waiting for payment')");
 	pg_query($db,"UPDATE createcart SET cart_used = '1' WHERE cartp_id = '$cart_avail'");
 	pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$cus_id','0')");
@@ -619,8 +619,9 @@ function move_to_history($db)
      {
 	     
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
-	       VALUES ('5c67a4','98','30','2019-02-16','12:48:48','SHP4007911074')");
+	       VALUES ('5c67a4','98','30',strtotime("2019-02-16"),"12:48:48",'SHP4007911074')");
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c67a4' ");
+	     file_put_contents("php://stderr", "delete success ");
      }
 	
 	
