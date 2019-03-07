@@ -174,28 +174,27 @@ function carousel_flex_order($db,$userid,$check)
 				
 			}
 		}
-	
-	for($k=0;$k<sizeof($cartp);$k++)
+	$skuid_array = array();
+	for($k=0;$k<sizeof($cartp);$k++) //คิดทีละใบออเดอร์
 	{
 		
 			
 		$sku_query = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp[$k]'");
-		$skuid_array = array();
 		$i = 0;
 		
 		
 		while($list = pg_fetch_row($sku_query)[0])
 		{
-			$skuid_array[$i] = $list;
-			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp[$k]' AND sku_id = '$list'"))[0];
+			$skuid_array[$k][$i] = $list;
+			$cartp_qtt[$k][$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp[$k]' AND sku_id = '$list'"))[0];
 			$i++;
 		}
 		$pdid_array = array();
 		$run =0;
-		while($run < sizeof($skuid_array))
+		while($run < sizeof($skuid_array[$k]))
 		{
-			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
-			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$run]'"))[0];
+			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$k][$run]'"))[0];
+			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$k][$run]'"))[0];
 			$run++;
 		}
 		$running = 0;
@@ -236,7 +235,7 @@ function carousel_flex_order($db,$userid,$check)
 			$data['contents']['contents'][$j]['body']['contents'][$i]['layout'] = 'baseline';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['flex'] = 0;
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['type'] = 'text';
-			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$i].' '.$sku_color[$j][$i].' '.$cartp_qtt[$i].' ชิ้น'; //prod_name
+			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$j][$i].' '.$sku_color[$j][$i].' '.$cartp_qtt[$j][$i].' ชิ้น'; //prod_name
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['margin'] = 'xs';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
 			$data['contents']['contents'][$j]['body']['contents'][$i]['contents'][1]['type'] = 'text';
