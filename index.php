@@ -41,7 +41,7 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
 	   
-//	out_of_time($db);
+	out_of_time($db);
 	   
 	if ($text=='ค้นหาสินค้า')
 	{
