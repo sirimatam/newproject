@@ -120,8 +120,7 @@ function carousel_flex_order($db,$userid,$check)
 	$pd = array();
 	$trackinglist = array();
 	$datelist = array();
-	$exp = 0;
-	$cc = '';
+
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
 		if($check=='1') // ที่รอชำระเงิน
