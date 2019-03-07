@@ -202,7 +202,7 @@ function carousel_flex_order($db,$userid,$check)
 		{
 			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
 			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
-			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid_array[$running]'"))[0]*$cartp_qtt[$running];
+			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid_array[$running]'"))[0]*$cartp_qtt[$k][$running];
 			$pd[$k][$running] = [$pd_id,$pd_name,$pd_price];
 			$running++;
 		}
