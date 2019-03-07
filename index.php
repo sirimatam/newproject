@@ -98,10 +98,15 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		out_of_time($db);
 		$post1 = carousel_flex_order($db,$userid,'1');
+		if($post1 == 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้')
+		{
+			$data1 = send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$post1)); 
+		}
+		else {
 		$post2 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
 		$data1 = format_message_v2($reply_token,[$post1,$post2]);
 			   
-		send_reply_message($API_URL, $POST_HEADER, $data1);
+		send_reply_message($API_URL, $POST_HEADER, $data1); }
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data1, JSON_UNESCAPED_UNICODE));
 	}      
 	   
