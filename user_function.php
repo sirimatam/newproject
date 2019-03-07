@@ -103,6 +103,7 @@ function delete_favorite($db,$fav_id)
   {
     pg_query($db,"DELETE FROM favorite WHERE fav_id = '$fav_id'");
   }
+
 function carousel_flex_order($db,$userid,$check)
 {
 	// check can be 1,2,3,4
@@ -193,8 +194,9 @@ function carousel_flex_order($db,$userid,$check)
 		$run =0;
 		while($run < sizeof($skuid_array[$k]))
 		{
-			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$skuid_array[$k][$run]'"))[0];
-			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$skuid_array[$k][$run]'"))[0];
+			$thissku = $skuid_array[$k][$run];
+			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$thissku'"))[0];
+			$sku_color[$k][$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$thissku'"))[0];
 			$run++;
 		}
 		$running = 0;
@@ -299,6 +301,7 @@ function carousel_flex_order($db,$userid,$check)
 	} 
 	else {	return $data; } 
 }
+
 
 function flex_order($db,$order_id,$cartp_id)
 {
