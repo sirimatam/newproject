@@ -619,7 +619,7 @@ function move_to_history($db)
      {
 	     
 	     pg_query($db,"INSERT INTO historyorder (order_id,cartp_id,total_price,order_date,order_time,tracking_number) 
-	       VALUES ('5c67a4','98','30',strtotime("2019-02-16"),"12:48:48",'SHP4007911074')");
+	       VALUES ('5c67a4','98','30','2019-02-16','12:48:48','SHP4007911074')");
 	     pg_query($db, "DELETE FROM orderlist WHERE order_id = '5c67a4' ");
 	     file_put_contents("php://stderr", "delete success ");
      }
