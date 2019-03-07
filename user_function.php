@@ -158,20 +158,13 @@ function carousel_flex_order($db,$userid,$check)
 				
 		if(pg_num_rows($a)>0 )
 			{
-				$aa = pg_fetch_row($a)[0]; //cartp
-				$bb = pg_fetch_row($b)[0]; // price
-				$cc = pg_fetch_row($c)[0]; //order id
-				$dd = pg_fetch_row($d)[0]; // date
-				$ee = pg_fetch_row($e)[0]; // time
-				
-				$cartp[$run1] = $aa;
+
+				$cartp[$run1] = pg_fetch_row($a)[0];
 				file_put_contents("php://stderr", " cartp_id ===> ".$cartp[$run1]);
-				$order_price[$run1] = $bb;
-				$order_id[$run1] = $cc;
-			
+				$order_price[$run1] = pg_fetch_row($b)[0];
+				$order_id[$run1] = pg_fetch_row($c)[0];
+				if($loop == '2' ) { $datelist[$run1] = pg_fetch_row($d)[0]; } 
 				$run1++;
-				if($loop == '2' ) { $datelist[$run1] = $dd; } 
-				
 
 			}
 	}
