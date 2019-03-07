@@ -16,7 +16,7 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 
 set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
-out_of_time($db);
+
 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
@@ -40,7 +40,9 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default) VALUES ('$userid','1')");
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
-	
+	   
+	out_of_time($db);
+	   
 	if ($text=='ค้นหาสินค้า')
 	{
 	        $data = format_message($reply_token,button_all_type($db));
