@@ -30,7 +30,7 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][$i+1]['action']['type'] = 'message';
 	  $data['contents']['header']['contents'][$i+1]['action']['label'] = $type[$i];
 	  $data['contents']['header']['contents'][$i+1]['action']['text'] = 'ค้นหาภายใน'.$type[$i];
- 	  $data['contents']['header']['contents'][$i+1]['action']['margin'] = 'none';
+ 	  $data['contents']['header']['contents']['margin'] = 'none';
 	  }
 	  $data['contents']['header']['contents'][$run+1]['type'] = 'text';
 	  $data['contents']['header']['contents'][$run+1]['wrap'] = true;
