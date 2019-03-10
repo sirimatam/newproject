@@ -259,7 +259,7 @@ if ( sizeof($request_array['events']) > 0 )
 				file_put_contents("php://stderr", "$carousel =====> ".json_encode($carousel));
 				$post = format_message($reply_token,$carousel);	
 				send_reply_message($API_URL, $POST_HEADER, $post);
-				file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));\\\\
+				file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));
 
 			}
 		}
