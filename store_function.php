@@ -34,7 +34,7 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][$run+1]['type'] = 'text';
 	  $data['contents']['header']['contents'][$run+1]['align'] = 'center';
 	  $data['contents']['header']['contents'][$run+1]['wrap'] = true;
-	  $data['contents']['header']['contents'][$run+1]['text'] = 'ค้นหาจากรหัสสินค้า กรุณาพิมพ์รหัสสินค้า เช่น A2';
+	  $data['contents']['header']['contents'][$run+1]['text'] = 'กดเลือกประเภทสินค้า หรือค้นหาจากรหัสสินค้า โดยพิมพ์รหัสสินค้า เช่น A2';
 	
    return $data;
   }  
