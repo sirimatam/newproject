@@ -900,7 +900,7 @@ function get_datetime()
 function flex_sku($db,$skuid)
 {
 	$sku = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$skuid' "))[0];
-	$prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE stock.prod_id = '$sku[1]' "))[0];
+	$prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$sku[1]' "))[0];
 	
 	$datas['contents']['contents'][0]['type'] = 'bubble';
     	$datas['contents']['contents'][0]['direction'] = 'ltr';
