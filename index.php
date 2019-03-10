@@ -204,9 +204,10 @@ if ( sizeof($request_array['events']) > 0 )
 			send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$data));
 			file_put_contents("php://stderr", "cart_qtt =====> ".json_encode($cart_qtt, JSON_UNESCAPED_UNICODE));
 		}
+		
 	}
 	}
-	elseif(explode("ค้นหาภายใน",$text)[0] == '')
+	elseif(explode(" ",$text)[0] == 'ค้นหาภายใน')
 	{
 		$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 		$run = 0;	
