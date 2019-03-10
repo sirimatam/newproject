@@ -205,39 +205,66 @@ if ( sizeof($request_array['events']) > 0 )
 			file_put_contents("php://stderr", "cart_qtt =====> ".json_encode($cart_qtt, JSON_UNESCAPED_UNICODE));
 		}
 	}
-	}  
-	else {
-	$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
-	$run = 0;	
-	$pdtype = [];
-	while($each = pg_fetch_row($query_pd)[0])
-	   {
-		   $pdtype[$run] = $each;
-		   $run++;
-	   }   
- 	foreach($pdtype as $type)
+	}
+	elseif(explode("ค้นหาภายใน",$text)[0] == '')
 	{
-		if($text == $type)
+		$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
+		$run = 0;	
+		$pdtype = [];
+		while($each = pg_fetch_row($query_pd)[0])
+		   {
+			   $pdtype[$run] = $each;
+			   $run++;
+		   }   
+		foreach($pdtype as $type)
 		{
-			$array_carousel = carousel_product_type($db,$text);
-			file_put_contents("php://stderr", "array_carousel =====> ".json_encode($array_carousel));
-			if(sizeof($array_carousel) > 1)
+			if($text == $type)
 			{
-				for($i=0;$i<sizeof($array_carousel);$i++)
+				$array_carousel = carousel_product_type($db,$text);
+				file_put_contents("php://stderr", "array_carousel =====> ".json_encode($array_carousel));
+				if(sizeof($array_carousel) > 1)
 				{
-					$post = format_message_push($userid,$array_carousel);	 
-					$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
-					file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+					for($i=0;$i<sizeof($array_carousel);$i++)
+					{
+						$post = format_message_push($userid,$array_carousel);	 
+						$send_result = send_reply_message($API_URL_push, $POST_HEADER, $post);
+						file_put_contents("php://stderr", "POST RESULT =====> ".$send_result);
+					}
+				}
+				else
+				{
+					$post = format_message($reply_token,$array_carousel[0]);	
+					send_reply_message($API_URL, $POST_HEADER, $post);
+					file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));
 				}
 			}
-			else
-			{
-				$post = format_message($reply_token,$array_carousel[0]);	
-				send_reply_message($API_URL, $POST_HEADER, $post);
-				file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));
-			}
+
 		}
 	}
+	else 
+	{
+		$query_sku = pg_query($db,"SELECT sku_id FROM product GROUP BY prod_type");
+		$run = 0;	
+		$listsku = [];
+		while($each = pg_fetch_row($query_sku)[0])
+		   {
+			   $listsku[$run] = $each;
+			   $run++;
+		   }   
+		foreach($listsku as $id_sku)
+		{
+			if($text == $id_sku)
+			{
+				$carousel = flex_sku($db,$id_sku);
+				file_put_contents("php://stderr", "$carousel =====> ".json_encode($carousel));
+				$post = format_message($reply_token,$carousel);	
+				send_reply_message($API_URL, $POST_HEADER, $post);
+				file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($post));\\\\
+
+			}
+		}
+			
+	
 	}
 	
    } 
