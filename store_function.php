@@ -23,6 +23,7 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][0]['text'] = 'เลือกประเภทสินค้า';
 	  $data['contents']['header']['contents'][0]['align'] = 'center';
 	  $data['contents']['header']['contents'][0]['weight'] = 'bold';
+	  $data['contents']['header']['contents'][0]['size'] = 'lg';
 	  $data['contents']['header']['contents'][1]['type'] = 'text';
 	  $data['contents']['header']['contents'][1]['align'] = 'center';
 	  $data['contents']['header']['contents'][1]['wrap'] = true;
