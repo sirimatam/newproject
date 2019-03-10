@@ -691,20 +691,6 @@ function carousel_view_more($db,$prod_id)
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['action']['text'] = 'ค้นหาสินค้า';           
 	$datas[$j]['contents']['contents'][$i]['footer']['contents'][1]['contents'][1]['color'] = '#4B4848';	
         
-		/*
-	$datas[$j]['template']['columns'][$i]['thumbnailImageUrl'] = $sku[($j*10)+$i][5]; 
-        $datas[$j]['template']['columns'][$i]['title'] = 'รหัสสินค้า '.$sku[($j*10)+$i][0].' '.$pd_name;
-        $datas[$j]['template']['columns'][$i]['text'] = $pd_des."\n".$sku[($j*10)+$i][3]." size: ".$sku[($j*10)+$i][4]."  Stock : ".$sku[($j*10)+$i][2];
-        $datas[$j]['template']['columns'][$i]['actions'][0]['type'] = 'postback';
-        $datas[$j]['template']['columns'][$i]['actions'][0]['label'] = 'สั่งลงตะกร้า';
-        $datas[$j]['template']['columns'][$i]['actions'][0]['text'] = 'บันทึก'.$pd_name.' '.$sku[($j*10)+$i][3].' ลงตะกร้าเรียบร้อยแล้ว';
-        $datas[$j]['template']['columns'][$i]['actions'][0]['data'] = 'Cart '.$sku[($j*10)+$i][0];
-	$datas[$j]['template']['columns'][$i]['actions'][1]['type'] = 'message';
-        $datas[$j]['template']['columns'][$i]['actions'][1]['label'] = 'สั่งสินค้ามากกว่า 1 ชิ้น';
-        $datas[$j]['template']['columns'][$i]['actions'][1]['text'] = "กรุณาพิมพ์รหัสสินค้า เว้นวรรค ตามด้วยจำนวนสินค้าที่ต้องการ เช่น</br>B01 4";
-        $datas[$j]['template']['columns'][$i]['actions'][2]['type'] = 'message';
-        $datas[$j]['template']['columns'][$i]['actions'][2]['label'] = 'ดูสินค้าอื่น';
-        $datas[$j]['template']['columns'][$i]['actions'][2]['text'] = 'ดูและสั่งซื้อสินค้า'; */
      }
    }
 	$last_carousel = $num_carousel-($num_set*10);
@@ -902,41 +888,43 @@ function flex_sku($db,$skuid)
 	$sku = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$skuid' "))[0];
 	$prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$sku[1]' "))[0];
 	
-	$datas['contents']['contents'][0]['type'] = 'bubble';
-    	$datas['contents']['contents'][0]['direction'] = 'ltr';
-	$datas['contents']['contents'][0]['header']['type'] = 'box';
-	$datas['contents']['contents'][0]['header']['layout'] = 'vertical';
-	$datas['contents']['contents'][0]['header']['contents'][0]['type'] = 'image';
-	$datas['contents']['contents'][0]['header']['contents'][0]['url'] = $sku[5];     
-	$datas['contents']['contents'][0]['header']['contents'][0]['size'] = 'full';
-	$datas['contents']['contents'][0]['header']['contents'][0]['aspectRatio'] = '1.51:1';
-	$datas['contents']['contents'][0]['header']['contents'][0]['aspectMode'] = 'fit';             
-	$datas['contents']['contents'][0]['header']['contents'][1]['type'] = 'text';      
-	$datas['contents']['contents'][0]['header']['contents'][1]['text'] = 'รหัสสินค้า '.$sku[0].' '.$prod[1];      
-        $datas['contents']['contents'][0]['header']['contents'][1]['weight'] = 'bold';
-	$datas['contents']['contents'][0]['header']['contents'][1]['size'] = 'xl';
-	$datas['contents']['contents'][0]['header']['contents'][1]['wrap'] = true;
-	$datas['contents']['contents'][0]['header']['contents'][2]['type'] = 'box';
-	$datas['contents']['contents'][0]['header']['contents'][2]['layout'] = 'baseline';     
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][0]['type'] = 'text';       
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod[5];      
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
+	$datas['type'] = 'flex';
+    	$datas['altText'] = 'Flex Message';
+	$datas['contents'][0]['type'] = 'bubble';
+    	$datas['contents'][0]['direction'] = 'ltr';
+	$datas['contents'][0]['header']['type'] = 'box';
+	$datas['contents'][0]['header']['layout'] = 'vertical';
+	$datas['contents'][0]['header']['contents'][0]['type'] = 'image';
+	$datas['contents'][0]['header']['contents'][0]['url'] = $sku[5];     
+	$datas['contents'][0]['header']['contents'][0]['size'] = 'full';
+	$datas['contents'][0]['header']['contents'][0]['aspectRatio'] = '1.51:1';
+	$datas['contents'][0]['header']['contents'][0]['aspectMode'] = 'fit';             
+	$datas['contents'][0]['header']['contents'][1]['type'] = 'text';      
+	$datas['contents'][0]['header']['contents'][1]['text'] = 'รหัสสินค้า '.$sku[0].' '.$prod[1];      
+        $datas['contents'][0]['header']['contents'][1]['weight'] = 'bold';
+	$datas['contents'][0]['header']['contents'][1]['size'] = 'xl';
+	$datas['contents'][0]['header']['contents'][1]['wrap'] = true;
+	$datas['contents'][0]['header']['contents'][2]['type'] = 'box';
+	$datas['contents'][0]['header']['contents'][2]['layout'] = 'baseline';     
+	$datas['contents'][0]['header']['contents'][2]['contents'][0]['type'] = 'text';       
+	$datas['contents'][0]['header']['contents'][2]['contents'][0]['text'] = '฿ '.$prod[5];      
+	$datas['contents'][0]['header']['contents'][2]['contents'][0]['margin'] = 'none';  
 	      if($prod[6]<$prod[5]) {
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][1]['type'] = 'text';       
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod[6].' !!!';               
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
-	$datas['contents']['contents'][0]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; }
-	$datas['contents']['contents'][0]['header']['contents'][3]['type'] = 'box';
-	$datas['contents']['contents'][0]['header']['contents'][3]['layout'] = 'vertical';
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][0]['type'] = 'text';
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][0]['text'] = $prod[4];     
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][0]['wrap'] = true;   
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][1]['type'] = 'text';
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][1]['text'] = 'size: '.$sku[4];     
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][2]['type'] = 'text';
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][2]['text'] = $sku[3]; //สี
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][3]['type'] = 'text';
-	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][3]['text'] = 'stock: '.$sku[2];    
+	$datas['contents'][0]['header']['contents'][2]['contents'][1]['type'] = 'text';       
+	$datas['contents'][0]['header']['contents'][2]['contents'][1]['text'] = 'Now ฿'.$prod[6].' !!!';               
+	$datas['contents'][0]['header']['contents'][2]['contents'][1]['weight'] = 'bold';
+	$datas['contents'][0]['header']['contents'][2]['contents'][1]['color'] = '#FF0000'; }
+	$datas['contents'][0]['header']['contents'][3]['type'] = 'box';
+	$datas['contents'][0]['header']['contents'][3]['layout'] = 'vertical';
+	$datas['contents'][0]['header']['contents'][3]['contents'][0]['type'] = 'text';
+	$datas['contents'][0]['header']['contents'][3]['contents'][0]['text'] = $prod[4];     
+	$datas['contents'][0]['header']['contents'][3]['contents'][0]['wrap'] = true;   
+	$datas['contents'][0]['header']['contents'][3]['contents'][1]['type'] = 'text';
+	$datas['contents'][0]['header']['contents'][3]['contents'][1]['text'] = 'size: '.$sku[4];     
+	$datas['contents'][0]['header']['contents'][3]['contents'][2]['type'] = 'text';
+	$datas['contents'][0]['header']['contents'][3]['contents'][2]['text'] = $sku[3]; //สี
+	$datas['contents'][0]['header']['contents'][3]['contents'][3]['type'] = 'text';
+	$datas['contents'][0]['header']['contents'][3]['contents'][3]['text'] = 'stock: '.$sku[2];    
 	
 	return $datas;
 }
