@@ -243,7 +243,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	else 
 	{
-		$query_sku = pg_query($db,"SELECT sku_id FROM product GROUP BY prod_type");
+		$query_sku = pg_query($db,"SELECT sku_id FROM stock");
 		$run = 0;	
 		$listsku = [];
 		while($each = pg_fetch_row($query_sku)[0])
