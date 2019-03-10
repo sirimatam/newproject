@@ -211,17 +211,18 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 		$run = 0;	
-		$pdtype = [];
+		$pdtypelist = [];
+		$pdtype = (explode(" ",$text)[1];
 		while($each = pg_fetch_row($query_pd)[0])
 		   {
 			   $pdtype[$run] = $each;
 			   $run++;
 		   }   
-		foreach($pdtype as $type)
+		foreach($pdtypelist as $type)
 		{
-			if($text == $type)
+			if($pdtype == $type)
 			{
-				$array_carousel = carousel_product_type($db,$text);
+				$array_carousel = carousel_product_type($db,$pdtype);
 				file_put_contents("php://stderr", "array_carousel =====> ".json_encode($array_carousel));
 				if(sizeof($array_carousel) > 1)
 				{
