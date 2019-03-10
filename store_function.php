@@ -937,7 +937,7 @@ function flex_sku($db,$skuid)
 	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][3]['type'] = 'text';
 	$datas['contents']['contents'][0]['header']['contents'][3]['contents'][3]['text'] = 'stock: '.$sku[2];    
 	
-	return $datas
+	return $datas;
 }
 
 ?>
