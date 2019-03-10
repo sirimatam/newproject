@@ -23,18 +23,18 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][0]['text'] = 'เลือกประเภทสินค้า';
 	  $data['contents']['header']['contents'][0]['align'] = 'center';
 	  $data['contents']['header']['contents'][0]['weight'] = 'bold';
-	  
+	  $data['contents']['header']['contents'][1]['type'] = 'text';
+	  $data['contents']['header']['contents'][1]['align'] = 'center';
+	  $data['contents']['header']['contents'][1]['wrap'] = true;
+	  $data['contents']['header']['contents'][1]['text'] = 'กดเลือกประเภทสินค้า หรือค้นหาจากรหัสสินค้า โดยพิมพ์รหัสสินค้า เช่น A2';
 	  for ($i=0;$i<$run;$i++)
 	  {
-	  $data['contents']['header']['contents'][$i+1]['type'] = 'button';
-	  $data['contents']['header']['contents'][$i+1]['action']['type'] = 'message';
-	  $data['contents']['header']['contents'][$i+1]['action']['label'] = $type[$i];
-	  $data['contents']['header']['contents'][$i+1]['action']['text'] = 'ค้นหาภายใน '.$type[$i];
+	  $data['contents']['header']['contents'][$i+2]['type'] = 'button';
+	  $data['contents']['header']['contents'][$i+2]['action']['type'] = 'message';
+	  $data['contents']['header']['contents'][$i+2]['action']['label'] = $type[$i];
+	  $data['contents']['header']['contents'][$i+2]['action']['text'] = 'ค้นหาภายใน '.$type[$i];
 	  }
-	  $data['contents']['header']['contents'][$run+1]['type'] = 'text';
-	  $data['contents']['header']['contents'][$run+1]['align'] = 'center';
-	  $data['contents']['header']['contents'][$run+1]['wrap'] = true;
-	  $data['contents']['header']['contents'][$run+1]['text'] = 'กดเลือกประเภทสินค้า หรือค้นหาจากรหัสสินค้า โดยพิมพ์รหัสสินค้า เช่น A2';
+	 
 	
    return $data;
   }  
