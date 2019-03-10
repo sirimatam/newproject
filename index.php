@@ -212,7 +212,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$query_pd = pg_query($db,"SELECT prod_type FROM product GROUP BY prod_type");
 		$run = 0;	
 		$pdtypelist = [];
-		$pdtype = (explode(" ",$text)[1];
+		$pdtype = explode(" ",$text)[1];
 		while($each = pg_fetch_row($query_pd)[0])
 		   {
 			   $pdtype[$run] = $each;
