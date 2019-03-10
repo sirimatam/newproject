@@ -889,9 +889,10 @@ function get_datetime()
 function flex_sku($db,$skuid)
 {
 	$sku = pg_fetch_row(pg_query($db,"SELECT * FROM stock WHERE sku_id = '$skuid' "))[0];
-	$prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$sku[1]' "))[0];
+	$prod_id = $sku[1];
+	$prod = pg_fetch_row(pg_query($db,"SELECT * FROM product WHERE prod_id = '$prod_id' "))[0];
 	
-	file_put_contents("php://stderr", "prod id =====> ".$sku[1]);
+	file_put_contents("php://stderr", "prod id =====> ".$prod_id);
 	file_put_contents("php://stderr", "prod name =====> ".$prod[1]);
 	
 	$datas['type'] = 'flex';
