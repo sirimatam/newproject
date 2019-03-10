@@ -215,7 +215,7 @@ if ( sizeof($request_array['events']) > 0 )
 		$pdtype = explode(" ",$text)[1];
 		while($each = pg_fetch_row($query_pd)[0])
 		   {
-			   $pdtype[$run] = $each;
+			   $pdtypelist[$run] = $each;
 			   $run++;
 		   }   
 		foreach($pdtypelist as $type)
