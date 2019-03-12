@@ -13,10 +13,10 @@ function quickreply()
   $data['quickReply']['items'][1]['action']['label'] = 'Select Photo';
   $data['quickReply']['items'][2]['action']['type'] = 'location';
   $data['quickReply']['items'][2]['action']['label'] = 'Location';
-  $data['quickReply']['items'][3]['action']['type'] = 'datetimepicker';
+/*  $data['quickReply']['items'][3]['action']['type'] = 'datetimepicker';
   $data['quickReply']['items'][3]['action']['label'] = 'Select date and time';
   $data['quickReply']['items'][3]['action']['data'] = '12345';
-  $data['quickReply']['items'][3]['action']['mode'] = 'datetime';
+  $data['quickReply']['items'][3]['action']['mode'] = 'datetime'; */
   
   return $data;
 }
