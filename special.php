@@ -10,7 +10,7 @@ function quickreply()
   $data['quickReply']['items'][0]['action']['label'] = 'Open camera';
   $data['quickReply']['items'][1]['type'] = 'action';
   $data['quickReply']['items'][1]['action']['type'] = 'cameraRoll';
-  $data['quickReply']['items'][1]['action']['label'] = 'Send Photo';
+  $data['quickReply']['items'][1]['action']['label'] = 'Select Photo';
   $data['quickReply']['items'][2]['action']['type'] = 'location';
   $data['quickReply']['items'][2]['action']['label'] = 'Location';
   $data['quickReply']['items'][3]['action']['type'] = 'datetimepicker';
