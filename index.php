@@ -67,8 +67,8 @@ if ( sizeof($request_array['events']) > 0 )
 			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c80a6'");}
 		}
 		*/
-		$message = quickreply();
-		$data = format_message($reply_token,$message());
+		
+		$data = format_message($reply_token,quickreply());
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL_push, $POST_HEADER, $data);
 	}	
