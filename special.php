@@ -19,6 +19,10 @@ function quickreply()
   $data['quickReply']['items'][3]['action']['mode'] = 'datetime'; 
   
   return $data;
+  
+  https://cloudinary.com/documentation/upload_images#uploading_images_to_the_cloud
+  https://cloudinary.com/documentation/upload_images#how_to_set_read_access_on_a_private_amazon_s3_bucket
+  
 }
 
 
