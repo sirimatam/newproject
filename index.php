@@ -68,7 +68,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		*/
 		
-		$data = format_message($reply_token,quickreply());
+		$data = format_message_push($userid,quickreply());
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL_push, $POST_HEADER, $data);
 	}	
