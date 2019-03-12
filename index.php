@@ -46,7 +46,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	if ($text=='ค้นหาสินค้า')
 	{
-	        $data = format_message($reply_token,[button_all_type($db)]);
+	        $data = format_message($reply_token,button_all_type($db));
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
@@ -68,7 +68,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		*/
 		
-		$data = format_message_push($userid,quickreply());
+		$data = format_message_push($userid,[quickreply()]);
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL_push, $POST_HEADER, $data);
 	}	
