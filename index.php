@@ -67,10 +67,10 @@ if ( sizeof($request_array['events']) > 0 )
 			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c80a6'");}
 		}
 		*/
-		$data = quickreply();
-		
-		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
-		send_reply_message($API_URL, $POST_HEADER, $data);
+		$message = quickreply();
+		$dataa = format_message_push($userid,$message);
+		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($dataa));
+		send_reply_message($API_URL_push, $POST_HEADER, $dataa);
 	}	
 	
 	elseif ($text=='โปรโมชั่น')
