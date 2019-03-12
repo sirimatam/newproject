@@ -3,6 +3,7 @@ require_once('connection.php');
 require 'user_function.php';
 require 'store_function.php';
 require 'RichMenu/uploadandsetrichMenuDefault.php';
+include ('special.php');
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
@@ -54,7 +55,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		/*
 		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
-		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); */
+		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); 
 		
 		date_default_timezone_set("Asia/Bangkok");
 		$time = date("H:i:s");
@@ -65,6 +66,8 @@ if ( sizeof($request_array['events']) > 0 )
 			if($time > "10:00:30") {
 			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c80a6'");}
 		}
+		*/
+		$data = quickreply();
 		
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
