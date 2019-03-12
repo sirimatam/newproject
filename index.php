@@ -68,9 +68,9 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		*/
 		$message = quickreply();
-		$dataa = format_message_push($userid,$message);
-		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($dataa));
-		send_reply_message($API_URL_push, $POST_HEADER, $dataa);
+		$data = format_message($reply_token,$message());
+		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
+		send_reply_message($API_URL_push, $POST_HEADER, $data);
 	}	
 	
 	elseif ($text=='โปรโมชั่น')
