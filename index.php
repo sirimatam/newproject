@@ -287,20 +287,20 @@ if ( sizeof($request_array['events']) > 0 )
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "order id ===> ".$current);
+	   $err = 0;
 	   
-	   $historder = Array();
-	   $query1 = pg_fetch_row(pg_query($db,"SELECT order_id FROM historyorder "));
-	   foreach( $query1 as $each)
+	   $query1 = pg_query($db,"SELECT order_id FROM historyorder ");
+	   while( $list = pg_fetch_row($query1)[0])
 	   {
-		   if( $current == $each[0])
+		   if( $current == $list)
 		   {
 			   $err = 1;
 		   }
 	   }
-	   $query2 = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' "));
-	   foreach( $query2 as $each)
+	   $query2 = pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' ");
+	   while( $list = pg_fetch_row($query2)[0])
 	   {
-		   if( $current == $each[0])
+		   if( $current == $list)
 		   {
 			   $err = 1;
 		   }
