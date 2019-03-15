@@ -15,6 +15,7 @@ function get_user_content($msgid, $post_header)
 	
 	$response = curl_exec($ch);
 	curl_close($ch);
+	return $response;
 }
 	   
 function show_address($db,$cusid)
