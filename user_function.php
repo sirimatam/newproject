@@ -295,7 +295,7 @@ function carousel_flex_order($db,$userid,$check)
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
 		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
-		   $data['contents']['contents'][$j]['footer']['contents'][]['action']['type'] = 'postback';
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'postback';
 	     	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'text'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['text'] = 'สลิปอยู่ระหว่างการตรวจสอบ กดอัพโหลดอีกครั้งเพื่อแก้ไขรูป';
 		   $data['contents']['contents'][$j]['footer']['contents'][1]['action']['label'] = 'อัพโหลดสลิปใหม่';
