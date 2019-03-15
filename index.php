@@ -287,7 +287,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
-	   file_put_contents("php://stderr", "order id ===> ".$orderid);
+	   //file_put_contents("php://stderr", "order id ===> ".$orderid);
 	   
 	   $response = get_user_content($imgid,$POST_HEADER);
 	   
@@ -296,11 +296,11 @@ if ( sizeof($request_array['events']) > 0 )
 	   $img = base64_encode($response); 
 	   $data = base64_decode($img);
 	   
-	   $file = UPLOAD_DIR . $orderid . '.png';
+	   $file = UPLOAD_DIR . $imgid . '.png';
 	   	   
 	   $success = file_put_contents($file, $data);	   
 	   
-	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
+	   file_put_contents("php://stderr", "image 64  ===> ".$data);
 	   
 	   $datetime = get_datetime();
 	   
