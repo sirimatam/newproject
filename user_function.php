@@ -278,13 +278,32 @@ function carousel_flex_order($db,$userid,$check)
 		} 
 	if($check=='1')
 		{
+		   $orderd = $orderid[$j];
+		   $uploadcheck = pg_fetch_row(pg_query($db,"SELECT pay_check FROM payment WHERE order_id = '$orderd' "))[0];
+		if($uploadcheck == '')
+		{
 		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
-		   $data['contents']['contents'][$j]['footer']['layout'] = 'horizontal';    
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'postback'; 
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['label'] = 'อัพโหลดสลิป';
 	   	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['text']= 'กดถ่ายรูปสลิป หรือเลือกจากคลังรูปภาพ สำหรับใบสั่งซื้อที่ '.$order_id[$j];
 		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['data']= 'touploadslip_orderid_'.$order_id[$j];	
+		}
+		elseif($uploadcheck == '0')
+		{
+		   $data['contents']['contents'][$j]['footer']['type'] = 'box';
+		   $data['contents']['contents'][$j]['footer']['layout'] = 'vertical';    
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['type'] = 'button';
+		   $data['contents']['contents'][$j]['footer']['contents'][]['action']['type'] = 'postback';
+	     	   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['type'] = 'text'; 
+		   $data['contents']['contents'][$j]['footer']['contents'][0]['action']['text'] = 'สลิปอยู่ระหว่างการตรวจสอบ กดอัพโหลดอีกครั้งเพื่อแก้ไขรูป';
+		   $data['contents']['contents'][$j]['footer']['contents'][1]['action']['label'] = 'อัพโหลดสลิปใหม่';
+	   	   $data['contents']['contents'][$j]['footer']['contents'][1]['action']['text']= 'กดถ่ายรูปสลิป หรือเลือกจากคลังรูปภาพ สำหรับใบสั่งซื้อที่ '.$order_id[$j];
+		   $data['contents']['contents'][$j]['footer']['contents'][1]['action']['data']= 'touploadslip_orderid_'.$order_id[$j];	
+		   
+		}
+		   
 		}
 	if($loop=='2')
 		{
