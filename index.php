@@ -283,7 +283,7 @@ if ( sizeof($request_array['events']) > 0 )
    {
 	   
 	//   $orderid = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
-	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
+	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE customer.cus_id = '$userid' AND customer.cus_default = '1' "))[0];
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "order id ===> ".$current);
