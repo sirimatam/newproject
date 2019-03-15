@@ -282,27 +282,31 @@ if ( sizeof($request_array['events']) > 0 )
    elseif( $event['message']['type'] == 'image' )
    {
 	   
-	
-	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE customer.cus_id = '$userid' AND customer.cus_default = '1' "))[0];
+	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "order id ===> ".$current);
 	   $err = 0;
-	   
-	   $query1 = pg_query($db,"SELECT order_id FROM historyorder ");
-	   while( $list = pg_fetch_row($query1)[0])
+	   if($current == '')
 	   {
-		   if( $current == $list)
-		   {
-			   $err = 1;
-		   }
+		   $err =1;
 	   }
-	   $query2 = pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' ");
-	   while( $list = pg_fetch_row($query2)[0])
-	   {
-		   if( $current == $list)
+	   else{
+		   $query1 = pg_query($db,"SELECT order_id FROM historyorder ");
+		   while( $list = pg_fetch_row($query1)[0])
 		   {
-			   $err = 1;
+			   if( $current == $list)
+			   {
+				   $err = 1;
+			   }
+		   }
+		   $query2 = pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' ");
+		   while( $list = pg_fetch_row($query2)[0])
+		   {
+			   if( $current == $list)
+			   {
+				   $err = 1;
+			   }
 		   }
 	   }
 	   if($err == 1)
