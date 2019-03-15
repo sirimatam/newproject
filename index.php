@@ -286,7 +286,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   $imgid =  $event['message']['id']; 
 	   
-	   file_put_contents("php://stderr", "image id ===> ".$imgid);
+	   file_put_contents("php://stderr", "order id ===> ".$orderid);
 	   
 	   $response = get_user_img($POST_HEADER,$imgid,$orderid);
  
