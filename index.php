@@ -281,7 +281,7 @@ if ( sizeof($request_array['events']) > 0 )
 	  
    elseif( $event['message']['type'] == 'image' )
    {
-	   
+	   $userid = $event['source']['userId'];
 	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
 	   $imgid =  $event['message']['id']; 
 	   
