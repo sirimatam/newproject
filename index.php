@@ -68,7 +68,7 @@ if ( sizeof($request_array['events']) > 0 )
 		}
 		*/
 		
-		$data = format_message_push($userid,[quickreply()]);
+		$data = format_message_push($userid,[quickreplytest()]);
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL_push, $POST_HEADER, $data);
 	}	
@@ -282,9 +282,7 @@ if ( sizeof($request_array['events']) > 0 )
    elseif( $event['message']['type'] == 'image' )
    {
 	   
-	   
-	   //$cartpid = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '0' "))[0];
-	   //$orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM order WHERE cartp_id = '$cartpid' AND order_status = '' "))[0];
+	   $orderid = pg_fetch_row(pg_query($db,"SELECT uploading FROM cusomer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
 	   
 	   $imgid =  $event['message']['id']; 
 	   
@@ -401,6 +399,15 @@ if ( sizeof($request_array['events']) > 0 )
 		file_put_contents("php://stderr", "POST RESULT =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 		file_put_contents("php://stderr", "POST RESULT2 =====> ".$send_result);
 	}
+	if(explode("_",$info)[0] == 'touploadslip' )
+	{
+		$orderid = explode("_",$info)[2];
+		pg_query("update customer SET uploading = '$orderid' WHERE cus_id = '$userid' AND cus_default = '1' ");
+		$data = format_message_push($userid,[upload_quickreply()]);
+		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
+		send_reply_message($API_URL_push, $POST_HEADER, $data);
+	}
+	  
 	$sku_ids = pg_query($db,'SELECT sku_id FROM stock');
 	while($sku_id = pg_fetch_row($sku_ids))
 	{
@@ -415,7 +422,7 @@ if ( sizeof($request_array['events']) > 0 )
 			if(explode(" ",$info)[0] == 'Delete')
 			{
 			  
-			   $cart_qtt = 1;
+			  $cart_qtt = 1;
 			  delete_from_cart($db,$sku_id[0],$userid,$cart_qtt);
 			  $data = ['replyToken' => $reply_token,'messages' => [['type' => 'text', 'text' => 'ลบสินค้ารหัส '.$sku_id[0].' ออกจากตะกร้าเรียบร้อยแล้ว กรุณากดเมนูตะกร้าของฉันเพื่อตรวจสอบอีกครั้ง']]];
 			  send_reply_message($API_URL, $POST_HEADER, $data);
