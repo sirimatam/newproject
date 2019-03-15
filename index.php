@@ -289,18 +289,18 @@ if ( sizeof($request_array['events']) > 0 )
 	   file_put_contents("php://stderr", "order id ===> ".$current);
 	   
 	   $historder = Array();
-	   $query1 = pg_fetch_row(pg_query($db,"SELECT order_id FROM historyorder "))[0];
+	   $query1 = pg_fetch_row(pg_query($db,"SELECT order_id FROM historyorder "));
 	   foreach( $query1 as $each)
 	   {
-		   if( $current == $each)
+		   if( $current == $each[0])
 		   {
 			   $err = 1;
 		   }
 	   }
-	   $query2 = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' "))[0];
+	   $query2 = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' "));
 	   foreach( $query2 as $each)
 	   {
-		   if( $current == $each)
+		   if( $current == $each[0])
 		   {
 			   $err = 1;
 		   }
