@@ -1,6 +1,6 @@
 <?php
 
-function quickreply()
+function quickreplytest()
 {
   $data = array();
   $data['type'] = 'text';
@@ -19,7 +19,7 @@ function quickreply()
   $data['quickReply']['items'][3]['action']['mode'] = 'datetime'; 
   
   return $data;
-  
+
   
   /*
   https://cloudinary.com/documentation/upload_images#uploading_images_to_the_cloud
@@ -28,6 +28,22 @@ function quickreply()
   */
   
 }
+
+function upload_quickreply()
+{
+  $data = array();
+  $data['type'] = 'text';
+  $data['text'] = 'อัพโหลด หรือ เปิดกล้องเพื่อถ่ายรูปสลิป';
+  $data['quickReply']['items'][0]['type'] = 'action';
+  $data['quickReply']['items'][0]['action']['type'] = 'cameraRoll';
+  $data['quickReply']['items'][0]['action']['label'] = 'Select Photo';
+  $data['quickReply']['items'][1]['type'] = 'action';
+  $data['quickReply']['items'][1]['action']['type'] = 'camera';
+  $data['quickReply']['items'][1]['action']['label'] = 'Open camera';
+
+
+  
+  return $data;
 
 
 
