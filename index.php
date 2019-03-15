@@ -278,7 +278,7 @@ if ( sizeof($request_array['events']) > 0 )
 	  
 	  
 	  
-	  /*
+	  
    elseif( $event['message']['type'] == 'image' )
    {
 	   
@@ -288,35 +288,22 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
 	   
-	   $response = get_user_content($msgid,$POST_HEADER);
+	   $response = get_user_img($POST_HEADER,$imgid,$orderid);
 	   
-	   define('UPLOAD_DIR', '/image/');
-	   $img = base64_encode($response); 
-	   $data = base64_decode($img);
-	   
-	   $file = UPLOAD_DIR . $imgid . '.png';
-	   	   
-	   $success = file_put_contents('$file', $data);	   
+	      
 	   
 	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
 	   
 	   $datetime = get_datetime();
 	   
-	   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','order1','0')");
+	   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','$orderid','0')");
 	   
-	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'hello']);
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'ได้รับรูปภาพแล้ว //รอ echo รูป//']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   
-	   //$get = get_user_content($GET_url,$POST_HEADER);
+	  	   
 	   
-	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
-	   
-	   
-	   
-	   
-	   
-	   
-   } */
+   } 
 
   else { }
   }
