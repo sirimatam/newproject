@@ -282,23 +282,28 @@ if ( sizeof($request_array['events']) > 0 )
    elseif( $event['message']['type'] == 'image' )
    {
 	   
-	   $orderid = pg_fetch_row(pg_query($db,"SELECT uploading FROM cusomer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
+	   $orderid = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
 	   
 	   $imgid =  $event['message']['id']; 
 	   
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
 	   
 	   $response = get_user_img($POST_HEADER,$imgid,$orderid);
-	   
-	      
+ 
 	   
 	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
 	   
 	   $datetime = get_datetime();
+	   $check = pg_fetch_row(pg_query($db,"SELECT pay_id FROM payment WHERE order_id = '$orderid' "))[0];
+	   if($check == '')
+	   {
+		   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','$orderid','0')");
+	   }
+	   else{ 
+		   pg_query($db,"UPDATE payment (pay_slip,pay_date,pay_time) SET ('$imgid','$datetime[0]','$datetime[1]') WHERE pay_id = '$check' AND order_id = '$orderid' ");
+	   }
 	   
-	   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','$orderid','0')");
-	   
-	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'ได้รับรูปภาพแล้ว //รอ echo รูป//']);
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> 'ได้รับรูปภาพของใบสั่งซื้อเลขที่ '.$orderid.' แล้ว (รอ echo รูป)']);
 	   send_reply_message($API_URL, $POST_HEADER, $dataa);
 	   
 	  	   
