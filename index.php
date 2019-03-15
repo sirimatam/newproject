@@ -288,8 +288,8 @@ if ( sizeof($request_array['events']) > 0 )
 	   
 	   file_put_contents("php://stderr", "image id ===> ".$imgid);
 	   //file_put_contents("php://stderr", "order id ===> ".$orderid);
-	   
-	   $response = get_user_content($imgid,$POST_HEADER);
+	   $msgid = $request_array['events'][0]['message']['id'];
+	   $response = get_user_content($msgid,$POST_HEADER);
 	   
 	   define('UPLOAD_DIR', 'C://xampp/htdocs/image/');
 	   
@@ -300,7 +300,7 @@ if ( sizeof($request_array['events']) > 0 )
 	   	   
 	   $success = file_put_contents($file, $data);	   
 	   
-	   file_put_contents("php://stderr", "image 64  ===> ".$data);
+	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($data));
 	   
 	   $datetime = get_datetime();
 	   
