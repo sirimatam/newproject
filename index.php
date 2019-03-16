@@ -53,20 +53,7 @@ if ( sizeof($request_array['events']) > 0 )
 	}
 	elseif ($text=='เวลา')
 	{
-		/*
-		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
-		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); 
-		
-		date_default_timezone_set("Asia/Bangkok");
-		$time = date("H:i:s");
-		$date = date("Y-m-d");
-		$exp_date = date("Y-m-d", strtotime("+2 days", strtotime("2019-02-21")));
-	    	if($date >= $exp_date )
-		{
-			if($time > "10:00:30") {
-			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c80a6'");}
-		}
-		*/
+
 		
 		$data = format_message_push($userid,[quickreplytest()]);
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
@@ -329,9 +316,14 @@ if ( sizeof($request_array['events']) > 0 )
 		   else{ 
 			   pg_query($db,"UPDATE payment (pay_slip,pay_date,pay_time) SET ('$imgid','$datetime[0]','$datetime[1]') WHERE pay_id = '$check' AND order_id = '$current' ");
 		   }
-
-		   $dataa = format_message($reply_token,['type'=>'text','text'=> 'ได้รับรูปภาพของใบสั่งซื้อเลขที่ '.$current.' แล้ว (รอ echo รูป)']);
-		   send_reply_message($API_URL, $POST_HEADER, $dataa);
+		   
+		   $echo['type'] = 'image';
+		   $echo['originalContentUrl'] = 'https:.../'.$current.'.jpg';
+		   $echo['previewImageUrl'] = 'https:.../'.$current.'.jpg';
+		   $push = upload_quickreply();
+		   $reply = ['type'=>'text','text'=> 'ยืนยันสลิปใบสั่งซื้อเลขที่ '.$current.' แล้ว หากต้องการเปลี่ยนแปลง กรุณากด(รอ echo รูป)'];
+		   $data = format_message_push($userid,[$echo,$reply,$push]);
+		   send_reply_message($API_URL_push, $POST_HEADER, $data);
 	   }
 	  	   
 	   
