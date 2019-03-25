@@ -71,8 +71,8 @@ function set_richmenu_default($richMenuId,$ACCESS_TOKEN)
       CURLOPT_TIMEOUT => 30,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "POST",
-      //CURLOPT_POSTFIELDS => $post_data,
-      CURLOPT_POST => 1,
+      CURLOPT_POSTFIELDS => $post_data,
+      //CURLOPT_POST => 1,
 	CURLOPT_HTTPHEADER => array(
         "authorization: Bearer ".$ACCESS_TOKEN,
         "cache-control: no-cache",
