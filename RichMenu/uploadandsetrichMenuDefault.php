@@ -1,7 +1,8 @@
 <?php
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad";  // page1
-$richMenuId2 = "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2
+$richMenuId2 = "richmenu-b5605d39250019a4ad9734dffc7d23ef"; //page2 old
+$richMenuId2 = "richmenu-cc0063317dd8d062a9be46ef81a8e717"; // new
 /*
 $file1 = fopen('image/firstpage.png', 'r');
 $size1 = filesize('image/firstpage.png');
@@ -70,8 +71,9 @@ function set_richmenu_default($richMenuId,$ACCESS_TOKEN)
       CURLOPT_TIMEOUT => 30,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => $post_data,
-      CURLOPT_HTTPHEADER => array(
+      //CURLOPT_POSTFIELDS => $post_data,
+      CURLOPT_POST => 1,
+	CURLOPT_HTTPHEADER => array(
         "authorization: Bearer ".$ACCESS_TOKEN,
         "cache-control: no-cache",
         "content-type: application/json; charset=UTF-8",
