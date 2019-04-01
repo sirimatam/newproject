@@ -28,7 +28,7 @@ function button_all_type($db)
 	  $data['contents']['header']['contents'][1]['align'] = 'center';
 	  $data['contents']['header']['contents'][1]['wrap'] = true;
 	  $data['contents']['header']['contents'][1]['margin'] = 'lg';
-	  $data['contents']['header']['contents'][1]['text'] = 'เลือกประเภทสินค้า หรือพิมพ์รหัสสินค้าที่ต้องการ เช่น A2';
+	  $data['contents']['header']['contents'][1]['text'] = 'เลือกประเภทสินค้า หรือพิมพ์รหัสสินค้าที่ต้องการ เช่น S5';
 	  for ($i=0;$i<$run;$i++)
 	  {
 	  $data['contents']['header']['contents'][$i+2]['type'] = 'button';

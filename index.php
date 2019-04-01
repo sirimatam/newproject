@@ -7,7 +7,7 @@ include ('special.php');
 
 
 $richMenuId1 = "richmenu-ff58dd0a3a6e5f68cfc40afae5abe6ad"; //page1
-$richMenuId2= "richmenu-cc0063317dd8d062a9be46ef81a8e717"; //page2 new! 25/03
+$richMenuId2 = "richmenu-cc0063317dd8d062a9be46ef81a8e717"; //page2 new
 
 
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -15,7 +15,7 @@ $API_URL_push = 'https://api.line.me/v2/bot/message/push';
 $ACCESS_TOKEN = 'wa9sF+y4HsXJ2IqRQcTadD32XYH7lG01BLuw9O9AbkTSbdRUvC4CU6vOvAKCE4LGU0AgIBSwSyumjqfA22ZZVWQxrkmbxfDaupCQ3tPD0yrY67su+hl6Iw1oKWVpWo3JWOg7RFFphGSz3x5MY/aqMgdB04t89/1O/w1cDnyilFU='; // Access Token ค่าที่เราสร้างขึ้น
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
-set_richmenu_default($richMenuId2,$ACCESS_TOKEN);
+set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
 
 
 
@@ -41,19 +41,43 @@ if ( sizeof($request_array['events']) > 0 )
 		pg_query($db,"INSERT INTO customer (cus_id,cus_default,uploading) VALUES ('$userid','1','')");
 		pg_query($db,"INSERT INTO createcart (cus_id,cart_used) VALUES ('$userid','0')");
 	}
-	   
-	
+	 
+	//search for order detail
+	$cartp_id_array = pg_query($db,"SELECT cartp_id FROM createcart WHERE cus_id = '$userid' AND cart_used = '1'");
+	while($cartp_id = pg_fetch_row($cartp_id_array)[0])
+	{
+		$orderid = pg_fetch_row(pg_query($db,"SELECT order_id FROM orderlist WHERE cartp_id = '$cartp_id'"))[0];
+		if($text==$orderid)
+		{
+			$post = format_message_push($userid,[order_detail($db,$orderid)]);
+			send_reply_message($API_URL_push, $POST_HEADER, $post);
+		}
+	}
 	   
 	if ($text=='ค้นหาสินค้า')
 	{
-	        $data = format_message($reply_token,button_all_type($db));
+	    $data = format_message($reply_token,button_all_type($db));
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
 		send_reply_message($API_URL, $POST_HEADER, $data);
 		
 	}
-	elseif ($text=='เวลา')
+	
+	elseif ($text=='Hello')
 	{
-
+		/*
+		$data = format_message($reply_token,['type'=>'text','text' => date("H:i:s") ]);
+		pg_query($db,"UPDATE product SET prod_price = 300 WHERE prod_id = '6'"); 
+		
+		date_default_timezone_set("Asia/Bangkok");
+		$time = date("H:i:s");
+		$date = date("Y-m-d");
+		$exp_date = date("Y-m-d", strtotime("+2 days", strtotime("2019-02-21")));
+	    	if($date >= $exp_date )
+		{
+			if($time > "10:00:30") {
+			pg_query($db,"DELETE FROM orderlist WHERE order_id = '5c80a6'");}
+		}
+		*/
 		
 		$data = format_message_push($userid,[quickreplytest()]);
 		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
@@ -88,22 +112,27 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		out_of_time($db);
 		$post1 = carousel_flex_order($db,$userid,'1');
-		if($post1['text'] == 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้')
+		//if($post1['text'] == 'ยังไม่มีใบออเดอร์ในขั้นตอนนี้')
+		if(isset($post1['text']))
 		{
 			$data1 = send_reply_message($API_URL, $POST_HEADER, format_message($reply_token,$post1)); 
 		}
 		else {
 		$post2 = ['type'=>'text','text' => 'โอนเงินไปยังที่เลขที่บัญชี bot shop Kbank 111222333 หรือพร้อมเพย์ 0812345678 แล้วอัพโหลดสลิป '];
-		$data1 = format_message_v2($reply_token,[$post1,$post2]);
+		$post3 = ['type'=>'text','text' => 'พิมพ์หมายเลขใบออเดอร์ เพื่อแสดงรายระเอียดสินค้าที่สั่ง'];
+		$data1 = format_message_push($userid,[$post1,$post2]);
 			   
-		send_reply_message($API_URL, $POST_HEADER, $data1); }
+		send_reply_message($API_URL_push, $POST_HEADER, $data1); }
 		file_put_contents("php://stderr", "POST REQUEST1 =====> ".json_encode($data1, JSON_UNESCAPED_UNICODE));
 	}      
 	   
 	   
 	elseif ($text=='เกี่ยวกับร้านค้า')
 	{
-		//	        send_reply_message($API_URL, $POST_HEADER,$data);
+		$post = ['type'=>'text','text' => ' ขอบคุณที่ร่วมทดสอบ กรุณาบันทึกข้อมูลเพิ่มเติมที่  https://goo.gl/forms/aSN0kXNcMvf2M1f42'];
+		$data = format_message($reply_token,$post);
+		file_put_contents("php://stderr", "POST RESULT =====>".json_encode($data));
+		send_reply_message($API_URL, $POST_HEADER, $data);
 	}
 	elseif ($text=='หน้าถัดไป')
 	{
@@ -112,16 +141,18 @@ if ( sizeof($request_array['events']) > 0 )
 	}   
 	elseif ($text=='ที่ต้องจัดส่ง')
 	{
-		$data = format_message($reply_token,carousel_flex_order($db,$userid,'2'));
-		send_reply_message($API_URL, $POST_HEADER,$data);
+		$post = ['type'=>'text','text' => 'พิมพ์หมายเลขใบออเดอร์ เพื่อแสดงรายระเอียดสินค้าที่สั่ง'];
+		$data = format_message_push($userid,[carousel_flex_order($db,$userid,'2'),$post]);
+		send_reply_message($API_URL_push, $POST_HEADER,$data);
 		file_put_contents("php://stderr", "POST ที่ต้องจัดส่ง =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 	}  
 	elseif ($text=='ที่ต้องได้รับ')
 	{	
 		$move = move_to_history($db);
 		file_put_contents("php://stderr", "move to history =====> ".json_encode($move, JSON_UNESCAPED_UNICODE));
-		$data = format_message($reply_token,carousel_flex_order($db,$userid,'3'));
-		send_reply_message($API_URL, $POST_HEADER, $data);
+		$post = ['type'=>'text','text' => 'พิมพ์หมายเลขใบออเดอร์ เพื่อแสดงรายระเอียดสินค้าที่สั่งทั้งหมด'];
+		$data = format_message_push($userid,[carousel_flex_order($db,$userid,'3'),$post]);
+		send_reply_message($API_URL_push, $POST_HEADER, $data);
 		file_put_contents("php://stderr", "POST ที่ต้องได้รับ =====> ".json_encode($data, JSON_UNESCAPED_UNICODE));
 		
 	} 
@@ -150,8 +181,7 @@ if ( sizeof($request_array['events']) > 0 )
 	{
 		unlink_richmenu($userid,$ACCESS_TOKEN);
 		set_richmenu_default($richMenuId1,$ACCESS_TOKEN);
-	}   
-	
+	}   	
 	
        elseif ($text=='เพิ่มชื่อและที่อยู่ใหม่')
 	{
@@ -269,63 +299,49 @@ if ( sizeof($request_array['events']) > 0 )
    elseif( $event['message']['type'] == 'image' )
    {
 	   $userid = $event['source']['userId'];
-	   $current = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
+	   
+	   $orderid = pg_fetch_row(pg_query($db,"SELECT uploading FROM customer WHERE cus_id = '$userid' AND cus_default = '1' "))[0];
+	   
 	   $imgid =  $event['message']['id']; 
 	   
-	   file_put_contents("php://stderr", "order id ===> ".$current);
-	   $err = 0;
-	   if($current == '')
-	   {
-		   $err =1;
-	   }
-	   else{
-		   $query1 = pg_query($db,"SELECT order_id FROM historyorder ");
-		   while( $list = pg_fetch_row($query1)[0])
-		   {
-			   if( $current == $list)
-			   {
-				   $err = 1;
-			   }
-		   }
-		   $query2 = pg_query($db,"SELECT order_id FROM orderlist WHERE order_status != 'waiting for payment' ");
-		   while( $list = pg_fetch_row($query2)[0])
-		   {
-			   if( $current == $list)
-			   {
-				   $err = 1;
-			   }
-		   }
-	   }
-	   if($err == 1)
-	   {
-		   $dataa = format_message($reply_token,['type'=>'text','text'=> 'กรุณากดเลือกใบสั่งซื้อ ก่อนอัพโหลดสลิป']);
-		   send_reply_message($API_URL, $POST_HEADER, $dataa);
-	   }
-	   else
-	   {
-		   $response = get_user_img($POST_HEADER,$imgid,$orderid);
-
-		   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
-
-		   $datetime = get_datetime();
-		   $check = pg_fetch_row(pg_query($db,"SELECT pay_id FROM payment WHERE order_id = '$current' "))[0]; // check whether payment row is inserted
-		   if($check == '')
-		   {
-			   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','$current','0')");
-		   }
-		   else{ 
-			   pg_query($db,"UPDATE payment (pay_slip,pay_date,pay_time) SET ('$imgid','$datetime[0]','$datetime[1]') WHERE pay_id = '$check' AND order_id = '$current' ");
-		   }
-		   
-		   $echo['type'] = 'image';
-		   $echo['originalContentUrl'] = 'https:.../'.$current.'.jpg';
-		   $echo['previewImageUrl'] = 'https:.../'.$current.'.jpg';
+	   file_put_contents("php://stderr", "image id ===> ".$imgid);
+	   
+	   $msgid = $request_array['events'][0]['message']['id'];
+	   
+	   $response = get_user_content($msgid,$POST_HEADER);
+	   
+	   //define('UPLOAD_DIR', 'C://xampp/htdocs/image/');
+	   define('UPLOAD_DIR', 'https://6dd445ce.ngrok.io/htdocs/image/');
+	   $img = base64_encode($response); 
+	   $data = base64_decode($img);
+	   
+	   $file = UPLOAD_DIR . $imgid . '.jpg';
+	   	   
+	   $success = file_put_contents($file, $data);	   
+	   
+	   file_put_contents("php://stderr", "image 64  ===> ".json_encode($img));
+	   
+	   $datetime = get_datetime();
+	   
+	   pg_query($db,"INSERT INTO payment (pay_slip,pay_date,pay_time,order_id,pay_check) VALUES ('$imgid','$datetime[0]','$datetime[1]','$orderid','0')");
+	   
+	   $dataa = format_message($reply_token,['type'=>'text','text'=> $success]);
+	   //send_reply_message($API_URL, $POST_HEADER, $dataa);
+	   
+	   //$get = get_user_content($GET_url,$POST_HEADER);
+	   
+	   //pg_guery($db,"UPDATE payment SET pay_slip = $get WHERE payment.order_id = $orderid ");
+	   
+	   
+	   $echo['type'] = 'image';
+		   $echo['originalContentUrl'] = 'https://6dd445ce.ngrok.io/image/'.$imgid.'.jpg';
+		   $echo['previewImageUrl'] = 'https://6dd445ce.ngrok.io/image/'.$imgid.'.jpg';
 		   $push = upload_quickreply();
-		   $reply = ['type'=>'text','text'=> 'ยืนยันสลิปใบสั่งซื้อเลขที่ '.$current.' แล้ว หากต้องการเปลี่ยนแปลง กรุณากด(รอ echo รูป)'];
+		   $reply = ['type'=>'text','text'=> 'ยืนยันสลิปใบสั่งซื้อเลขที่ '.$imgid.' แล้ว หากต้องการเปลี่ยนแปลง กรุณาอัพโหลดใหม่)'];
 		   $data = format_message_push($userid,[$echo,$reply,$push]);
 		   send_reply_message($API_URL_push, $POST_HEADER, $data);
-	   }
-	  	   
+	   
+	   
 	   
    } 
 
@@ -474,4 +490,6 @@ function send_reply_message($url, $post_header, $post)
  curl_close($ch);
  return $result;
 } 
+
+
 ?>

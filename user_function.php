@@ -15,6 +15,8 @@ function get_user_content($msgid, $post_header)
 	
 	$response = curl_exec($ch);
 	curl_close($ch);
+	return $response;
+
 }
 	   
 function show_address($db,$cusid)
@@ -121,6 +123,7 @@ function carousel_flex_order($db,$userid,$check)
 	$pd = array();
 	$trackinglist = array();
 	$datelist = array();
+	$loop = '0';
 	while($cartp_id = pg_fetch_row($cartp_id_array)[0]) // check ทีละ cartp_id
 	{
 		if($check=='1') // ที่รอชำระเงิน
@@ -278,7 +281,7 @@ function carousel_flex_order($db,$userid,$check)
 		} 
 	if($check=='1')
 		{
-		   $orderd = $orderid[$j];
+		   $orderd = $order_id[$j];
 		   $uploadcheck = pg_fetch_row(pg_query($db,"SELECT pay_check FROM payment WHERE order_id = '$orderd' "))[0];
 		   file_put_contents("php://stderr", "uploadcheck =====> ".json_encode($uploadcheck));
 		if($uploadcheck == '0')
@@ -619,36 +622,85 @@ function timepost()
 	return ['type'=>'text','text' => [$datee,$timee] ];
 }
 
-function get_user_img($POST_HEADER,$imgid,$orderid)
-	{
-		$curl = curl_init();
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => "https://api.line.me/v2/bot/message/".$imgid."/content",
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "GET",
-		  CURLOPT_POSTFIELDS => "",
-		  CURLOPT_HTTPHEADER => $POST_HEADER,
-		));
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
+function order_detail($db,$orderid)
+{
+	$order_price = pg_fetch_row(pg_query($db,"SELECT total_price FROM orderlist WHERE order_id = '$orderid'"))[0];
+	$cartp_id = pg_fetch_row(pg_query($db,"SELECT cartp_id FROM orderlist WHERE order_id = '$orderid'"))[0];
+	$skuid_array = array();
+	$cartp_qtt = array();
+	$sku_color =array();
 	
-		curl_close($curl);
-		if ($err) {
-		  	echo "cURL Error #:" . $err;
-		} else {
-		  	define('UPLOAD_DIR', 'image/');
-		  	$img=base64_encode($response);
-			$data = base64_decode($img);
-			$file = UPLOAD_DIR . $orderid . '.jpg';
-			$success = file_put_contents($file, $data);
+	$sku_query = pg_query($db,"SELECT sku_id FROM cart_product WHERE cartp_id = '$cartp_id'");
+	$i = 0;
+		while($list = pg_fetch_row($sku_query)[0])
+		{
+			$skuid_array[$i] = $list;
+			$cartp_qtt[$i] = pg_fetch_row(pg_query($db,"SELECT cart_prod_qtt FROM cart_product WHERE cartp_id = '$cartp_id' AND sku_id = '$list'"))[0];
+			$i++;
 		}
-	}
+		$pdid_array = array();
+		$run =0;
+		while($run < sizeof($skuid_array))
+		{
+			$thissku = $skuid_array[$run];
+			$pdid_array[$run] = pg_fetch_row(pg_query($db,"SELECT prod_id FROM stock WHERE sku_id = '$thissku'"))[0];
+			$sku_color[$run] = pg_fetch_row(pg_query($db,"SELECT sku_color FROM stock WHERE sku_id = '$thissku'"))[0];
+			$run++;
+		}
+		$running = 0;
+		while($running < sizeof($pdid_array))
+		{
+			$pd_id = pg_fetch_row(pg_query($db,"SELECT prod_id FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
+			$pd_name = pg_fetch_row(pg_query($db,"SELECT prod_name FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
+			$pd_price = pg_fetch_row(pg_query($db,"SELECT prod_pro_price FROM product WHERE prod_id = '$pdid_array[$running]'"))[0]*$cartp_qtt[$running];
+			$pd_des = pg_fetch_row(pg_query($db,"SELECT prod_description FROM product WHERE prod_id = '$pdid_array[$running]'"))[0];
+			$pd[$running] = [$pd_id,$pd_name,$pd_price,$pd_des];
+			$running++;
+		}
+	
+	$data = [];
+	$data['type'] = 'flex';
+	$data['altText'] = 'Flex Message';
+	$data['contents']['type'] = 'bubble';
+	$data['contents']['header']['type'] = 'box';
+	$data['contents']['header']['layout'] = 'vertical';
+	$data['contents']['header']['contents'][0]['type'] = 'text';
+	$data['contents']['header']['contents'][0]['text'] = 'รหัสใบสั่งซื้อที่ '.$orderid;
+	$data['contents']['header']['contents'][0]['size'] = 'lg';
+	$data['contents']['header']['contents'][0]['align'] = 'center';
+	$data['contents']['header']['contents'][0]['weight'] = 'bold';
+	$data['contents']['body']['type'] = 'box';
+	$data['contents']['body']['layout'] = 'vertical';
+	for($i=0;$i<sizeof($pd);$i++) // i = วน sku ในแต่ละใบสั่งซื้อ
+		{
+			$data['contents']['body']['contents'][$i]['type'] = 'box';
+			$data['contents']['body']['contents'][$i]['layout'] = 'baseline';
+			$data['contents']['body']['contents'][$i]['flex'] = 0;
+			$data['contents']['body']['contents'][$i]['contents'][0]['type'] = 'text';
+			$data['contents']['body']['contents'][$i]['contents'][0]['text'] = $skuid_array[$i].' '.$pd[$i][1].' '.$sku_color[$i].' '.$cartp_qtt[$i].' ชิ้น'; //prod_name
+			$data['contents']['body']['contents'][$i]['contents'][0]['margin'] = 'xs';
+			$data['contents']['body']['contents'][$i]['contents'][0]['weight'] = 'regular';
+			$data['contents']['body']['contents'][$i]['contents'][0]['wrap'] = true;
+			$data['contents']['body']['contents'][$i]['contents'][1]['type'] = 'text';
+			$data['contents']['body']['contents'][$i]['contents'][1]['text'] = $pd[$i][2].' บาท'; //prod_name
+			$data['contents']['body']['contents'][$i]['contents'][1]['margin'] = 'sm';
+			$data['contents']['body']['contents'][$i]['contents'][1]['weight'] = 'regular';
+			$data['contents']['body']['contents'][$i]['contents'][1]['align'] = 'end';
+		}
+		$n = sizeof($pd);	
+		
+	$data['contents']['body']['contents'][$n]['type'] = 'box';
+	$data['contents']['body']['contents'][$n]['layout'] = 'baseline';
+	$data['contents']['body']['contents'][$n]['flex'] = 0;
+	$data['contents']['body']['contents'][$n]['contents'][0]['type'] = 'text';
+	$data['contents']['body']['contents'][$n]['contents'][0]['text'] = 'รวม'; //prod_name
+	$data['contents']['body']['contents'][$n]['contents'][0]['margin'] = 'lg';
+	$data['contents']['body']['contents'][$n]['contents'][0]['weight'] = 'bold';
+	$data['contents']['body']['contents'][$n]['contents'][1]['type'] = 'text';
+	$data['contents']['body']['contents'][$n]['contents'][1]['text'] = $order_price.' บาท'; //prod_name
+	$data['contents']['body']['contents'][$n]['contents'][1]['margin'] = 'lg';
+	$data['contents']['body']['contents'][$n]['contents'][1]['weight'] = 'bold';			
+	return $data;
+}
 
-
-
-   
 ?>
